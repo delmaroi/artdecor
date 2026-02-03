@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ContactBlock from "../components/ContactBlock.astro";
+import "../styles/globals.css";
+---
+<Layout title="Kontakt – Art Decor Pszczyna | 696 293 362" description="Kontakt Art Decor Pszczyna – Męczenników Oświęcimskich 16, 43-200 Pszczyna. Tel. 696 293 362, biuro@artdecor.net.pl. Godziny: pn–pt 8:00–17:00.">
+  <Header />
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="page-title">Kontakt</h1>
+        <p class="lead">Zapraszamy do kontaktu – chętnie omówimy Twoje zlecenie i zaproponujemy rozwiązania dopasowane do potrzeb.</p>
+      </div>
+    </section>
+    <ContactBlock />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  .lead {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: 50ch;
+  }
+</style>

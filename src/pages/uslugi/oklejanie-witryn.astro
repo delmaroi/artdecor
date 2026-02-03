@@ -1,0 +1,125 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Oklejanie Witryn - Art Decor Pszczyna"
+  description="Profesjonalne oklejanie witryn sklepowych folią. Reklama, przyciemnianie, dekoracje."
+  heroTitle="Oklejanie Witryn"
+  heroSubtitle="Oklejanie witryn sklepowych folią reklamową, przyciemniającą i dekoracyjną."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Profesjonalne oklejanie witryn</h3>
+    <p>
+      Oklejanie witryn to skuteczny sposób na reklamę, ochronę prywatności lub dekorację przestrzeni. Używamy wysokiej jakości folii, które są trwałe i łatwe w utrzymaniu.
+    </p>
+
+    <h3>Rodzaje folii</h3>
+    <ul>
+      <li><strong>Folia reklamowa</strong> - logo, napisy, grafika promocyjna</li>
+      <li><strong>Folia przyciemniająca</strong> - ochrona przed słońcem i wzrokiem</li>
+      <li><strong>Folia matowa/mleczna</strong> - dyskretne oddzielenie przestrzeni</li>
+      <li><strong>Folia dekoracyjna</strong> - wzory, motywy, efekty 3D</li>
+      <li><strong>Folia perforowana (One Way Vision)</strong> - widoczność z jednej strony</li>
+    </ul>
+
+    <h3>Zastosowania</h3>
+    <p>Oklejanie witryn sprawdza się w:</p>
+    <ul>
+      <li>Sklepach i galeriach handlowych</li>
+      <li>Biurach i recepcjach</li>
+      <li>Restauracjach i kawiarniach</li>
+      <li>Salonach kosmetycznych i fryzjerskich</li>
+      <li>Bankach i instytucjach</li>
+    </ul>
+
+    <h3>Proces aplikacji</h3>
+    <p>
+      Folię aplikujemy metodą mokrą lub suchą, w zależności od rodzaju folii i powierzchni. Gwarantujemy profesjonalne wykonanie bez pęcherzyków powietrza i fałd.
+    </p>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Folie</h3>
+        <ul>
+          <li>Reklamowa (Oracal 551)</li>
+          <li>Przyciemniająca</li>
+          <li>Matowa/mleczna</li>
+          <li>Perforowana (OWV)</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Trwałość</h3>
+        <ul>
+          <li>Zewnętrzna: 5-7 lat</li>
+          <li>Wewnętrzna: 7-10 lat</li>
+          <li>Gwarancja: 12 miesięcy</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Właściwości</h3>
+        <ul>
+          <li>Odporna na UV</li>
+          <li>Łatwa w czyszczeniu</li>
+          <li>Możliwość demontażu</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Realizacja</h3>
+        <ul>
+          <li>Projekt: 1 dzień</li>
+          <li>Aplikacja: 1-2 dni</li>
+          <li>Pomiar: bezpłatny</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

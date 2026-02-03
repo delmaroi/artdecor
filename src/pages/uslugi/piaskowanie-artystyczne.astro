@@ -1,0 +1,140 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Piaskowanie Artystyczne - Art Decor Pszczyna"
+  description="Artystyczne piaskowanie 3D szkła, luster, ceramiki i kamienia. Unikalne akcesoria reklamowe."
+  heroTitle="Piaskowanie Artystyczne 3D"
+  heroSubtitle="Unikalna technologia piaskowania 3D. Tworzymy oryginalne akcesoria ze szkła, luster i kamienia."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Innowacyjna technologia</h3>
+    <p>
+      Jako jedna z nielicznych firm reklamowych w Polsce wdrożyliśmy technologię <strong>artystycznego piaskowania 3D</strong>. Pozwala ona na tworzenie niezwykłych efektów przestrzennych na szkle, lustrach, ceramice i kamieniu.
+    </p>
+
+    <h3>Czym jest piaskowanie 3D?</h3>
+    <p>
+      Piaskowanie 3D to zaawansowana technika obróbki powierzchni, w której strumień piasku pod wysokim ciśnieniem wybija w materiale wzory o różnej głębokości. Dzięki precyzyjnemu sterowaniu uzyskujemy efekt trójwymiarowości i głębi.
+    </p>
+
+    <h3>Materiały</h3>
+    <p>Piaskujemy:</p>
+    <ul>
+      <li><strong>Szkło</strong> - szyby, tafle, szkło hartowane</li>
+      <li><strong>Lustra</strong> - dekoracyjne, reklamowe</li>
+      <li><strong>Ceramika</strong> - płytki, kafle</li>
+      <li><strong>Kamień</strong> - marmur, granit</li>
+    </ul>
+
+    <h3>Zastosowania</h3>
+    <ul>
+      <li>Szyldy i tablice firmowe</li>
+      <li>Drzwi szklane i przegrody</li>
+      <li>Lustra reklamowe i dekoracyjne</li>
+      <li>Upominki firmowe (puchary, statuetki)</li>
+      <li>Tablice pamiątkowe</li>
+      <li>Dekoracje wnętrz</li>
+      <li>Nagrobki i pomniki</li>
+    </ul>
+
+    <h3>Proces realizacji</h3>
+    <p>
+      Grafika jest przygotowywana w specjalnym oprogramowaniu, które pozwala na kontrolę głębokości piaskowania w każdym punkcie. Następnie za pomocą piaskarki tworzymy wzór na materiale.
+    </p>
+
+    <h3>Unikalne efekty</h3>
+    <ul>
+      <li>Efekt 3D - prawdziwa głębia i przestrzenność</li>
+      <li>Półtony - płynne przejścia tonalne</li>
+      <li>Fotorealizm - możliwość odwzorowania zdjęć</li>
+      <li>Trwałość - piaskowanie jest niezniszczalne</li>
+    </ul>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Materiały</h3>
+        <ul>
+          <li>Szkło (wszystkie rodzaje)</li>
+          <li>Lustra</li>
+          <li>Ceramika</li>
+          <li>Kamień (marmur, granit)</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Wymiary</h3>
+        <ul>
+          <li>Maksymalnie: 200 x 100 cm</li>
+          <li>Grubość: 3-30mm</li>
+          <li>Dowolne kształty</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Efekty</h3>
+        <ul>
+          <li>Piaskowanie 3D</li>
+          <li>Półtony</li>
+          <li>Fotorealizm</li>
+          <li>Wzory geometryczne</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Realizacja</h3>
+        <ul>
+          <li>Projekt: 1-2 dni</li>
+          <li>Piaskowanie: 1-3 dni</li>
+          <li>Trwałość: nieograniczona</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

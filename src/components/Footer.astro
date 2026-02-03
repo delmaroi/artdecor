@@ -1,0 +1,162 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="footer-glow" aria-hidden="true"></div>
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="logo-text gradient-text">Art Decor</span>
+      <span class="logo-sub">Pszczyna · Reklama wizualna</span>
+    </div>
+    <div class="footer-links">
+      <a href="/">Strona główna</a>
+      <a href="/o-nas/">O nas</a>
+      <a href="/kontakt/">Kontakt</a>
+      <a href="https://www.facebook.com/artdecorreklama/" target="_blank" rel="noopener noreferrer" class="footer-social">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M20 10C20 4.477 15.523 0 10 0S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z"/>
+        </svg>
+        Facebook
+      </a>
+    </div>
+    <p class="footer-legal">
+      © {year} Art Decor Pszczyna
+      <a href="/polityka-cookies/">Polityka cookies</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--glass-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border-top: 1px solid var(--glass-border);
+    padding-block: 3rem;
+    margin-top: auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-glow {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .footer-brand .logo-text {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
+
+  .footer-brand .logo-sub {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .footer-links a {
+    color: var(--color-text-muted);
+    font-weight: 500;
+    transition: all var(--transition-base);
+    position: relative;
+  }
+
+  .footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-accent);
+  }
+
+  .footer-links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .footer-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+  }
+
+  .footer-social:hover {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .footer-social::after {
+    display: none;
+  }
+
+  .footer-legal {
+    width: 100%;
+    margin: 0;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+    font-size: 0.9rem;
+    color: var(--color-text-dim);
+    text-align: center;
+  }
+
+  .footer-legal a {
+    margin-left: 1rem;
+    color: var(--color-text-muted);
+    transition: color var(--transition-base);
+  }
+
+  .footer-legal a:hover {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 768px) {
+    .footer-legal {
+      text-align: left;
+    }
+  }
+</style>

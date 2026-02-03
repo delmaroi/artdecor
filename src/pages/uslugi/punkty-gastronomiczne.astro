@@ -1,0 +1,128 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Punkty Gastronomiczne - Art Decor Pszczyna"
+  description="Kompleksowe oznakowanie punktów gastronomicznych. Menu boards, banery, naklejki, szyldy."
+  heroTitle="Punkty Gastronomiczne"
+  heroSubtitle="Kompleksowe rozwiązania reklamowe dla restauracji, kawiarni i barów."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Reklama dla gastronomii</h3>
+    <p>
+      Specjalizujemy się w kompleksowym oznakowaniu punktów gastronomicznych. Tworzymy spójną identyfikację wizualną, która przyciąga klientów i buduje rozpoznawalność marki.
+    </p>
+
+    <h3>Nasza oferta</h3>
+    <ul>
+      <li><strong>Menu boards</strong> - tablice menu LED lub tradycyjne</li>
+      <li><strong>Szyldy zewnętrzne</strong> - kasetony, litery LED, pylony</li>
+      <li><strong>Oklejanie witryn</strong> - menu, godziny otwarcia, promocje</li>
+      <li><strong>Banery i flagi</strong> - reklama zewnętrzna</li>
+      <li><strong>Oznakowanie wnętrz</strong> - napisy na ścianach, grafika</li>
+      <li><strong>Tablice kredowe</strong> - menu dzienne, oferty specjalne</li>
+      <li><strong>Stojaki reklamowe</strong> - potykacze, roll-upy</li>
+    </ul>
+
+    <h3>Materiały</h3>
+    <p>Dostosowujemy materiały do charakteru lokalu:</p>
+    <ul>
+      <li>Drewno - ciepły, naturalny wygląd</li>
+      <li>Metal - nowoczesny, industrialny styl</li>
+      <li>Plexi - eleganckie, łatwe w czyszczeniu</li>
+      <li>Tablica kredowa - tradycyjny, przytulny charakter</li>
+    </ul>
+
+    <h3>Kompleksowa realizacja</h3>
+    <p>
+      Oferujemy kompleksową obsługę - od projektu graficznego, przez produkcję, aż po montaż. Dbamy o spójność wizualną wszystkich elementów.
+    </p>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Menu Boards</h3>
+        <ul>
+          <li>LED (programowalne)</li>
+          <li>Podświetlane (lightbox)</li>
+          <li>Tablice kredowe</li>
+          <li>Ramki click (wymienne)</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Szyldy</h3>
+        <ul>
+          <li>Kasetony LED</li>
+          <li>Litery przestrzenne</li>
+          <li>Szyldy drewniane</li>
+          <li>Neony LED</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Materiały</h3>
+        <ul>
+          <li>Drewno</li>
+          <li>Metal</li>
+          <li>Plexi</li>
+          <li>Tablica kredowa</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Realizacja</h3>
+        <ul>
+          <li>Projekt: 2-3 dni</li>
+          <li>Produkcja: 5-10 dni</li>
+          <li>Montaż: 1-2 dni</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

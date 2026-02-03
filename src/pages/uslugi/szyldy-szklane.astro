@@ -1,0 +1,122 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Szyldy Szklane - Art Decor Pszczyna"
+  description="Eleganckie szyldy szklane z piaskowaną grafiką. Nowoczesne oznakowanie dla firm i biur."
+  heroTitle="Szyldy Szklane"
+  heroSubtitle="Eleganckie szyldy ze szkła z piaskowaną lub wydrukowaną grafiką. Prestiżowe oznakowanie dla Twojej firmy."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Prestiżowe szyldy szklane</h3>
+    <p>
+      Szyldy szklane to eleganckie rozwiązanie dla firm, które cenią sobie nowoczesny wygląd i wysoką jakość. Wykonujemy je ze szkła hartowanego lub akrylowego, z możliwością różnych technik zdobienia.
+    </p>
+
+    <h3>Technologie wykonania</h3>
+    <ul>
+      <li><strong>Piaskowanie artystyczne 3D</strong> - matowa grafika wpiaskowana w szkło</li>
+      <li><strong>Wydruk UV</strong> - pełnokolorowa grafika na szkle</li>
+      <li><strong>Folia ploterowa</strong> - naklejana grafika, możliwość złotych/srebrnych akcentów</li>
+      <li><strong>Podświetlenie LED</strong> - opcjonalne podświetlenie od tyłu</li>
+    </ul>
+
+    <h3>Materiały</h3>
+    <p>Oferujemy szyldy wykonane z:</p>
+    <ul>
+      <li>Szkło hartowane (bezpieczne, odporne na uszkodzenia)</li>
+      <li>Szkło laminowane (dodatkowa wytrzymałość)</li>
+      <li>Plexi (lżejsza alternatywa)</li>
+      <li>Lustro (efektowne wykończenie)</li>
+    </ul>
+
+    <h3>Montaż</h3>
+    <p>
+      Szyldy montujemy na dystansach aluminiowych lub stalowych, co nadaje im przestrzenny, unoszący się efekt. Możliwy również montaż bezpośrednio do ściany lub w ramie aluminiowej.
+    </p>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Materiały</h3>
+        <ul>
+          <li>Szkło hartowane 6-10mm</li>
+          <li>Plexi 3-10mm</li>
+          <li>Lustro 4-6mm</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Wymiary</h3>
+        <ul>
+          <li>Maksymalnie: 200 x 100 cm</li>
+          <li>Grubość: 3-10mm</li>
+          <li>Indywidualny projekt</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Techniki</h3>
+        <ul>
+          <li>Piaskowanie 3D</li>
+          <li>Wydruk UV</li>
+          <li>Folia ploterowa</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Realizacja</h3>
+        <ul>
+          <li>Projekt: 1-2 dni</li>
+          <li>Produkcja: 5-7 dni</li>
+          <li>Gwarancja: 24 miesiące</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

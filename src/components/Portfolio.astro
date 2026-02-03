@@ -1,0 +1,248 @@
+---
+const categories = [
+  "Wszystko",
+  "Kasetony z dibondu",
+  "Litery blokowe",
+  "Litery przestrzenne",
+  "Oklejanie samochodów",
+  "Oklejanie witryn",
+  "Piaskowanie artystyczne",
+  "Punkty gastronomiczne",
+  "Systemy wystawiennicze",
+  "Szyldy szklane",
+];
+
+const portfolioItems = [
+  { id: 1, title: "Litery LED na fasadzie", category: "Litery blokowe", image: "/images/portfolio/sample-1.png" },
+  { id: 2, title: "Pylon reklamowy", category: "Kasetony z dibondu", image: "/images/portfolio/sample-2.png" },
+  { id: 3, title: "Oklejanie samochodu", category: "Oklejanie samochodów", image: "/images/portfolio/sample-3.png" },
+  { id: 4, title: "Realizacja 4", category: "Szyldy szklane", image: "/images/portfolio/sample-1.png" },
+  { id: 5, title: "Realizacja 5", category: "Litery przestrzenne", image: "/images/portfolio/sample-2.png" },
+  { id: 6, title: "Realizacja 6", category: "Oklejanie witryn", image: "/images/portfolio/sample-3.png" },
+];
+---
+<section class="section portfolio" id="portfolio">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Nasze <span class="gradient-text">prace</span></h2>
+      <p class="section-lead">Projektowane przez nas reklamy cechują się nowoczesnym wzornictwem i różnorodnymi technikami produkcji.</p>
+    </div>
+    <div class="portfolio-filters">
+      {categories.map((cat, index) => (
+        <button
+          type="button"
+          class="filter-btn"
+          data-filter={cat === "Wszystko" ? "all" : cat.toLowerCase().replace(/\s+/g, "-")}
+          aria-pressed={index === 0 ? "true" : "false"}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+    <ul class="portfolio-grid">
+      {portfolioItems.map((item, index) => (
+        <li class="portfolio-item" style={`animation-delay: ${index * 0.1}s`} data-category={item.category.toLowerCase().replace(/\s+/g, "-")}>
+          <div class="portfolio-card">
+            <img src={item.image} alt={item.title} loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-content">
+                <h3 class="portfolio-title">{item.title}</h3>
+                <p class="portfolio-category">{item.category}</p>
+                <svg class="portfolio-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .section-lead {
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .portfolio-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    padding: 0.625rem 1.25rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .filter-btn:hover,
+  .filter-btn[aria-pressed="true"] {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: rgba(245, 158, 11, 0.1);
+  }
+
+  .portfolio-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .portfolio-item {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .portfolio-card {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--color-surface);
+    cursor: pointer;
+    transition: transform var(--transition-base);
+  }
+
+  .portfolio-card:hover {
+    transform: translateY(-8px);
+  }
+
+  .portfolio-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .portfolio-card:hover img {
+    transform: scale(1.1);
+  }
+
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10, 10, 15, 0.95) 0%,
+      rgba(10, 10, 15, 0.7) 50%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+  }
+
+  .portfolio-card:hover .portfolio-overlay {
+    opacity: 1;
+  }
+
+  .portfolio-content {
+    width: 100%;
+    transform: translateY(20px);
+    transition: transform var(--transition-base);
+  }
+
+  .portfolio-card:hover .portfolio-content {
+    transform: translateY(0);
+  }
+
+  .portfolio-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+    color: var(--color-text);
+  }
+
+  .portfolio-category {
+    font-size: 0.9rem;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .portfolio-icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: var(--color-text);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all var(--transition-base);
+  }
+
+  .portfolio-card:hover .portfolio-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (min-width: 640px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      // Update active state
+      filterBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+
+      // Filter items
+      portfolioItems.forEach(item => {
+        const category = item.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

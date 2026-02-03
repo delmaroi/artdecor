@@ -1,0 +1,132 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Oklejanie Samochodów - Art Decor Pszczyna"
+  description="Oklejanie samochodów folią reklamową i ochronną. Reklama mobilna, zmiana koloru, ochrona lakieru."
+  heroTitle="Oklejanie Samochodów"
+  heroSubtitle="Reklama mobilna i ochrona lakieru. Oklejanie całopowierzchniowe i częściowe."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Reklama mobilna</h3>
+    <p>
+      Oklejanie samochodów to skuteczna forma reklamy mobilnej. Twój samochód staje się wizytówką firmy, docierając do tysięcy potencjalnych klientów każdego dnia.
+    </p>
+
+    <h3>Rodzaje oklejania</h3>
+    <ul>
+      <li><strong>Oklejanie reklamowe</strong> - logo, dane kontaktowe, grafika promocyjna</li>
+      <li><strong>Oklejanie całopowierzchniowe</strong> - zmiana koloru pojazdu</li>
+      <li><strong>Oklejanie częściowe</strong> - akcenty, pasy, elementy graficzne</li>
+      <li><strong>Folia ochronna</strong> - ochrona lakieru przed uszkodzeniami</li>
+    </ul>
+
+    <h3>Folie premium</h3>
+    <p>Używamy wyłącznie folii renomowanych producentów:</p>
+    <ul>
+      <li><strong>3M</strong> - najwyższa jakość, gwarancja producenta</li>
+      <li><strong>Avery Dennison</strong> - szeroka paleta kolorów i efektów</li>
+      <li><strong>Oracal</strong> - doskonały stosunek jakości do ceny</li>
+    </ul>
+
+    <h3>Proces oklejania</h3>
+    <p>
+      Oklejanie wykonujemy w profesjonalnej hali, z zachowaniem odpowiedniej temperatury i czystości. Gwarantujemy precyzyjne dopasowanie i trwałe wykończenie.
+    </p>
+
+    <h3>Korzyści</h3>
+    <ul>
+      <li>Skuteczna reklama 24/7</li>
+      <li>Ochrona oryginalnego lakieru</li>
+      <li>Możliwość zmiany wyglądu bez lakierowania</li>
+      <li>Łatwy demontaż bez uszkodzenia lakieru</li>
+      <li>Trwałość 5-7 lat</li>
+    </ul>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Folie</h3>
+        <ul>
+          <li>3M (seria 1080, 2080)</li>
+          <li>Avery Dennison</li>
+          <li>Oracal (seria 970)</li>
+          <li>Folia ochronna PPF</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Trwałość</h3>
+        <ul>
+          <li>Zewnętrzna: 5-7 lat</li>
+          <li>Gwarancja: 12-24 miesiące</li>
+          <li>Odporna na UV i myjnie</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Pojazdy</h3>
+        <ul>
+          <li>Samochody osobowe</li>
+          <li>Dostawcze</li>
+          <li>Busy i ciężarowe</li>
+          <li>Motocykle</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Realizacja</h3>
+        <ul>
+          <li>Projekt: 1-2 dni</li>
+          <li>Oklejanie: 2-5 dni</li>
+          <li>Wycena: bezpłatna</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

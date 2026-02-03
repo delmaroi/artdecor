@@ -1,0 +1,330 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import "../styles/globals.css";
+
+const { title, description, heroTitle, heroSubtitle, content, specifications, process, ctaText = "Zapytaj o wycenę", ctaHref = "/kontakt/" } = Astro.props;
+---
+<Layout title={title} description={description}>
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="service-hero">
+      <div class="service-hero-bg" aria-hidden="true">
+        <div class="service-hero-gradient"></div>
+      </div>
+      <div class="container service-hero-inner">
+        <div class="breadcrumb">
+          <a href="/">Strona główna</a>
+          <span>/</span>
+          <a href="/#uslugi">Usługi</a>
+          <span>/</span>
+          <span>{heroTitle}</span>
+        </div>
+        <h1 class="service-hero-title">
+          {heroTitle.split(' ').map((word, i) =>
+            i === heroTitle.split(' ').length - 1 ?
+              <span class="gradient-text">{word}</span> :
+              <span>{word} </span>
+          )}
+        </h1>
+        {heroSubtitle && <p class="service-hero-subtitle">{heroSubtitle}</p>}
+        <a href={ctaHref} class="service-cta">
+          {ctaText}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4.16669 10H15.8334M15.8334 10L10 4.16669M15.8334 10L10 15.8334" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Content Section -->
+    {content && (
+      <section class="section service-content">
+        <div class="container">
+          <div class="content-card glass-card">
+            <slot name="content" />
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Specifications -->
+    {specifications && (
+      <section class="section service-specs">
+        <div class="container">
+          <h2 class="section-title">Specyfikacja <span class="gradient-text">techniczna</span></h2>
+          <slot name="specifications" />
+        </div>
+      </section>
+    )}
+
+    <!-- Process -->
+    {process && (
+      <section class="section service-process">
+        <div class="container">
+          <h2 class="section-title">Proces <span class="gradient-text">realizacji</span></h2>
+          <slot name="process" />
+        </div>
+      </section>
+    )}
+
+    <!-- CTA Section -->
+    <section class="section service-cta-section">
+      <div class="container">
+        <div class="cta-card glass-card">
+          <h2 class="cta-title">Zainteresowany tą usługą?</h2>
+          <p class="cta-text">Skontaktuj się z nami, aby uzyskać bezpłatną wycenę i doradztwo techniczne.</p>
+          <div class="cta-buttons">
+            <a href="/kontakt/" class="cta-button primary">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M2.5 4.16667C2.5 3.24619 3.24619 2.5 4.16667 2.5H6.41667C6.83333 2.5 7.19583 2.77083 7.31667 3.16667L8.35417 6.66667C8.46667 7.03333 8.33333 7.42917 8.02083 7.65833L6.5 8.75C7.5 10.8333 9.16667 12.5 11.25 13.5L12.3417 11.9792C12.5708 11.6667 12.9667 11.5333 13.3333 11.6458L16.8333 12.6833C17.2292 12.8042 17.5 13.1667 17.5 13.5833V15.8333C17.5 16.7538 16.7538 17.5 15.8333 17.5H15C8.09625 17.5 2.5 11.9038 2.5 5V4.16667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Zadzwoń: 696 293 362
+            </a>
+            <a href="mailto:biuro@artdecor.net.pl" class="cta-button secondary">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M2.5 6.66667L9.0752 11.0517C9.34895 11.2328 9.48582 11.3234 9.63425 11.3599C9.76507 11.3919 9.90159 11.3919 10.0324 11.3599C10.1809 11.3234 10.3177 11.2328 10.5915 11.0517L17.1667 6.66667M5.66667 15.8333H14.3333C15.7335 15.8333 16.4335 15.8333 16.9683 15.5608C17.4387 15.3212 17.8212 14.9387 18.0608 14.4683C18.3333 13.9335 18.3333 13.2335 18.3333 11.8333V8.16667C18.3333 6.76654 18.3333 6.06647 18.0608 5.53169C17.8212 5.06129 17.4387 4.67883 16.9683 4.43915C16.4335 4.16667 15.7335 4.16667 14.3333 4.16667H5.66667C4.26654 4.16667 3.56647 4.16667 3.03169 4.43915C2.56129 4.67883 2.17883 5.06129 1.93915 5.53169C1.66667 6.06647 1.66667 6.76654 1.66667 8.16667V11.8333C1.66667 13.2335 1.66667 13.9335 1.93915 14.4683C2.17883 14.9387 2.56129 15.3212 3.03169 15.5608C3.56647 15.8333 4.26654 15.8333 5.66667 15.8333Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Wyślij email
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero Section */
+  .service-hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    padding-block: 8rem 4rem;
+    overflow: hidden;
+  }
+
+  .service-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .service-hero-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 50%, rgba(245, 158, 11, 0.12) 0%, transparent 50%),
+      linear-gradient(180deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+  }
+
+  .service-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-accent);
+  }
+
+  .breadcrumb span:last-child {
+    color: var(--color-accent);
+  }
+
+  .service-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 1.5rem;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+
+  .service-hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    margin: 0 0 2.5rem;
+    line-height: 1.7;
+  }
+
+  .service-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: var(--gradient-primary);
+    color: var(--color-bg);
+    font-weight: 700;
+    font-size: 1.05rem;
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-base);
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+  }
+
+  .service-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
+    color: var(--color-bg);
+  }
+
+  .service-cta svg {
+    transition: transform var(--transition-base);
+  }
+
+  .service-cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Content Section */
+  .service-content {
+    padding-block: 4rem;
+  }
+
+  .content-card {
+    padding: 3rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+  }
+
+  .content-card :global(h3) {
+    color: var(--color-text);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+  }
+
+  .content-card :global(h3:first-child) {
+    margin-top: 0;
+  }
+
+  .content-card :global(p) {
+    margin: 0 0 1rem;
+  }
+
+  .content-card :global(ul) {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .content-card :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Specifications */
+  .service-specs {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin: 0 0 2rem;
+    color: var(--color-text);
+    text-align: center;
+  }
+
+  /* Process */
+  .service-process {
+    padding-block: 5rem;
+  }
+
+  /* CTA Section */
+  .service-cta-section {
+    padding-block: 5rem;
+  }
+
+  .cta-card {
+    padding: 4rem 3rem;
+    text-align: center;
+  }
+
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 800;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .cta-text {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin: 0 0 2.5rem;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-base);
+  }
+
+  .cta-button.primary {
+    background: var(--gradient-primary);
+    color: var(--color-bg);
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+  }
+
+  .cta-button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
+    color: var(--color-bg);
+  }
+
+  .cta-button.secondary {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--color-text);
+  }
+
+  .cta-button.secondary:hover {
+    border-color: var(--color-accent);
+    background: rgba(245, 158, 11, 0.1);
+    transform: translateY(-2px);
+  }
+
+  @media (min-width: 768px) {
+    .service-hero {
+      min-height: 70vh;
+    }
+
+    .content-card {
+      padding: 4rem;
+    }
+  }
+</style>

@@ -1,0 +1,136 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Tablice LED - Art Decor Pszczyna"
+  description="Elektroniczne tablice LED do wyświetlania reklam i informacji. Pełny kolor, programowalne."
+  heroTitle="Tablice LED"
+  heroSubtitle="Nowoczesne elektroniczne tablice LED do dynamicznej reklamy i informacji."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Dynamiczna reklama LED</h3>
+    <p>
+      Tablice LED to nowoczesne narzędzie reklamowe, które przyciąga wzrok i pozwala na wyświetlanie dynamicznych treści. Idealne do reklamy zewnętrznej i wewnętrznej.
+    </p>
+
+    <h3>Rodzaje tablic</h3>
+    <ul>
+      <li><strong>Tablice pełnokolorowe (RGB)</strong> - wyświetlanie grafiki, wideo, animacji</li>
+      <li><strong>Tablice jednokolorowe</strong> - tekst przewijany, informacje</li>
+      <li><strong>Tablice dwukolorowe</strong> - większa czytelność, niższa cena</li>
+      <li><strong>Wyświetlacze cenowe</strong> - dla stacji paliw, kantorów</li>
+    </ul>
+
+    <h3>Zastosowania</h3>
+    <ul>
+      <li>Reklama zewnętrzna (fasady budynków)</li>
+      <li>Centra handlowe i galerie</li>
+      <li>Stacje paliw (ceny paliw)</li>
+      <li>Apteki (krzyż apteczny LED)</li>
+      <li>Banki i kantory (kursy walut)</li>
+      <li>Informacja pasażerska (przystanki, dworce)</li>
+    </ul>
+
+    <h3>Sterowanie</h3>
+    <p>
+      Tablice programujemy za pomocą dedykowanego oprogramowania. Możliwość zdalnej aktualizacji treści przez WiFi lub GSM.
+    </p>
+
+    <h3>Korzyści</h3>
+    <ul>
+      <li>Przyciągają uwagę 24/7</li>
+      <li>Łatwa zmiana treści</li>
+      <li>Niskie koszty eksploatacji</li>
+      <li>Długa żywotność (100 000h)</li>
+      <li>Widoczne z daleka</li>
+    </ul>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Typy</h3>
+        <ul>
+          <li>Pełny kolor (RGB)</li>
+          <li>Jednokolorowe</li>
+          <li>Dwukolorowe</li>
+          <li>Wyświetlacze cenowe</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Rozdzielczość</h3>
+        <ul>
+          <li>P10 (outdoor)</li>
+          <li>P6 (semi-outdoor)</li>
+          <li>P4 (indoor)</li>
+          <li>Indywidualne rozmiary</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Sterowanie</h3>
+        <ul>
+          <li>WiFi</li>
+          <li>GSM/3G/4G</li>
+          <li>USB</li>
+          <li>Oprogramowanie PC</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Parametry</h3>
+        <ul>
+          <li>Jasność: 5000-8000 cd/m²</li>
+          <li>Żywotność: 100 000h</li>
+          <li>IP65 (outdoor)</li>
+          <li>Gwarancja: 24 miesiące</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

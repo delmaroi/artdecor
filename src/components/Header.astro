@@ -1,0 +1,278 @@
+---
+const currentPath = Astro.url.pathname;
+const nav = [
+  { href: "/", label: "Strona główna" },
+  { href: "/o-nas/", label: "O nas" },
+  { href: "/kontakt/", label: "Kontakt" },
+];
+---
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="Art Decor – strona główna">
+      <span class="logo-text">Art Decor</span>
+      <span class="logo-sub">Reklama wizualna</span>
+    </a>
+    <nav class="nav" aria-label="Główne menu">
+      <ul class="nav-list">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={["nav-link", { "nav-link--active": currentPath === item.href || (item.href === "/" && currentPath === "/") }]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <a href="tel:+48696293362" class="header-cta">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M2.5 4.16667C2.5 3.24619 3.24619 2.5 4.16667 2.5H6.41667C6.83333 2.5 7.19583 2.77083 7.31667 3.16667L8.35417 6.66667C8.46667 7.03333 8.33333 7.42917 8.02083 7.65833L6.5 8.75C7.5 10.8333 9.16667 12.5 11.25 13.5L12.3417 11.9792C12.5708 11.6667 12.9667 11.5333 13.3333 11.6458L16.8333 12.6833C17.2292 12.8042 17.5 13.1667 17.5 13.5833V15.8333C17.5 16.7538 16.7538 17.5 15.8333 17.5H15C8.09625 17.5 2.5 11.9038 2.5 5V4.16667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      696 293 362
+    </a>
+    <button type="button" class="menu-toggle" aria-label="Otwórz menu" aria-expanded="false">
+      <span class="menu-toggle-bar"></span>
+      <span class="menu-toggle-bar"></span>
+      <span class="menu-toggle-bar"></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all var(--transition-base);
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(245, 158, 11, 0.05) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+  }
+
+  .header:hover::before {
+    opacity: 1;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.25rem;
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.35rem;
+    transition: all var(--transition-base);
+    position: relative;
+  }
+
+  .logo-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all var(--transition-base);
+  }
+
+  .logo:hover .logo-text {
+    filter: brightness(1.2);
+  }
+
+  .logo-sub {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-list {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .nav-list {
+      display: flex;
+    }
+  }
+
+  .nav-link {
+    padding: 0.625rem 1rem;
+    border-radius: var(--radius-lg);
+    color: var(--color-text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all var(--transition-base);
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0.5rem;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link--active {
+    background: var(--glass-bg);
+    color: var(--color-accent);
+  }
+
+  .nav-link--active::after {
+    transform: scaleX(1);
+  }
+
+  .header-cta {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-lg);
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    transition: all var(--transition-base);
+  }
+
+  .header-cta:hover {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+  }
+
+  @media (min-width: 768px) {
+    .header-cta {
+      display: inline-flex;
+    }
+  }
+
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: transform var(--transition-base);
+  }
+
+  .menu-toggle:hover {
+    transform: scale(1.1);
+  }
+
+  @media (min-width: 768px) {
+    .menu-toggle {
+      display: none;
+    }
+  }
+
+  .menu-toggle-bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: all var(--transition-base);
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  @media (max-width: 767px) {
+    .nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all var(--transition-base);
+    }
+
+    .nav--open {
+      max-height: 400px;
+      opacity: 1;
+    }
+
+    .nav-list {
+      flex-direction: column;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 1rem;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".nav");
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const open = nav.classList.toggle("nav--open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Zamknij menu" : "Otwórz menu");
+    });
+  }
+</script>

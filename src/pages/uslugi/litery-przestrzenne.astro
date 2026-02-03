@@ -1,0 +1,126 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Litery Przestrzenne - Art Decor Pszczyna"
+  description="Litery przestrzenne 3D z różnych materiałów. PCV, dibond, stal nierdzewna. Montaż na dystansach."
+  heroTitle="Litery Przestrzenne"
+  heroSubtitle="Trójwymiarowe litery z PCV, dibondu, stali. Eleganckie oznakowanie bez podświetlenia."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Litery przestrzenne bez podświetlenia</h3>
+    <p>
+      Litery przestrzenne to klasyczne rozwiązanie dla firm, które preferują eleganckie oznakowanie bez podświetlenia. Wykonujemy je z różnych materiałów, dostosowanych do charakteru marki i miejsca montażu.
+    </p>
+
+    <h3>Materiały</h3>
+    <ul>
+      <li><strong>PCV</strong> - lekkie, ekonomiczne, dowolne kolory</li>
+      <li><strong>Dibond</strong> - aluminium, wersje szczotkowane (złoty, srebrny, miedziany)</li>
+      <li><strong>Stal nierdzewna</strong> - premium, szczotkowana lub polerowana</li>
+      <li><strong>Drewno</strong> - naturalne, ciepłe wykończenie</li>
+      <li><strong>Plexi</strong> - kolorowe lub transparentne</li>
+    </ul>
+
+    <h3>Grubości i wykończenia</h3>
+    <p>
+      Litery wykonujemy w grubościach od 3mm do 50mm, w zależności od materiału i rozmiaru. Możliwe wykończenia:
+    </p>
+    <ul>
+      <li>Lakierowane (dowolny kolor RAL)</li>
+      <li>Oklejone folią (mat/błysk, metaliczne)</li>
+      <li>Szczotkowane (efekt metaliczny)</li>
+      <li>Naturalne (drewno, stal)</li>
+    </ul>
+
+    <h3>Montaż</h3>
+    <p>
+      Litery montujemy na dystansach aluminiowych lub stalowych (efekt unoszenia się), bezpośrednio do ściany lub na tablicy nośnej. Możliwy montaż wewnętrzny i zewnętrzny.
+    </p>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Materiały</h3>
+        <ul>
+          <li>PCV 3-30mm</li>
+          <li>Dibond 3-6mm</li>
+          <li>Stal nierdzewna 1-3mm</li>
+          <li>Drewno 10-30mm</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Wymiary</h3>
+        <ul>
+          <li>Wysokość: 5-200 cm</li>
+          <li>Dowolna czcionka</li>
+          <li>Indywidualny projekt</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Wykończenie</h3>
+        <ul>
+          <li>Lakierowane RAL</li>
+          <li>Oklejone folią</li>
+          <li>Szczotkowane</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Realizacja</h3>
+        <ul>
+          <li>Projekt: 1-2 dni</li>
+          <li>Produkcja: 3-7 dni</li>
+          <li>Gwarancja: 24 miesiące</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

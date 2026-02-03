@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Services from "../components/Services.astro";
+import Portfolio from "../components/Portfolio.astro";
+import Clients from "../components/Clients.astro";
+import ContactBlock from "../components/ContactBlock.astro";
+import "../styles/globals.css";
+---
+<Layout title="Art Decor Pszczyna – Reklama wizualna | Pylony, totemy, kasetony z dibondu" description="Art Decor Pszczyna – kompleksowa reklama wizualna. Pylony, totemy, kasetony z dibondu, szyldy szklane, oklejanie witryn i samochodów, litery przestrzenne, tablice LED. Profesjonalny park maszynowy. 696 293 362.">
+  <Header />
+  <main>
+    <Hero
+      title="Reklama wizualna z charakterem"
+      subtitle="Jesteśmy agencją reklamową z Pszczyny. Kompleksowa obsługa firm i klientów indywidualnych – pylony, totemy, kasetony z dibondu, szyldy, oklejanie witryn i samochodów. Nowoczesny wzornictwo i profesjonalny park maszynowy."
+      ctaText="Skontaktuj się"
+      ctaHref="/kontakt/"
+    />
+    <Services />
+    <Portfolio />
+    <Clients />
+    <ContactBlock />
+  </main>
+  <Footer />
+</Layout>

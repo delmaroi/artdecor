@@ -1,0 +1,127 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Systemy Wystawiennicze - Art Decor Pszczyna"
+  description="Systemy wystawiennicze, roll-upy, ścianki reklamowe, banery. Idealne na targi i wydarzenia."
+  heroTitle="Systemy Wystawiennicze"
+  heroSubtitle="Profesjonalne systemy wystawiennicze na targi, konferencje i wydarzenia firmowe."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Kompleksowe rozwiązania targowe</h3>
+    <p>
+      Oferujemy szeroki wybór systemów wystawienniczych, które pomogą Ci wyróżnić się na targach, konferencjach i eventach firmowych.
+    </p>
+
+    <h3>Nasza oferta</h3>
+    <ul>
+      <li><strong>Roll-upy</strong> - przenośne, łatwe w montażu, różne rozmiary</li>
+      <li><strong>Ścianki reklamowe (Pop-up)</strong> - duża powierzchnia ekspozycyjna</li>
+      <li><strong>Banery</strong> - tekstylne i winylowe, z systemem montażowym</li>
+      <li><strong>Flagi reklamowe (Beach flags)</strong> - widoczne z daleka</li>
+      <li><strong>Stoiska modułowe</strong> - konfigurowalne systemy aluminiowe</li>
+      <li><strong>Ladyprzenośne</strong> - z nadrukiem, składane</li>
+    </ul>
+
+    <h3>Druk i wykończenie</h3>
+    <p>
+      Wszystkie grafiki drukujemy w technologii wielkoformatowej na profesjonalnych drukarkach solwentowych lub UV. Gwarantujemy żywe kolory i wysoką trwałość wydruków.
+    </p>
+
+    <h3>Zalety</h3>
+    <ul>
+      <li>Szybki montaż i demontaż</li>
+      <li>Łatwy transport</li>
+      <li>Wielokrotne użycie</li>
+      <li>Profesjonalny wygląd</li>
+      <li>Możliwość wymiany grafiki</li>
+    </ul>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Roll-upy</h3>
+        <ul>
+          <li>85 x 200 cm (standard)</li>
+          <li>100 x 200 cm (premium)</li>
+          <li>150 x 200 cm (XXL)</li>
+          <li>Dwustronne</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Ścianki Pop-up</h3>
+        <ul>
+          <li>Proste i zakrzywione</li>
+          <li>2x3, 3x3, 3x4 panele</li>
+          <li>Z oświetleniem LED</li>
+          <li>Walizka transportowa</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Materiały</h3>
+        <ul>
+          <li>Baner tekstylny</li>
+          <li>Baner winylowy</li>
+          <li>Blockout</li>
+          <li>Mesh (ażurowy)</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Realizacja</h3>
+        <ul>
+          <li>Projekt: 1 dzień</li>
+          <li>Druk: 1-2 dni</li>
+          <li>Montaż: 15 minut</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

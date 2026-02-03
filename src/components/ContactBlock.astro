@@ -1,0 +1,220 @@
+---
+const phone = "696 293 362";
+const email = "biuro@artdecor.net.pl";
+const address = "Męczenników Oświęcimskich 16";
+const city = "43-200 Pszczyna";
+const hours = [
+  { days: "Poniedziałek–piątek", time: "8:00 – 17:00" },
+  { days: "Sobota", time: "nieczynne" },
+  { days: "Niedziela", time: "nieczynne" },
+];
+---
+<section class="section contact-block" id="kontakt">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Skontaktuj <span class="gradient-text">się</span></h2>
+      <p class="section-lead">Jesteśmy do Twojej dyspozycji. Skontaktuj się z nami telefonicznie, mailowo lub odwiedź nas osobiście.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card glass-card">
+        <div class="contact-info">
+          <h3 class="contact-heading">Dane kontaktowe</h3>
+          <address class="contact-address">
+            <div class="contact-item">
+              <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <strong>Adres</strong>
+                <p>{address}<br />{city}</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <strong>Telefon</strong>
+                <p><a href={`tel:+48${phone.replace(/\s/g, "")}`}>{phone}</a></p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <svg class="contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C19.5304 19 20.0391 18.7893 20.4142 18.4142C20.7893 18.0391 21 17.5304 21 17V7C21 6.46957 20.7893 5.96086 20.4142 5.58579C20.0391 5.21071 19.5304 5 19 5H5C4.46957 5 3.96086 5.21071 3.58579 5.58579C3.21071 5.96086 3 6.46957 3 7V17C3 17.5304 3.21071 18.0391 3.58579 18.4142C3.96086 18.7893 4.46957 19 5 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <strong>E-mail</strong>
+                <p><a href={`mailto:${email}`}>{email}</a></p>
+              </div>
+            </div>
+          </address>
+        </div>
+      </div>
+      <div class="contact-card glass-card">
+        <div class="contact-hours">
+          <h3 class="contact-heading">Godziny pracy</h3>
+          <ul class="hours-list">
+            {hours.map((h) => (
+              <li>
+                <span class="hours-days">{h.days}</span>
+                <span class="hours-time">{h.time}</span>
+              </li>
+            ))}
+          </ul>
+          <a href="https://www.facebook.com/artdecorreklama/" target="_blank" rel="noopener noreferrer" class="contact-social">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12C24 5.373 18.627 0 12 0S0 5.373 0 12c0 5.989 4.388 10.954 10.125 11.854v-8.385H7.078V12h3.047V9.356c0-3.007 1.792-4.668 4.533-4.668 1.312 0 2.686.234 2.686.234v2.953h-1.513c-1.491 0-1.956.925-1.956 1.875V12h3.328l-.532 3.469h-2.796v8.385C19.612 22.954 24 17.989 24 12z"/>
+            </svg>
+            Odwiedź nas na Facebooku
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .section-lead {
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .contact-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .contact-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .contact-heading {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: var(--color-text);
+  }
+
+  .contact-address {
+    font-style: normal;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .contact-icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    margin-top: 0.25rem;
+  }
+
+  .contact-item strong {
+    display: block;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .contact-item p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .contact-item a {
+    color: var(--color-accent);
+    transition: color var(--transition-base);
+  }
+
+  .contact-item a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .hours-list {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+  }
+
+  .hours-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .hours-list li:last-child {
+    border-bottom: none;
+  }
+
+  .hours-days {
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  .hours-time {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .contact-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.5rem;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: var(--radius-lg);
+    color: var(--color-accent);
+    font-weight: 600;
+    transition: all var(--transition-base);
+  }
+
+  .contact-social:hover {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+  }
+</style>

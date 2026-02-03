@@ -1,0 +1,129 @@
+---
+import ServiceTemplate from "../../components/ServiceTemplate.astro";
+---
+<ServiceTemplate
+  title="Wycinanie Znaków - Art Decor Pszczyna"
+  description="Wycinanie znaków i liter z folii ploterowej. Naklejki, napisy, grafika na samochody i witryny."
+  heroTitle="Wycinanie Znaków"
+  heroSubtitle="Precyzyjne wycinanie liter, logo i grafiki z folii ploterowej."
+  content={true}
+  specifications={true}
+>
+  <div slot="content">
+    <h3>Cięcie ploterowe</h3>
+    <p>
+      Wycinanie znaków to podstawowa technika w reklamie wizualnej. Pozwala na tworzenie napisów, logo i grafiki z folii samoprzylepnej, które można nakleić na różne powierzchnie.
+    </p>
+
+    <h3>Zastosowania</h3>
+    <ul>
+      <li><strong>Napisy na samochody</strong> - logo, dane kontaktowe, grafika</li>
+      <li><strong>Oznakowanie witryn</strong> - godziny otwarcia, napisy promocyjne</li>
+      <li><strong>Naklejki</strong> - logo firmowe, naklejki promocyjne</li>
+      <li><strong>Oznakowanie wnętrz</strong> - napisy na ścianach, drzwiach</li>
+      <li><strong>Szablony do malowania</strong> - precyzyjne wzory</li>
+    </ul>
+
+    <h3>Folie</h3>
+    <p>Używamy folii renomowanych producentów:</p>
+    <ul>
+      <li><strong>Oracal</strong> - seria 551 (5 lat), 751 (8 lat)</li>
+      <li><strong>3M</strong> - seria Scotchcal</li>
+      <li><strong>Avery Dennison</strong> - MPI series</li>
+    </ul>
+
+    <h3>Kolory i efekty</h3>
+    <p>Dostępne w szerokiej gamie kolorów i wykończeń:</p>
+    <ul>
+      <li>Kolory matowe i błyszczące</li>
+      <li>Metaliczne (złoty, srebrny, miedziany)</li>
+      <li>Fluorescencyjne</li>
+      <li>Refleksyjne (odblaskowe)</li>
+      <li>Transparentne</li>
+    </ul>
+  </div>
+
+  <div slot="specifications">
+    <div class="specs-grid">
+      <div class="spec-card glass-card">
+        <h3>Folie</h3>
+        <ul>
+          <li>Oracal 551 (5 lat)</li>
+          <li>Oracal 751 (8 lat)</li>
+          <li>3M Scotchcal</li>
+          <li>Avery Dennison MPI</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Wymiary</h3>
+        <ul>
+          <li>Szerokość: do 125 cm</li>
+          <li>Długość: bez ograniczeń</li>
+          <li>Min. wielkość: 1 cm</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Wykończenia</h3>
+        <ul>
+          <li>Mat / błysk</li>
+          <li>Metaliczne</li>
+          <li>Fluorescencyjne</li>
+          <li>Refleksyjne</li>
+        </ul>
+      </div>
+
+      <div class="spec-card glass-card">
+        <h3>Realizacja</h3>
+        <ul>
+          <li>Projekt: 1 dzień</li>
+          <li>Cięcie: 1 dzień</li>
+          <li>Aplikacja: opcjonalna</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ServiceTemplate>
+
+<style>
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card {
+    padding: 2rem;
+    transition: all var(--transition-base);
+  }
+
+  .spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .spec-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .spec-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spec-card li {
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .spec-card li:last-child {
+    border-bottom: none;
+  }
+</style>

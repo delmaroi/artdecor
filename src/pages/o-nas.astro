@@ -1,0 +1,82 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/globals.css";
+---
+<Layout title="O nas – Art Decor Pszczyna | Reklama wizualna" description="O firmie Art Decor Pszczyna – kompleksowa reklama wizualna, różnorodne techniki produkcji, profesjonalny park maszynowy: ploter CNC, termoformierka, piaskarka.">
+  <Header />
+  <main>
+    <section class="section">
+      <div class="container page-content">
+        <h1 class="page-title">O nas</h1>
+        <p class="lead">
+          Jesteśmy agencją reklamową zajmującą się <strong>kompleksową obsługą firm i klientów indywidualnych</strong> w zakresie szeroko pojętej reklamy wizualnej.
+        </p>
+        <h2>Różnorodne techniki produkcji</h2>
+        <p>
+          Projektowane przez nas reklamy cechują się nowoczesnym wzornictwem i możliwością zastosowania różnorodnych technik produkcji – od pylony i totemy, przez kasetony z dibondu, litery blokowe i przestrzenne, po szyldy szklane, oklejanie witryn i samochodów, systemy wystawiennicze, tablice LED i piaskowanie artystyczne.
+        </p>
+        <h2>Profesjonalny park maszynowy</h2>
+        <p>
+          Dysponujemy <strong>ploterem frezującym CNC</strong>, ploterem termicznym, ploterem tnącym do folii samoprzylepnych, <strong>termoformierką</strong>, ploterem drukującym i <strong>piaskarką</strong>. Dzięki temu realizujemy zlecenia na najwyższym poziomie – od projektu po montaż.
+        </p>
+        <p>
+          <a href="/kontakt/" class="cta-link">Skontaktuj się z nami →</a>
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: var(--color-text);
+  }
+
+  .page-content {
+    max-width: 65ch;
+  }
+
+  .lead {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+
+  .page-content h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 2rem 0 0.75rem;
+    color: var(--color-text);
+  }
+
+  .page-content p {
+    margin: 0 0 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .cta-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-weight: 600;
+    border-radius: var(--radius);
+    transition: background 0.2s;
+  }
+
+  .cta-link:hover {
+    background: var(--color-accent-hover);
+    color: var(--color-bg);
+  }
+</style>

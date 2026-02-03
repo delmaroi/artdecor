@@ -1,0 +1,52 @@
+---
+const clientCount = 4;
+---
+<section class="section clients" id="klienci">
+  <div class="container">
+    <h2 class="section-title">Nasi klienci</h2>
+    <div class="clients-strip">
+      {Array.from({ length: clientCount }).map((_, i) => (
+        <div class="client-slot">
+          <span class="client-placeholder">Logo {i + 1}</span>
+        </div>
+      ))}
+    </div>
+    <p class="clients-note">Dodaj loga klientów w <code>public/images/clients/</code> i podłącz w tym komponencie.</p>
+  </div>
+</section>
+
+<style>
+  .clients-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem 0;
+  }
+
+  .client-slot {
+    width: 140px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .clients-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .clients-note code {
+    background: var(--color-surface);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+  }
+</style>
