@@ -13,12 +13,30 @@ const categories = [
 ];
 
 const portfolioItems = [
-  { id: 1, title: "Litery LED na fasadzie", category: "Litery blokowe", image: "/images/portfolio/sample-1.png" },
-  { id: 2, title: "Pylon reklamowy", category: "Kasetony z dibondu", image: "/images/portfolio/sample-2.png" },
-  { id: 3, title: "Oklejanie samochodu", category: "Oklejanie samochodów", image: "/images/portfolio/sample-3.png" },
-  { id: 4, title: "Realizacja 4", category: "Szyldy szklane", image: "/images/portfolio/sample-1.png" },
-  { id: 5, title: "Realizacja 5", category: "Litery przestrzenne", image: "/images/portfolio/sample-2.png" },
-  { id: 6, title: "Realizacja 6", category: "Oklejanie witryn", image: "/images/portfolio/sample-3.png" },
+  // Pylony
+  { id: 1, title: "Pylon reklamowy - Kancelarie", category: "Kasetony z dibondu", image: "/images/portfolio/pylony-totemy/pylon-1.jpg" },
+  { id: 2, title: "Totem reklamowy LED", category: "Kasetony z dibondu", image: "/images/portfolio/pylony-totemy/pylon-2.jpg" },
+  { id: 3, title: "Nowoczesny pylon firmowy", category: "Kasetony z dibondu", image: "/images/portfolio/pylony-totemy/pylon-3.jpg" },
+
+  // Kasetony
+  { id: 4, title: "Kaseton z dibondu frezowany", category: "Kasetony z dibondu", image: "/images/portfolio/kasetony-z-dibondu/kaseton-1.jpg" },
+  { id: 5, title: "Szyld świetlny LED", category: "Kasetony z dibondu", image: "/images/portfolio/kasetony-z-dibondu/kaseton-2.jpg" },
+  { id: 6, title: "Kaseton reklamowy - Pracownia Fryzur", category: "Kasetony z dibondu", image: "/images/portfolio/kasetony-z-dibondu/kaseton-3.jpg" },
+
+  // Litery Blokowe
+  { id: 7, title: "Litery blokowe podświetlane", category: "Litery blokowe", image: "/images/portfolio/litery-blokowe/litera-1.jpg" },
+  { id: 8, title: "Napis LED przestrzenny", category: "Litery blokowe", image: "/images/portfolio/litery-blokowe/litera-2.jpg" },
+  { id: 9, title: "Logo firmowe na elewacji", category: "Litery blokowe", image: "/images/portfolio/litery-blokowe/litera-3.jpg" },
+
+  // Witryny
+  { id: 10, title: "Oklejanie witryny sklepowej", category: "Oklejanie witryn", image: "/images/portfolio/oklejanie-witryn/witryna-1.jpg" },
+  { id: 11, title: "Grafika na szkle - biuro", category: "Oklejanie witryn", image: "/images/portfolio/oklejanie-witryn/witryna-2.jpg" },
+  { id: 12, title: "Folia szroniona na witrynie", category: "Oklejanie witryn", image: "/images/portfolio/oklejanie-witryn/witryna-3.jpg" },
+
+  // Samochody
+  { id: 13, title: "Reklama na samochodzie dostawczym", category: "Oklejanie samochodów", image: "/images/portfolio/oklejanie-samochodow/auto-1.jpg" },
+  { id: 14, title: "Oklejanie busa firmowego", category: "Oklejanie samochodów", image: "/images/portfolio/oklejanie-samochodow/auto-2.jpg" },
+  { id: 15, title: "Grafika reklamowa na pojazd", category: "Oklejanie samochodów", image: "/images/portfolio/oklejanie-samochodow/auto-3.jpg" },
 ];
 ---
 <section class="section portfolio" id="portfolio">
@@ -92,9 +110,7 @@ const portfolioItems = [
 
   .filter-btn {
     padding: 0.625rem 1.25rem;
-    background: var(--glass-bg);
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
+    background: white;
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-xl);
     color: var(--color-text-muted);
@@ -103,13 +119,21 @@ const portfolioItems = [
     font-weight: 500;
     cursor: pointer;
     transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
   }
 
-  .filter-btn:hover,
-  .filter-btn[aria-pressed="true"] {
+  .filter-btn:hover {
     border-color: var(--color-accent);
     color: var(--color-accent);
-    background: rgba(245, 158, 11, 0.1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .filter-btn[aria-pressed="true"] {
+    background: var(--gradient-primary);
+    border-color: var(--color-accent);
+    color: white;
+    box-shadow: 0 4px 15px rgba(254, 107, 0, 0.2);
   }
 
   .portfolio-grid {
@@ -133,11 +157,13 @@ const portfolioItems = [
     overflow: hidden;
     background: var(--color-surface);
     cursor: pointer;
-    transition: transform var(--transition-base);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
   }
 
   .portfolio-card:hover {
     transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 53, 102, 0.1);
   }
 
   .portfolio-card img {
@@ -148,7 +174,7 @@ const portfolioItems = [
   }
 
   .portfolio-card:hover img {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 
   .portfolio-overlay {
@@ -156,8 +182,8 @@ const portfolioItems = [
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(10, 10, 15, 0.95) 0%,
-      rgba(10, 10, 15, 0.7) 50%,
+      rgba(0, 53, 102, 0.9) 0%,
+      rgba(0, 53, 102, 0.4) 50%,
       transparent 100%
     );
     opacity: 0;
@@ -185,12 +211,13 @@ const portfolioItems = [
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0 0 0.25rem;
-    color: var(--color-text);
+    color: white;
   }
 
   .portfolio-category {
     font-size: 0.9rem;
     color: var(--color-accent);
+    font-weight: 600;
     margin: 0;
   }
 
@@ -198,7 +225,7 @@ const portfolioItems = [
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-    color: var(--color-text);
+    color: white;
     opacity: 0;
     transform: scale(0.8);
     transition: all var(--transition-base);

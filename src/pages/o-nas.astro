@@ -4,26 +4,113 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/globals.css";
 ---
-<Layout title="O nas – Art Decor Pszczyna | Reklama wizualna" description="O firmie Art Decor Pszczyna – kompleksowa reklama wizualna, różnorodne techniki produkcji, profesjonalny park maszynowy: ploter CNC, termoformierka, piaskarka.">
+<Layout title="O nas – Art Decor Pszczyna | Tradycja od 1993 roku" description="Poznaj historię Art Decor Pszczyna. Od 1993 roku tworzymy nowoczesną reklamę wizualną. Własny park maszynowy: CNC, termoformowanie, piaskowanie 3D.">
   <Header />
   <main>
-    <section class="section">
-      <div class="container page-content">
-        <h1 class="page-title">O nas</h1>
+    <!-- Simple Hero -->
+    <section class="about-hero">
+      <div class="about-hero-bg" aria-hidden="true"></div>
+      <div class="container relative z-10">
+        <div class="breadcrumb">
+          <a href="/">Strona główna</a>
+          <span>/</span>
+          <span>O nas</span>
+        </div>
+        <h1 class="page-title">Pasja i <span class="gradient-text">doświadczenie</span></h1>
         <p class="lead">
-          Jesteśmy agencją reklamową zajmującą się <strong>kompleksową obsługą firm i klientów indywidualnych</strong> w zakresie szeroko pojętej reklamy wizualnej.
+          Tradycja budowana od <strong>1993 roku</strong> pozwala nam na efektywną pomoc w promowaniu Twojej marki.
         </p>
-        <h2>Różnorodne techniki produkcji</h2>
-        <p>
-          Projektowane przez nas reklamy cechują się nowoczesnym wzornictwem i możliwością zastosowania różnorodnych technik produkcji – od pylony i totemy, przez kasetony z dibondu, litery blokowe i przestrzenne, po szyldy szklane, oklejanie witryn i samochodów, systemy wystawiennicze, tablice LED i piaskowanie artystyczne.
-        </p>
-        <h2>Profesjonalny park maszynowy</h2>
-        <p>
-          Dysponujemy <strong>ploterem frezującym CNC</strong>, ploterem termicznym, ploterem tnącym do folii samoprzylepnych, <strong>termoformierką</strong>, ploterem drukującym i <strong>piaskarką</strong>. Dzięki temu realizujemy zlecenia na najwyższym poziomie – od projektu po montaż.
-        </p>
-        <p>
-          <a href="/kontakt/" class="cta-link">Skontaktuj się z nami →</a>
-        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-main-content">
+            <div class="content-card glass-card">
+              <h2>Kompleksowa reklama wizualna</h2>
+              <p>
+                Jesteśmy agencją reklamową zajmującą się kompleksową obsługą firm i klientów indywidualnych w zakresie szeroko pojętej reklamy wizualnej. Połączenie świeżości wraz z nowatorskimi rozwiązaniami pozwala nam tworzyć produkty, które przyciągają uwagę i budują profesjonalny wizerunek.
+              </p>
+              <p>
+                Projektowane przez nas reklamy cechują się nowoczesnym wzornictwem i możliwością zastosowania różnorodnych technik produkcji. Całość usług realizujemy kompleksowo, opierając się wyłącznie o prace naszego zespołu oraz własne zasoby sprzętowe – <strong>od projektu po montaż</strong>.
+              </p>
+
+              <div class="highlights-grid">
+                <div class="highlight-item">
+                  <div class="highlight-icon">30+</div>
+                  <p>Lat doświadczenia</p>
+                </div>
+                <div class="highlight-item">
+                  <div class="highlight-icon">100%</div>
+                  <p>Własna produkcja</p>
+                </div>
+                <div class="highlight-item">
+                  <div class="highlight-icon">∞</div>
+                  <p>Pasja do designu</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="about-sidebar">
+            <div class="machinery-card glass-card">
+              <h3>Park maszynowy</h3>
+              <ul class="machinery-list">
+                <li>
+                  <span class="icon">⚙️</span>
+                  <div>
+                    <strong>Ploter frezujący CNC</strong>
+                    <p>Precyzyjna obróbka płyt dibond, plexi i PCV.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="icon">🌡️</span>
+                  <div>
+                    <strong>Termoformierka</strong>
+                    <p>Wytwarzanie wypukłych elementów z tworzyw sztucznych.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="icon">✨</span>
+                  <div>
+                    <strong>Piaskarka 3D</strong>
+                    <p>Unikalna technologia artystycznego piaskowania szkła i kamienia.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="icon">🖨️</span>
+                  <div>
+                    <strong>Ploter drukujący</strong>
+                    <p>Wydruki wielkoformatowe UV i solwentowe wysokiej jakości.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="icon">✂️</span>
+                  <div>
+                    <strong>Ploter tnący</strong>
+                    <p>Precyzyjne wycinanie liter i znaków z folii.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="unique-service glass-card">
+              <h3>Technologia 3D</h3>
+              <p>
+                Jako jedna z nielicznych firm wdrożyliśmy technikę <strong>artystycznego piaskowania 3D</strong>. Wykorzystujemy ją do produkcji unikalnych akcesoriów ze szkła, luster, ceramiki i kamienia (marmur, granit).
+              </p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-cta">
+      <div class="container text-center">
+        <h2 class="section-title">Masz pomysł na <span class="gradient-text">reklamę?</span></h2>
+        <p class="section-lead">Zrealizujemy go dla Ciebie – od koncepcji po gotowy produkt na Twoim budynku.</p>
+        <a href="/kontakt/" class="cta-button primary">Skontaktuj się z nami</a>
       </div>
     </section>
   </main>
@@ -31,52 +118,210 @@ import "../styles/globals.css";
 </Layout>
 
 <style>
+  .about-hero {
+    position: relative;
+    padding-block: 8rem 4rem;
+    overflow: hidden;
+  }
+
+  .about-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(254, 107, 0, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-accent);
+  }
+
   .page-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 1.5rem;
+    color: var(--color-text);
+  }
+
+  .lead {
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .content-card {
+    padding: 3rem;
+    height: 100%;
+  }
+
+  .content-card h2 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
     font-weight: 700;
     margin: 0 0 1.5rem;
     color: var(--color-text);
   }
 
-  .page-content {
-    max-width: 65ch;
-  }
-
-  .lead {
-    font-size: 1.2rem;
+  .content-card p {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
     color: var(--color-text-muted);
-    margin: 0 0 2rem;
-    line-height: 1.6;
   }
 
-  .page-content h2 {
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .highlight-item {
+    text-align: center;
+  }
+
+  .highlight-icon {
     font-family: var(--font-display);
-    font-size: 1.35rem;
-    font-weight: 600;
-    margin: 2rem 0 0.75rem;
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 12px rgba(254, 107, 0, 0.15);
+  }
+
+  .highlight-item p {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .about-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .machinery-card, .unique-service {
+    padding: 2.5rem;
+  }
+
+  .about-sidebar h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
     color: var(--color-text);
   }
 
-  .page-content p {
-    margin: 0 0 1rem;
+  .machinery-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .machinery-list li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .machinery-list .icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    padding-top: 0.125rem;
+  }
+
+  .machinery-list strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .machinery-list p {
+    font-size: 0.9rem;
     color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .unique-service p {
+    font-size: 1rem;
     line-height: 1.7;
+    color: var(--color-text-muted);
+    margin: 0;
   }
 
-  .cta-link {
-    display: inline-block;
-    margin-top: 1.5rem;
-    padding: 0.75rem 1.25rem;
-    background: var(--color-accent);
-    color: var(--color-bg);
-    font-weight: 600;
-    border-radius: var(--radius);
-    transition: background 0.2s;
+  .about-cta {
+    background: #f8faff;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
   }
 
-  .cta-link:hover {
-    background: var(--color-accent-hover);
-    color: var(--color-bg);
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 1.125rem 2.5rem;
+    border-radius: var(--radius-xl);
+    font-weight: 700;
+    transition: all var(--transition-base);
+    margin-top: 2rem;
+    font-size: 1.05rem;
+  }
+
+  .cta-button.primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 8px 30px rgba(254, 107, 0, 0.25);
+  }
+
+  .cta-button.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(254, 107, 0, 0.35);
+    color: white;
+  }
+
+  @media (min-width: 1024px) {
+    .about-grid {
+      grid-template-columns: 1fr 380px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .highlights-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
   }
 </style>

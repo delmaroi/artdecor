@@ -9,6 +9,11 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
+  images={[
+    "/images/portfolio/pylony-totemy/pylon-1.jpg",
+    "/images/portfolio/pylony-totemy/pylon-2.jpg",
+    "/images/portfolio/pylony-totemy/pylon-3.jpg"
+  ]}
 >
   <div slot="content">
     <h3>Profesjonalne pylony reklamowe</h3>
@@ -178,7 +183,8 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
 
   .spec-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+    box-shadow: 0 12px 40px rgba(254, 107, 0, 0.1);
+    border-color: var(--color-accent);
   }
 
   .spec-icon {
@@ -187,7 +193,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%);
+    background: rgba(254, 107, 0, 0.08);
     color: var(--color-accent);
     border-radius: var(--radius-xl);
     margin-bottom: 1.5rem;
@@ -246,11 +252,11 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
     align-items: center;
     justify-content: center;
     background: var(--gradient-primary);
-    color: var(--color-bg);
+    color: white;
     font-size: 1.5rem;
     font-weight: 800;
     border-radius: 50%;
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 4px 20px rgba(254, 107, 0, 0.2);
   }
 
   .process-content h3 {
@@ -269,7 +275,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   .process-time {
     display: inline-block;
     padding: 0.25rem 0.75rem;
-    background: rgba(245, 158, 11, 0.1);
+    background: rgba(254, 107, 0, 0.08);
     color: var(--color-accent);
     font-size: 0.9rem;
     font-weight: 600;

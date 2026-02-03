@@ -2,9 +2,22 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
+import { Carousel } from "astro-carousel";
 import "../styles/globals.css";
 
-const { title, description, heroTitle, heroSubtitle, content, specifications, process, ctaText = "Zapytaj o wycenę", ctaHref = "/kontakt/" } = Astro.props;
+const { title, description, heroTitle, heroSubtitle, content, specifications, process, images = [], ctaText = "Zapytaj o wycenę", ctaHref = "/kontakt/" } = Astro.props;
+
+// Map image strings to objects required by astro-carousel
+const carouselImages = images.map(img => {
+  const src = typeof img === 'string' ? img : img.src;
+  return {
+    src,
+    alt: heroTitle,
+    width: 1200,
+    height: 800,
+    format: "webp"
+  };
+});
 ---
 <Layout title={title} description={description}>
   <Header />
@@ -70,6 +83,40 @@ const { title, description, heroTitle, heroSubtitle, content, specifications, pr
       </section>
     )}
 
+    <!-- Gallery Section -->
+    <section class="section service-gallery">
+      <div class="container">
+        <h2 class="section-title">Nasze <span class="gradient-text">realizacje</span></h2>
+        {images && images.length > 0 ? (
+          <div id="carouselTargetList">
+            <div class="gallery-grid">
+              {images.map((img, index) => (
+                <a
+                  href={`?image=${index}`}
+                  class="gallery-item glass-card"
+                  data-carousel-index={index}
+                >
+                  <img src={typeof img === 'string' ? img : img.src} alt={`${heroTitle} - Realizacja ${index + 1}`} loading="lazy" />
+                  <div class="gallery-overlay">
+                    <div class="view-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <div class="carousel-container">
+              <Carousel images={carouselImages} color="var(--color-accent)" />
+            </div>
+          </div>
+        ) : (
+          <slot name="gallery" />
+        )}
+      </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="section service-cta-section">
       <div class="container">
@@ -118,7 +165,7 @@ const { title, description, heroTitle, heroSubtitle, content, specifications, pr
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(circle at 30% 50%, rgba(245, 158, 11, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 30% 50%, rgba(254, 107, 0, 0.08) 0%, transparent 50%),
       linear-gradient(180deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
   }
 
@@ -173,18 +220,18 @@ const { title, description, heroTitle, heroSubtitle, content, specifications, pr
     gap: 0.75rem;
     padding: 1rem 2rem;
     background: var(--gradient-primary);
-    color: var(--color-bg);
+    color: white;
     font-weight: 700;
     font-size: 1.05rem;
     border-radius: var(--radius-xl);
     transition: all var(--transition-base);
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 4px 20px rgba(254, 107, 0, 0.2);
   }
 
   .service-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
-    color: var(--color-bg);
+    box-shadow: 0 8px 30px rgba(254, 107, 0, 0.4);
+    color: white;
   }
 
   .service-cta svg {
@@ -233,7 +280,7 @@ const { title, description, heroTitle, heroSubtitle, content, specifications, pr
 
   /* Specifications */
   .service-specs {
-    background: rgba(255, 255, 255, 0.02);
+    background: #fdfdfd;
   }
 
   .section-title {
@@ -245,9 +292,91 @@ const { title, description, heroTitle, heroSubtitle, content, specifications, pr
     text-align: center;
   }
 
-  /* Process */
-  .service-process {
-    padding-block: 5rem;
+  /* Gallery Styles */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    cursor: pointer;
+    display: block;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 20, 39, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    backdrop-filter: blur(4px);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+
+  .view-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: white;
+    color: var(--color-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.8);
+    transition: transform var(--transition-base);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .gallery-item:hover .view-icon {
+    transform: scale(1);
+  }
+
+  .carousel-container {
+    position: relative;
+    z-index: 1000;
+  }
+
+  /* Carousel Customization */
+  :global(.carousel) {
+    --astroCarouselColor: var(--color-accent) !important;
+  }
+
+  :global(.carousel__button) {
+    background: white !important;
+    border-radius: 50% !important;
+    box-shadow: var(--shadow-lg) !important;
+    color: var(--color-accent) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+  }
+
+  :global(.carousel__close) {
+    top: 2rem !important;
+    right: 2rem !important;
   }
 
   /* CTA Section */
@@ -296,14 +425,14 @@ const { title, description, heroTitle, heroSubtitle, content, specifications, pr
 
   .cta-button.primary {
     background: var(--gradient-primary);
-    color: var(--color-bg);
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+    color: white;
+    box-shadow: 0 4px 20px rgba(254, 107, 0, 0.2);
   }
 
   .cta-button.primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
-    color: var(--color-bg);
+    box-shadow: 0 8px 30px rgba(254, 107, 0, 0.4);
+    color: white;
   }
 
   .cta-button.secondary {
@@ -314,7 +443,7 @@ const { title, description, heroTitle, heroSubtitle, content, specifications, pr
 
   .cta-button.secondary:hover {
     border-color: var(--color-accent);
-    background: rgba(245, 158, 11, 0.1);
+    background: rgba(254, 107, 0, 0.05);
     transform: translateY(-2px);
   }
 

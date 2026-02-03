@@ -114,7 +114,8 @@ const hours = [
 
   .contact-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+    box-shadow: 0 12px 40px rgba(254, 107, 0, 0.1);
+    border-color: var(--color-accent);
   }
 
   .contact-heading {
@@ -165,7 +166,8 @@ const hours = [
   }
 
   .contact-item a:hover {
-    color: var(--color-accent-hover);
+    color: var(--color-accent);
+    text-decoration: underline;
   }
 
   .hours-list {
@@ -202,19 +204,19 @@ const hours = [
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.875rem 1.5rem;
-    background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.2);
-    border-radius: var(--radius-lg);
+    padding: 1rem 1.75rem;
+    background: rgba(254, 107, 0, 0.08);
+    border: 1px solid rgba(254, 107, 0, 0.15);
+    border-radius: var(--radius-xl);
     color: var(--color-accent);
-    font-weight: 600;
+    font-weight: 700;
     transition: all var(--transition-base);
   }
 
   .contact-social:hover {
-    background: rgba(245, 158, 11, 0.15);
+    background: rgba(254, 107, 0, 0.12);
     border-color: var(--color-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(254, 107, 0, 0.2);
   }
 </style>

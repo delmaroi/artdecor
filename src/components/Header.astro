@@ -45,7 +45,7 @@ const nav = [
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(10, 10, 15, 0.8);
+    background: rgba(255, 255, 255, 0.82);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--glass-border);
@@ -56,7 +56,7 @@ const nav = [
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(245, 158, 11, 0.05) 0%, transparent 100%);
+    background: linear-gradient(to bottom, rgba(254, 107, 0, 0.03) 0%, transparent 100%);
     opacity: 0;
     transition: opacity var(--transition-base);
     pointer-events: none;
@@ -100,7 +100,7 @@ const nav = [
   .logo-sub {
     font-size: 0.65rem;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: var(--color-text-dim);
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
@@ -150,7 +150,7 @@ const nav = [
   }
 
   .nav-link--active {
-    background: var(--glass-bg);
+    background: rgba(254, 107, 0, 0.05);
     color: var(--color-accent);
   }
 
@@ -167,13 +167,13 @@ const nav = [
     color: var(--color-accent);
     padding: 0.625rem 1.25rem;
     border-radius: var(--radius-lg);
-    background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.2);
+    background: rgba(254, 107, 0, 0.08);
+    border: 1px solid rgba(254, 107, 0, 0.15);
     transition: all var(--transition-base);
   }
 
   .header-cta:hover {
-    background: rgba(245, 158, 11, 0.15);
+    background: rgba(254, 107, 0, 0.12);
     border-color: var(--color-accent);
     transform: translateY(-1px);
   }
@@ -236,7 +236,7 @@ const nav = [
       top: 100%;
       left: 0;
       right: 0;
-      background: rgba(10, 10, 15, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--glass-border);

@@ -8,6 +8,13 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   heroSubtitle="Reklama mobilna i ochrona lakieru. Oklejanie całopowierzchniowe i częściowe."
   content={true}
   specifications={true}
+  content={true}
+  specifications={true}
+  images={[
+    "/images/portfolio/oklejanie-samochodow/auto-1.jpg",
+    "/images/portfolio/oklejanie-samochodow/auto-2.jpg",
+    "/images/portfolio/oklejanie-samochodow/auto-3.jpg"
+  ]}
 >
   <div slot="content">
     <h3>Reklama mobilna</h3>
@@ -87,12 +94,43 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       </div>
     </div>
   </div>
+
+  <div slot="process">
+    <div class="process-timeline">
+      <div class="process-step">
+        <div class="process-number">01</div>
+        <div class="process-content">
+          <h3>Projekt</h3>
+          <p>Wymiarowanie pojazdu, przygotowanie wizualizacji 2D/3D, dobór folii</p>
+          <span class="process-time">1-2 dni</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-number">02</div>
+        <div class="process-content">
+          <h3>Przygotowanie</h3>
+          <p>Druk na folii wylewanej, laminowanie UV, wycinanie, przygotowanie pojazdu</p>
+          <span class="process-time">2-3 dni</span>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-number">03</div>
+        <div class="process-content">
+          <h3>Oklejanie</h3>
+          <p>Aplikacja folii w kontrolowanych warunkach, wykańczanie wnęk i krawędzi</p>
+          <span class="process-time">2-4 dni</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </ServiceTemplate>
 
 <style>
   .specs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
   }
@@ -104,7 +142,8 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
 
   .spec-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+    box-shadow: 0 12px 40px rgba(254, 107, 0, 0.1);
+    border-color: var(--color-accent);
   }
 
   .spec-card h3 {
@@ -128,5 +167,81 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
 
   .spec-card li:last-child {
     border-bottom: none;
+  }
+
+  .process-timeline {
+    max-width: 800px;
+    margin: 3rem auto 0;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .process-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 2rem;
+    top: 5rem;
+    width: 2px;
+    height: calc(100% + 1rem);
+    background: linear-gradient(to bottom, var(--color-accent) 0%, transparent 100%);
+  }
+
+  .process-number {
+    flex-shrink: 0;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 800;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(254, 107, 0, 0.2);
+  }
+
+  .process-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  .process-content p {
+    margin: 0 0 0.75rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .process-time {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: rgba(254, 107, 0, 0.08);
+    color: var(--color-accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+  }
+
+  @media (max-width: 640px) {
+    .process-step {
+      gap: 1rem;
+    }
+
+    .process-number {
+      width: 3rem;
+      height: 3rem;
+      font-size: 1.25rem;
+    }
+
+    .process-step:not(:last-child)::after {
+      left: 1.5rem;
+    }
   }
 </style>

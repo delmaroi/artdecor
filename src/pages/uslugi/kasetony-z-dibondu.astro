@@ -9,6 +9,11 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
+  images={[
+    "/images/portfolio/kasetony-z-dibondu/kaseton-1.jpg",
+    "/images/portfolio/kasetony-z-dibondu/kaseton-2.jpg",
+    "/images/portfolio/kasetony-z-dibondu/kaseton-3.jpg"
+  ]}
 >
   <div slot="content">
     <h3>Czym jest Dibond?</h3>
@@ -145,36 +150,27 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       <div class="process-step">
         <div class="process-number">01</div>
         <div class="process-content">
-          <h3>Projekt</h3>
-          <p>Konsultacja, pomiary, projekt graficzny, dobór kolorów i materiałów</p>
-          <span class="process-time">2-3 dni</span>
+          <h3>Projekt i wycena</h3>
+          <p>Spotkanie, pomiary, projekt graficzny, kalkulacja kosztów</p>
+          <span class="process-time">2-5 dni</span>
         </div>
       </div>
 
       <div class="process-step">
         <div class="process-number">02</div>
         <div class="process-content">
-          <h3>Frezowanie CNC</h3>
-          <p>Cięcie płyt dibondu, frezowanie grafiki, przygotowanie elementów</p>
-          <span class="process-time">2-3 dni</span>
+          <h3>Produkcja</h3>
+          <p>Frezowanie CNC, zaginanie, montaż modułów LED, wykończenie</p>
+          <span class="process-time">5-10 dni</span>
         </div>
       </div>
 
       <div class="process-step">
         <div class="process-number">03</div>
         <div class="process-content">
-          <h3>Montaż LED</h3>
-          <p>Instalacja modułów LED, podklejenie plexi, testowanie podświetlenia</p>
-          <span class="process-time">2-3 dni</span>
-        </div>
-      </div>
-
-      <div class="process-step">
-        <div class="process-number">04</div>
-        <div class="process-content">
-          <h3>Instalacja</h3>
-          <p>Transport, montaż na obiekcie, podłączenie elektryki, odbiór</p>
-          <span class="process-time">1 dzień</span>
+          <h3>Montaż</h3>
+          <p>Transport, bezpieczny montaż na elewacji, podłączenie zasilania</p>
+          <span class="process-time">1-2 dni</span>
         </div>
       </div>
     </div>
@@ -196,7 +192,8 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
 
   .spec-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
+    box-shadow: 0 12px 40px rgba(254, 107, 0, 0.1);
+    border-color: var(--color-accent);
   }
 
   .spec-icon {
@@ -205,7 +202,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%);
+    background: rgba(254, 107, 0, 0.08);
     color: var(--color-accent);
     border-radius: var(--radius-xl);
     margin-bottom: 1.5rem;
@@ -264,11 +261,11 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
     align-items: center;
     justify-content: center;
     background: var(--gradient-primary);
-    color: var(--color-bg);
+    color: white;
     font-size: 1.5rem;
     font-weight: 800;
     border-radius: 50%;
-    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 4px 20px rgba(254, 107, 0, 0.2);
   }
 
   .process-content h3 {
@@ -287,7 +284,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   .process-time {
     display: inline-block;
     padding: 0.25rem 0.75rem;
-    background: rgba(245, 158, 11, 0.1);
+    background: rgba(254, 107, 0, 0.08);
     color: var(--color-accent);
     font-size: 0.9rem;
     font-weight: 600;
@@ -309,4 +306,5 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       left: 1.5rem;
     }
   }
+</style>
 </style>
