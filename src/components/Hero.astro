@@ -308,7 +308,8 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const connectDist = window.innerWidth < 768 ? 120 : 180;
+      const isMobile = window.innerWidth < 768;
+      const connectDist = isMobile ? 120 : 180;
 
       particles.forEach((p, i) => {
         p.update(mouse);
@@ -322,28 +323,29 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
 
           if (dist < connectDist) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - dist / connectDist)})`;
-            ctx.lineWidth = 0.5;
+            // Increased line opacity and added subtle orange tint
+            ctx.strokeStyle = `rgba(254, 107, 0, ${0.15 * (1 - dist / connectDist)})`;
+            ctx.lineWidth = 0.8;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
 
-            // Triangles
-            if (window.innerWidth >= 768) { // Only desktop for triangles to save mobile perf
-              for (let k = j + 1; k < particles.length; k++) {
-                const p3 = particles[k];
-                const dx2 = p2.x - p3.x;
-                const dy2 = p2.y - p3.y;
-                const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+            // Triangles - now with much higher opacity and brand color
+            for (let k = j + 1; k < particles.length; k++) {
+              const p3 = particles[k];
+              const dx2 = p2.x - p3.x;
+              const dy2 = p2.y - p3.y;
+              const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
 
-                if (dist2 < connectDist) {
-                  ctx.beginPath();
-                  ctx.fillStyle = `rgba(254, 107, 0, ${0.03 * (1 - (dist + dist2) / (connectDist * 2))})`;
-                  ctx.moveTo(p.x, p.y);
-                  ctx.lineTo(p2.x, p2.y);
-                  ctx.lineTo(p3.x, p3.y);
-                  ctx.fill();
-                }
+              if (dist2 < connectDist) {
+                ctx.beginPath();
+                // Increased triangle opacity significantly
+                const triangleOpacity = isMobile ? 0.05 : 0.15;
+                ctx.fillStyle = `rgba(254, 107, 0, ${triangleOpacity * (1 - (dist + dist2) / (connectDist * 2))})`;
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.lineTo(p3.x, p3.y);
+                ctx.fill();
               }
             }
           }
