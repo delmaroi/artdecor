@@ -5,8 +5,8 @@ const year = new Date().getFullYear();
   <div class="footer-glow" aria-hidden="true"></div>
   <div class="container footer-inner">
     <div class="footer-brand">
-      <span class="logo-text gradient-text">Art Decor</span>
-      <span class="logo-sub">Pszczyna · Reklama wizualna</span>
+      <img src="/images/logo2.jpeg" alt="Art Decor Logo" class="footer-logo-img" />
+      <span class="footer-logo-sub">Pszczyna · Reklama wizualna</span>
     </div>
     <div class="footer-links">
       <a href="/">Strona główna</a>
@@ -64,16 +64,18 @@ const year = new Date().getFullYear();
     gap: 0.25rem;
   }
 
-  .footer-brand .logo-text {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.5rem;
+  .footer-logo-img {
+    height: 60px;
+    width: auto;
+    display: block;
+    mix-blend-mode: multiply;
   }
 
-  .footer-brand .logo-sub {
+  .footer-logo-sub {
     font-size: 0.85rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-dim);
     letter-spacing: 0.05em;
+    margin-top: 0.25rem;
   }
 
   .footer-links {

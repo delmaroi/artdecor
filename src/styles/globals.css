@@ -138,13 +138,13 @@ a:hover {
 
 /* Section */
 .section {
-  padding-block: 5rem;
+  padding-block: 2rem;
   position: relative;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-block: 8rem;
+    padding-block: 2rem;
   }
 }
 
