@@ -10,26 +10,43 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
 ---
 <section class="hero">
   <div class="hero-bg" aria-hidden="true">
-    <div class="hero-gradient"></div>
-    <div class="hero-glow"></div>
+    <canvas id="hero-particles" class="particles-canvas"></canvas>
+    <div class="hero-grid grid-pattern"></div>
+    <div class="hero-noise noise-overlay"></div>
+    <div class="hero-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
   </div>
+
   <div class="container hero-inner">
-    <div class="hero-content fade-in">
-      <h1 class="hero-title">
+    <div class="hero-content">
+      <h1 class="hero-title fade-in stagger-1">
         {title.split(' ').map((word, i) =>
-          i === title.split(' ').length - 2 ?
+          i >= title.split(' ').length - 2 ?
             <span class="gradient-text">{word} </span> :
             <span>{word} </span>
         )}
       </h1>
-      {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+
+      {subtitle && (
+        <p class="hero-subtitle fade-in stagger-2">
+          {subtitle}
+        </p>
+      )}
+
       {ctaText && ctaHref && (
-        <a href={ctaHref} class="hero-cta">
-          {ctaText}
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.16669 10H15.8334M15.8334 10L10 4.16669M15.8334 10L10 15.8334" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
+        <div class="hero-actions fade-in stagger-3">
+          <a href={ctaHref} class="hero-cta">
+            <span class="cta-text">{ctaText}</span>
+            <span class="cta-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.16669 10H15.8334M15.8334 10L10 4.16669M15.8334 10L10 15.8334" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
       )}
     </div>
   </div>
@@ -38,11 +55,12 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
 <style>
   .hero {
     position: relative;
-    min-height: 85vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
-    padding-block: 6rem 4rem;
+    padding-block: 8rem 4rem;
     overflow: hidden;
+    background: #001427;
   }
 
   .hero-bg {
@@ -51,40 +69,73 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
     z-index: 0;
   }
 
-  .hero-gradient {
+  .particles-canvas {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(circle at 20% 50%, rgba(254, 107, 0, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(0, 53, 102, 0.05) 0%, transparent 50%),
-      linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
-    animation: gradientShift 15s ease infinite;
-  }
-
-  @keyframes gradientShift {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.9;
-    }
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: -30%;
-    left: 50%;
-    transform: translateX(-50%);
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(254, 107, 0, 0.05) 0%, transparent 70%);
-    filter: blur(80px);
-    animation: float 8s ease-in-out infinite;
+    z-index: 1;
+    opacity: 0.6;
+    mix-blend-mode: screen;
+  }
+
+  .hero-grid {
+    opacity: 0.1;
+    z-index: 2;
+  }
+
+  .hero-noise {
+    opacity: 0.12;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .hero-orbs {
+    position: absolute;
+    inset: 0;
+    filter: blur(100px);
+    opacity: 0.35;
+    z-index: 0;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    animation: orb-float 20s ease-in-out infinite;
+  }
+
+  .orb-1 {
+    top: -10%;
+    left: 10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(254, 107, 0, 0.25) 0%, transparent 70%);
+  }
+
+  .orb-2 {
+    bottom: -15%;
+    right: 5%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(0, 53, 102, 0.4) 0%, transparent 70%);
+    animation-delay: -5s;
+    animation-duration: 25s;
+  }
+
+  .orb-3 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(254, 107, 0, 0.15) 0%, transparent 70%);
+    animation-delay: -10s;
+    animation-duration: 30s;
   }
 
   .hero-inner {
     position: relative;
-    z-index: 1;
+    z-index: 10;
   }
 
   .hero-content {
@@ -93,63 +144,80 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
 
   .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-size: clamp(2.75rem, 8vw, 5.5rem);
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 1.05;
     margin: 0 0 1.5rem;
-    color: var(--color-text);
-    letter-spacing: -0.02em;
+    color: white;
+    letter-spacing: -0.03em;
+    opacity: 0; /* Handled by fade-in */
   }
 
   .hero-title .gradient-text {
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg, #fe6b00 0%, #ffbb44 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline-block;
+    filter: drop-shadow(0 0 15px rgba(254, 107, 0, 0.3));
   }
 
   .hero-subtitle {
-    font-size: clamp(1.1rem, 2vw, 1.25rem);
-    color: var(--color-text-muted);
-    max-width: 600px;
-    margin: 0 0 2.5rem;
-    line-height: 1.7;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 650px;
+    margin: 0 0 3rem;
+    line-height: 1.6;
+    opacity: 0; /* Handled by fade-in */
+  }
+
+  .hero-actions {
+    opacity: 0; /* Handled by fade-in */
   }
 
   .hero-cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1.125rem 2.25rem;
-    background: var(--gradient-primary);
+    padding: 0.25rem;
+    padding-left: 1.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     color: white;
     font-weight: 700;
     font-size: 1.05rem;
     border-radius: var(--radius-xl);
     transition: all var(--transition-base);
-    box-shadow: 0 8px 30px rgba(254, 107, 0, 0.25);
-    position: relative;
-    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
-  .hero-cta::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity var(--transition-base);
+  .cta-text {
+    margin-right: 1.25rem;
+  }
+
+  .cta-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    box-shadow: 0 8px 25px rgba(254, 107, 0, 0.35);
   }
 
   .hero-cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(254, 107, 0, 0.35);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(254, 107, 0, 0.6);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     color: white;
   }
 
-  .hero-cta:hover::before {
-    opacity: 1;
+  .hero-cta:hover .cta-icon {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(254, 107, 0, 0.6);
   }
 
   .hero-cta svg {
@@ -160,10 +228,157 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
     transform: translateX(4px);
   }
 
+  @media (max-width: 767px) {
+    .hero {
+      min-height: 80vh;
+      padding-top: 6rem;
+    }
+
+    .hero-cta {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
   @media (min-width: 768px) {
     .hero {
-      min-height: 90vh;
-      padding-block: 8rem 6rem;
+      min-height: 95vh;
     }
   }
 </style>
+
+<script>
+  class Particle {
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d');
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.size = Math.random() * 1.5 + 0.5;
+    }
+
+    update(mouse) {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x < 0 || this.x > this.canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > this.canvas.height) this.vy *= -1;
+
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const limit = window.innerWidth < 768 ? 100 : 180;
+        if (dist < limit) {
+          const force = (limit - dist) / limit;
+          this.x -= dx * force * 0.02;
+          this.y -= dy * force * 0.02;
+        }
+      }
+    }
+
+    draw() {
+      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      this.ctx.beginPath();
+      this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+  }
+
+  const canvas = document.getElementById('hero-particles');
+  if (canvas instanceof HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d');
+    const mouse = { x: null, y: null };
+    let particles = [];
+    let animationId;
+
+    const init = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      particles = [];
+      const density = window.innerWidth < 768 ? 8000 : 15000;
+      const count = Math.min(Math.floor((canvas.width * canvas.height) / density), 120);
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle(canvas));
+      }
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const connectDist = window.innerWidth < 768 ? 120 : 180;
+
+      particles.forEach((p, i) => {
+        p.update(mouse);
+        p.draw();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < connectDist) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - dist / connectDist)})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+
+            // Triangles
+            if (window.innerWidth >= 768) { // Only desktop for triangles to save mobile perf
+              for (let k = j + 1; k < particles.length; k++) {
+                const p3 = particles[k];
+                const dx2 = p2.x - p3.x;
+                const dy2 = p2.y - p3.y;
+                const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+
+                if (dist2 < connectDist) {
+                  ctx.beginPath();
+                  ctx.fillStyle = `rgba(254, 107, 0, ${0.03 * (1 - (dist + dist2) / (connectDist * 2))})`;
+                  ctx.moveTo(p.x, p.y);
+                  ctx.lineTo(p2.x, p2.y);
+                  ctx.lineTo(p3.x, p3.y);
+                  ctx.fill();
+                }
+              }
+            }
+          }
+        }
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    const handleMouse = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+
+    const handleTouch = (e) => {
+      if (e.touches.length > 0) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    };
+
+    window.addEventListener('resize', init);
+    window.addEventListener('mousemove', handleMouse);
+    window.addEventListener('touchstart', handleTouch);
+    window.addEventListener('touchmove', handleTouch);
+    window.addEventListener('touchend', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+    window.addEventListener('mouseout', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    init();
+    animate();
+  }
+</script>
