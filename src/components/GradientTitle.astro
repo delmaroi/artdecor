@@ -1,0 +1,21 @@
+---
+export interface Props {
+  title: string;
+  /** Number of last words to highlight with gradient. Default: 1 for ServiceTemplate, 2 for Hero */
+  gradientWords?: number;
+  tag?: 'h1' | 'h2' | 'h3';
+  class?: string;
+}
+
+const { title, gradientWords = 2, tag: Tag = 'h1', class: className } = Astro.props;
+
+const words = title.split(' ');
+const splitIndex = words.length - gradientWords;
+---
+<Tag class={className}>
+  {words.map((word, i) =>
+    i >= splitIndex ?
+      <span class="gradient-text">{word} </span> :
+      <span>{word} </span>
+  )}
+</Tag>

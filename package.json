@@ -10,8 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@iconify-json/lucide": "^1.2.89",
+    "@iconify-json/mdi": "^1.2.3",
     "astro": "^5.17.1",
-    "astro-carousel": "^3.0.3"
+    "astro-carousel": "^3.0.3",
+    "astro-icon": "^1.1.5"
   },
   "devDependencies": {
     "sass": "^1.97.3"

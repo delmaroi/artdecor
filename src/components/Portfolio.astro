@@ -1,4 +1,7 @@
 ---
+import { Icon } from "astro-icon/components";
+import type { PortfolioItem } from "../types/index";
+
 const categories = [
   "Wszystko",
   "Kasetony z dibondu",
@@ -12,7 +15,7 @@ const categories = [
   "Szyldy szklane",
 ];
 
-const portfolioItems = [
+const portfolioItems: PortfolioItem[] = [
   // Pylony
   { id: 1, title: "Pylon reklamowy - Kancelarie", category: "Kasetony z dibondu", image: "/images/portfolio/pylony-totemy/pylon-1.jpg" },
   { id: 2, title: "Totem reklamowy LED", category: "Kasetony z dibondu", image: "/images/portfolio/pylony-totemy/pylon-2.jpg" },
@@ -42,10 +45,12 @@ const portfolioItems = [
 <section class="section portfolio" id="portfolio">
   <div class="container">
     <div class="section-header">
-      <h2 class="section-title">Nasze <span class="gradient-text">prace</span></h2>
-      <p class="section-lead">Projektowane przez nas reklamy cechują się nowoczesnym wzornictwem i różnorodnymi technikami produkcji.</p>
+      <div class="section-badge fade-in stagger-1">PORTFOLIO</div>
+      <h2 class="section-title fade-in stagger-2">Nasze ostatnie <span class="accent-text">realizacje</span></h2>
+      <p class="section-lead fade-in stagger-3">Zobacz, jak pomagamy naszym klientom wyróżnić się na tle konkurencji.</p>
     </div>
-    <div class="portfolio-filters">
+
+    <div class="portfolio-filters fade-in stagger-4">
       {categories.map((cat, index) => (
         <button
           type="button"
@@ -57,18 +62,22 @@ const portfolioItems = [
         </button>
       ))}
     </div>
-    <ul class="portfolio-grid">
+
+    <ul class="portfolio-grid fade-in stagger-4">
       {portfolioItems.map((item, index) => (
-        <li class="portfolio-item" style={`animation-delay: ${index * 0.1}s`} data-category={item.category.toLowerCase().replace(/\s+/g, "-")}>
+        <li class="portfolio-item" data-category={item.category.toLowerCase().replace(/\s+/g, "-")}>
           <div class="portfolio-card">
-            <img src={item.image} alt={item.title} loading="lazy" />
-            <div class="portfolio-overlay">
-              <div class="portfolio-content">
-                <h3 class="portfolio-title">{item.title}</h3>
-                <p class="portfolio-category">{item.category}</p>
-                <svg class="portfolio-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+            <div class="portfolio-image-wrapper">
+              <img src={item.image} alt={item.title} loading="lazy" />
+              <div class="portfolio-overlay">
+                <div class="portfolio-content">
+                  <p class="portfolio-category">{item.category}</p>
+                  <h3 class="portfolio-title">{item.title}</h3>
+                  <div class="portfolio-view">
+                    <span>Zobacz projekt</span>
+                    <Icon name="lucide:arrow-up-right" size={20} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -81,59 +90,45 @@ const portfolioItems = [
 <style>
   .section-header {
     text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    margin: 0 0 1rem;
-    color: var(--color-text);
-  }
-
-  .section-lead {
-    color: var(--color-text-muted);
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 1.1rem;
-    line-height: 1.7;
+    margin-bottom: 4rem;
   }
 
   .portfolio-filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 3rem;
+    gap: 0.5rem;
+    margin-bottom: 4rem;
     justify-content: center;
+    padding: 0.5rem;
+    background: var(--structa-white);
+    border: 1px solid var(--structa-border);
+    border-radius: 100px;
+    width: fit-content;
+    margin-inline: auto;
   }
 
   .filter-btn {
-    padding: 0.625rem 1.25rem;
-    background: white;
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-xl);
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-    font-family: inherit;
-    font-weight: 500;
+    padding: 0.6rem 1.25rem;
+    background: transparent;
+    border: none;
+    border-radius: 100px;
+    color: var(--structa-gray-text);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     cursor: pointer;
     transition: all var(--transition-base);
-    box-shadow: var(--shadow-sm);
   }
 
   .filter-btn:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    color: var(--structa-black);
+    background: var(--structa-offwhite);
   }
 
   .filter-btn[aria-pressed="true"] {
-    background: var(--gradient-primary);
-    border-color: var(--color-accent);
-    color: white;
-    box-shadow: 0 4px 15px rgba(254, 107, 0, 0.2);
+    background: var(--structa-black);
+    color: var(--structa-white);
   }
 
   .portfolio-grid {
@@ -141,29 +136,39 @@ const portfolioItems = [
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   .portfolio-item {
-    opacity: 0;
-    animation: fadeIn 0.6s ease-out forwards;
+    transition: all var(--transition-base);
   }
 
   .portfolio-card {
     position: relative;
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    background: var(--color-surface);
-    cursor: pointer;
-    transition: all var(--transition-base);
-    box-shadow: var(--shadow-md);
+    background: var(--structa-charcoal);
+    aspect-ratio: 1 / 1;
   }
 
-  .portfolio-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 40px rgba(0, 53, 102, 0.1);
+  .portfolio-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 
   .portfolio-card img {
@@ -174,80 +179,70 @@ const portfolioItems = [
   }
 
   .portfolio-card:hover img {
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 
   .portfolio-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to top,
-      rgba(0, 53, 102, 0.9) 0%,
-      rgba(0, 53, 102, 0.4) 50%,
-      transparent 100%
-    );
-    opacity: 0;
-    transition: opacity var(--transition-base);
+    background: linear-gradient(to top, rgba(255, 92, 53, 0.9) 0%, transparent 100%);
     display: flex;
     align-items: flex-end;
-    padding: 1.5rem;
+    padding: 2.5rem;
+    opacity: 0;
+    transition: all var(--transition-base);
   }
 
   .portfolio-card:hover .portfolio-overlay {
     opacity: 1;
+    visibility: visible;
   }
 
   .portfolio-content {
-    width: 100%;
     transform: translateY(20px);
-    transition: transform var(--transition-base);
+    transition: all var(--transition-base);
+    width: 100%;
   }
 
   .portfolio-card:hover .portfolio-content {
     transform: translateY(0);
   }
 
-  .portfolio-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0 0 0.25rem;
-    color: white;
-  }
-
   .portfolio-category {
-    font-size: 0.9rem;
-    color: var(--color-accent);
-    font-weight: 600;
-    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--structa-accent);
+    margin-bottom: 0.5rem;
   }
 
-  .portfolio-icon {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    color: white;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: all var(--transition-base);
+  .portfolio-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--structa-white);
+    margin: 0 0 1.5rem;
+    line-height: 1.2;
   }
 
-  .portfolio-card:hover .portfolio-icon {
-    opacity: 1;
-    transform: scale(1);
+  .portfolio-view {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--structa-white);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  @media (min-width: 640px) {
-    .portfolio-grid {
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .portfolio-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  .portfolio-view span {
+    border-bottom: 2px solid var(--structa-accent);
+    padding-bottom: 2px;
   }
 </style>
+
 
 <script>
   const filterBtns = document.querySelectorAll('.filter-btn');

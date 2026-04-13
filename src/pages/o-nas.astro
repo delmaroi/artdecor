@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { Icon } from "astro-icon/components";
 import "../styles/globals.css";
 ---
 <Layout title="O nas – Art Decor Pszczyna | Tradycja od 1993 roku" description="Poznaj historię Art Decor Pszczyna. Od 1993 roku tworzymy nowoczesną reklamę wizualną. Własny park maszynowy: CNC, termoformowanie, piaskowanie 3D.">
@@ -58,35 +59,35 @@ import "../styles/globals.css";
               <h3>Park maszynowy</h3>
               <ul class="machinery-list">
                 <li>
-                  <span class="icon">⚙️</span>
+                  <span class="icon" aria-hidden="true"><Icon name="lucide:settings" size={24} /></span>
                   <div>
                     <strong>Ploter frezujący CNC</strong>
                     <p>Precyzyjna obróbka płyt dibond, plexi i PCV.</p>
                   </div>
                 </li>
                 <li>
-                  <span class="icon">🌡️</span>
+                  <span class="icon" aria-hidden="true"><Icon name="lucide:thermometer" size={24} /></span>
                   <div>
                     <strong>Termoformierka</strong>
                     <p>Wytwarzanie wypukłych elementów z tworzyw sztucznych.</p>
                   </div>
                 </li>
                 <li>
-                  <span class="icon">✨</span>
+                  <span class="icon" aria-hidden="true"><Icon name="lucide:sparkles" size={24} /></span>
                   <div>
                     <strong>Piaskarka 3D</strong>
                     <p>Unikalna technologia artystycznego piaskowania szkła i kamienia.</p>
                   </div>
                 </li>
                 <li>
-                  <span class="icon">🖨️</span>
+                  <span class="icon" aria-hidden="true"><Icon name="lucide:printer" size={24} /></span>
                   <div>
                     <strong>Ploter drukujący</strong>
                     <p>Wydruki wielkoformatowe UV i solwentowe wysokiej jakości.</p>
                   </div>
                 </li>
                 <li>
-                  <span class="icon">✂️</span>
+                  <span class="icon" aria-hidden="true"><Icon name="lucide:scissors" size={24} /></span>
                   <div>
                     <strong>Ploter tnący</strong>
                     <p>Precyzyjne wycinanie liter i znaków z folii.</p>
