@@ -45,12 +45,12 @@ const year = new Date().getFullYear();
           </a>
           <div class="f-contact-item">
             <Icon name="lucide:map-pin" size={18} />
-            <span>ul. Chopina 15, 43-200 Pszczyna</span>
+            <span>ul. Męczenników Oświęcimskich 16, 43-200 Pszczyna</span>
           </div>
         </div>
       </div>
 
-      <div class="f-item f-item--newsletter">
+      <!-- <div class="f-item f-item--newsletter">
         <h4 class="f-title">Zostańmy w kontakcie</h4>
         <p class="f-desc">Zapisz się, aby otrzymywać informacje o naszych najnowszych realizacjach i technologiach.</p>
         <div class="f-newsletter-form">
@@ -59,7 +59,7 @@ const year = new Date().getFullYear();
             <Icon name="lucide:send" size={18} />
           </button>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="footer-bottom">
@@ -84,13 +84,9 @@ const year = new Date().getFullYear();
 
   .footer-bento {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 3rem;
     margin-bottom: 4rem;
-  }
-
-  .f-item--brand, .f-item--newsletter {
-    grid-column: span 2;
   }
 
   @media (min-width: 768px) {
@@ -98,19 +94,16 @@ const year = new Date().getFullYear();
       padding-top: 6rem;
     }
     .footer-bento {
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
     }
-    .f-item--brand { grid-column: span 5; }
-    .f-item--links { grid-column: span 2; }
-    .f-item--contact { grid-column: span 5; }
-    .f-item--newsletter { grid-column: span 12; margin-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 3rem; }
   }
 
   @media (min-width: 1024px) {
-    .f-item--brand { grid-column: span 4; }
-    .f-item--links { grid-column: span 2; }
-    .f-item--contact { grid-column: span 3; }
-    .f-item--newsletter { grid-column: span 3; margin-top: 0; border-top: none; padding-top: 0; }
+    .footer-bento {
+      grid-template-columns: 2fr 1fr 1.5fr;
+      gap: 4rem;
+    }
   }
 
   .f-item {
@@ -119,10 +112,18 @@ const year = new Date().getFullYear();
     gap: 1.5rem;
   }
 
+  .f-brand {
+    display: flex;
+    flex-direction: column;
+  }
+
   .f-logo {
     height: 124px;
     width: auto;
-    margin-bottom: 1.5rem;
+    object-fit: contain;
+    object-position: left;
+    margin-bottom: 0.5rem;
+    transform: translateX(-10px); /* Dopasowanie marginesu dodanego przez plik SVG */
   }
 
   .f-desc {
