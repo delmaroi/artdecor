@@ -8,10 +8,20 @@ import "../styles/globals.css";
 <Layout title="Kontakt – Art Decor Pszczyna | 696 293 362" description="Kontakt Art Decor Pszczyna – Męczenników Oświęcimskich 16, 43-200 Pszczyna. Tel. 696 293 362, biuro@artdecor.net.pl. Godziny: pn–pt 8:00–17:00.">
   <Header />
   <main>
-    <section class="section">
-      <div class="container">
-        <h1 class="page-title">Kontakt</h1>
-        <p class="lead">Zapraszamy do kontaktu – chętnie omówimy Twoje zlecenie i zaproponujemy rozwiązania dopasowane do potrzeb.</p>
+    <section class="contact-hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-image-layer"></div>
+        <div class="hero-overlay-gradient"></div>
+        <div class="noise-overlay" style="opacity: 0.1; z-index: 3; pointer-events: none;"></div>
+      </div>
+      <div class="container relative z-10 text-center">
+        <div class="breadcrumb">
+          <a href="/">Strona główna</a>
+          <span>/</span>
+          <span>Kontakt</span>
+        </div>
+        <h1 class="page-title">Skontaktuj <span class="gradient-text">się</span></h1>
+        <p class="lead">Jesteśmy do Twojej dyspozycji. Skontaktuj się z nami telefonicznie, mailowo lub odwiedź nas osobiście.</p>
       </div>
     </section>
     <ContactBlock />
@@ -20,18 +30,53 @@ import "../styles/globals.css";
 </Layout>
 
 <style>
+  .contact-hero {
+    position: relative;
+    padding-block: 10rem 4rem;
+    overflow: hidden;
+    background: var(--structa-charcoal);
+  }
+
+  .contact-hero .container {
+    position: relative;
+    z-index: 10;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .breadcrumb a {
+    color: rgba(255, 255, 255, 0.6);
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--structa-accent);
+  }
+
   .page-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 2.5rem);
-    font-weight: 700;
-    margin: 0 0 0.5rem;
-    color: var(--color-text);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 1.5rem;
+    color: var(--structa-white);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 
   .lead {
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
-    margin: 0;
-    max-width: 50ch;
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
   }
 </style>

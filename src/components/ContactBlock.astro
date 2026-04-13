@@ -2,8 +2,13 @@
 import { Icon } from "astro-icon/components";
 
 const phone = "696 293 362";
-const email = "biuro@artdecor.net.pl";
-const address = "Męczenników Oświęcimskich 16";
+const emails = [
+  { label: "Biuro", address: "biuro@artdecor.net.pl" },
+  { label: "Dział Graficzny", address: "grafika@artdecor.net.pl" },
+  { label: "Produkcja", address: "reklama@artdecor.net.pl" }
+];
+const companyName = "F.H.U. Art Decor";
+const street = "Męczenników Oświęcimskich 16";
 const city = "43-200 Pszczyna";
 const hours = [
   { days: "Poniedziałek–piątek", time: "8:00 – 17:00" },
@@ -11,12 +16,8 @@ const hours = [
   { days: "Niedziela", time: "nieczynne" },
 ];
 ---
-<section class="section contact-block" id="kontakt">
+<section class="section contact-block pt-4" id="kontakt">
   <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Skontaktuj <span class="gradient-text">się</span></h2>
-      <p class="section-lead">Jesteśmy do Twojej dyspozycji. Skontaktuj się z nami telefonicznie, mailowo lub odwiedź nas osobiście.</p>
-    </div>
     <div class="contact-grid">
       <div class="contact-card glass-card">
         <div class="contact-info">
@@ -25,22 +26,26 @@ const hours = [
             <div class="contact-item">
               <Icon name="lucide:map-pin" class="contact-icon" size={24} />
               <div>
-                <strong>Adres</strong>
-                <p>{address}<br />{city}</p>
+                <strong>Siedziba firmy</strong>
+                <p>{companyName}<br />{street}<br />{city}</p>
               </div>
             </div>
             <div class="contact-item">
               <Icon name="lucide:phone" class="contact-icon" size={24} />
               <div>
-                <strong>Telefon</strong>
+                <strong>Obsługa klienta</strong>
                 <p><a href={`tel:+48${phone.replace(/\s/g, "")}`}>{phone}</a></p>
               </div>
             </div>
             <div class="contact-item">
               <Icon name="lucide:mail" class="contact-icon" size={24} />
-              <div>
-                <strong>E-mail</strong>
-                <p><a href={`mailto:${email}`}>{email}</a></p>
+              <div class="emails-list">
+                {emails.map(e => (
+                  <div class="email-row">
+                    <strong>{e.label}:</strong>
+                    <a href={`mailto:${e.address}`}>{e.address}</a>
+                  </div>
+                ))}
               </div>
             </div>
           </address>
@@ -64,6 +69,18 @@ const hours = [
         </div>
       </div>
     </div>
+  </div>
+  
+  <div class="map-container">
+    <iframe 
+      src="https://maps.google.com/maps?q=Art%20Decor%20M%C4%99czennik%C3%B3w%20O%C5%9Bwi%C4%99cimskich%2016,%2043-200%20Pszczyna&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+      width="100%" 
+      height="450" 
+      style="border:0;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
 </section>
 
@@ -153,14 +170,41 @@ const hours = [
     line-height: 1.6;
   }
 
-  .contact-item a {
-    color: var(--color-accent);
-    transition: color var(--transition-base);
-  }
-
   .contact-item a:hover {
     color: var(--color-accent);
     text-decoration: underline;
+  }
+
+  .emails-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .email-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .email-row strong {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.1rem;
+  }
+
+  .map-container {
+    margin-top: 4rem;
+    width: 100%;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  }
+
+  .map-container iframe {
+    display: block;
+    width: 100%;
   }
 
   .hours-list {
