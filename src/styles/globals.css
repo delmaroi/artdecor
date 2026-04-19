@@ -327,11 +327,11 @@ a:hover {
 
 /* ── GSAP Animations ──────────────────────────────────────────────────────── */
 
-/* Header scroll shrink */
 .header--scrolled {
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  background: rgba(35, 45, 72, 0.92) !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.18) !important;
+  background: var(--structa-charcoal) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Page transition overlay */

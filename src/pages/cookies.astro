@@ -1,0 +1,231 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import "../styles/globals.css";
+
+const siteUrl = "https://www.artdecor.net.pl";
+---
+<Layout
+  title="Polityka plików cookies – Art Decor Pszczyna"
+  description="Polityka cookies serwisu Art Decor Pszczyna: rodzaje plików cookies, localStorage, sposób wyboru zgody i zarządzania ustawieniami."
+>
+  <Header />
+  <main>
+    <Hero
+      title="Polityka plików cookies"
+      subtitle="Jak korzystamy z plików cookies i podobnych technologii w serwisie Art Decor oraz jak możesz zarządzać swoimi ustawieniami."
+      ctaText="Polityka prywatności"
+      ctaHref="/polityka-prywatnosci/"
+    />
+
+    <section class="section legal-section">
+      <div class="container">
+        <article class="legal-card glass-card" data-reveal data-reveal-dir="up">
+          <p class="legal-meta">Obowiązuje od: 19 kwietnia 2026 r.</p>
+
+          <h2>1. Czym są pliki cookies?</h2>
+          <p>
+            Pliki cookies (tzw. „ciasteczka”) to niewielkie informacje tekstowe zapisywane przez przeglądarkę na Twoim urządzeniu (komputerze, smartfonie, tablecie) podczas przeglądania stron internetowych. Mogą pochodzić z serwisu, który odwiedzasz (cookies własne) lub od partnerów (cookies podmiotów trzecich).
+          </p>
+          <p>
+            Podobną funkcję mogą pełnić inne technologie, np. <strong>local storage</strong> w przeglądarce – służą m.in. do zapamiętania wyborów, także dotyczących cookies.
+          </p>
+
+          <h2>2. Jak korzystamy z cookies w Serwisie?</h2>
+          <p>
+            Serwis internetowy dostępny pod adresem <a href={siteUrl}>{siteUrl}</a> (dalej: „Serwis”) jest prowadzony przez <strong>F.H.U. Art Decor</strong>, ul. Męczenników Oświęcimskich 16, 43-200 Pszczyna. Wykorzystujemy cookies w zakresie niezbędnym do działania strony oraz – w zależności od Twojego wyboru w banerze zgody – w zakresie dodatkowym opisanym poniżej.
+          </p>
+
+          <h2>3. Baner zgody i zapis preferencji</h2>
+          <p>
+            Przy pierwszej wizycie możesz wybrać: <strong>„Akceptuję wszystko”</strong> albo <strong>„Tylko niezbędne”</strong>. Twój wybór zapisujemy w <strong>localStorage</strong> przeglądarki pod kluczem związanym z preferencją cookies (wartość odpowiadająca akceptacji lub ograniczeniu), aby nie wyświetlać banera wielokrotnie po dokonaniu wyboru.
+          </p>
+          <p>
+            Możesz w każdej chwili usunąć dane witryny w ustawieniach przeglądarki – wtedy baner może pojawić się ponownie.
+          </p>
+
+          <h2>4. Rodzaje plików cookies – zestawienie</h2>
+          <p>
+            Poniższa tabela ma charakter informacyjny i odzwierciedla typowe zastosowania. Rzeczywisty zakres zależy od wdrożonej konfiguracji Serwisu oraz od tego, czy wyrazisz zgodę na kategorie wykraczające poza niezbędne.
+          </p>
+
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th scope="col">Kategoria</th>
+                  <th scope="col">Cel</th>
+                  <th scope="col">Podstawa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Niezbędne (techniczne)</strong></td>
+                  <td>Poprawne wyświetlanie Serwisu, bezpieczeństwo, utrzymanie sesji, zapamiętanie wyboru w banerze (localStorage).</td>
+                  <td>prawnie uzasadniony interes administratora / niezbędność do świadczenia usługi (art. 6 RODO w powiązaniu z dyrektywą ePrivacy; wyjątki dla cookies ściśle niezbędnych).</td>
+                </tr>
+                <tr>
+                  <td><strong>Funkcjonalne / preferencje</strong></td>
+                  <td>Zapamiętanie ustawień użytkownika tam, gdzie zostaną wdrożone (np. język, układ).</td>
+                  <td>zgoda lub niezbędność techniczna – w zależności od implementacji.</td>
+                </tr>
+                <tr>
+                  <td><strong>Analityczne / statystyczne</strong></td>
+                  <td>Statystyki odwiedzin i zachowań użytkowników – <strong>wyłącznie jeśli zostaną podłączone narzędzia analityczne i wyrazisz zgodę</strong> (obecnie baner przewiduje taką możliwość; do momentu wdrożenia skryptów zgoda może nie uruchamiać dodatkowego śledzenia).</td>
+                  <td>zgoda (art. 6 ust. 1 lit. a RODO oraz przepisy o cookies), o ile narzędzia wymagają zgody.</td>
+                </tr>
+                <tr>
+                  <td><strong>Marketingowe</strong></td>
+                  <td>Personalizacja reklam – <strong>tylko po wyraźnej zgodzie i podłączeniu odpowiednich narzędzi</strong>.</td>
+                  <td>zgoda.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>5. Cookies podmiotów trzecich</h2>
+          <p>
+            Serwis może zawierać osadzone treści lub linki (np. mapa, profile społecznościowe). Te usługi mogą stosować własne pliki cookies i zasady prywatności – obowiązują Cię wtedy regulaminy ich operatorów.
+          </p>
+
+          <h2>6. Jak zarządzać cookies w przeglądarce?</h2>
+          <p>Możesz samodzielnie:</p>
+          <ul>
+            <li>usunąć lub zablokować pliki cookies w ustawieniach przeglądarki;</li>
+            <li>ustawić tryb „prywatny” / „incognito”;</li>
+            <li>skorzystać z rozszerzeń blokujących śledzenie (z uwzglądnieniem wpływu na działanie stron).</li>
+          </ul>
+          <p>
+            Instrukcje dla popularnych przeglądarek znajdziesz m.in. na stronach producentów oprogramowania (Chrome, Firefox, Safari, Edge).
+          </p>
+
+          <h2>7. Zmiany niniejszej polityki</h2>
+          <p>
+            Możemy aktualizować Politykę cookies w miarę zmian technologii lub przepisów. Aktualna wersja jest dostępna pod adresem <a href={`${siteUrl}/cookies/`}>{siteUrl}/cookies/</a>.
+          </p>
+
+          <h2>8. Kontakt</h2>
+          <p>
+            Pytania dotyczące cookies i prywatności: <a href="mailto:biuro@artdecor.net.pl">biuro@artdecor.net.pl</a>, tel. <a href="tel:+48696293362">+48 696 293 362</a>.
+          </p>
+          <p>
+            Szczegóły przetwarzania danych osobowych: <a href="/polityka-prywatnosci/">Polityka prywatności</a>.
+          </p>
+
+          <p class="legal-note">
+            Treść ma charakter informacyjny. W razie wdrożenia konkretnych narzędzi analitycznych lub marketingowych warto uzupełnić tabelę o nazwy dostawców i czas przechowywania identyfikatorów.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-section {
+    padding-bottom: 3rem;
+  }
+
+  .legal-card {
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: 2rem 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .legal-card {
+      padding: 2.5rem 3rem;
+    }
+  }
+
+  .legal-meta {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0 0 2rem;
+  }
+
+  .legal-card h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .legal-card h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .legal-card p {
+    margin: 0 0 1rem;
+    line-height: 1.75;
+    color: var(--color-text-muted);
+  }
+
+  .legal-card ul {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .legal-card li {
+    margin-bottom: 0.5rem;
+  }
+
+  .legal-card a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .legal-card a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .legal-table-wrap {
+    overflow-x: auto;
+    margin: 0 0 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+  }
+
+  .legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .legal-table th,
+  .legal-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--color-text-muted);
+  }
+
+  .legal-table th {
+    background: rgba(35, 45, 72, 0.04);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .legal-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .legal-note {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+</style>
