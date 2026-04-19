@@ -9,25 +9,24 @@ const services: Service[] = [
   { title: "Szyldy szklane", slug: "szyldy-szklane", icon: "lucide:square" },
   { title: "Litery przestrzenne", slug: "litery-przestrzenne", icon: "lucide:box" },
   { title: "Oklejanie witryn", slug: "oklejanie-witryn", icon: "lucide:rectangle-horizontal" },
-  { title: "Oklejanie samochodów", slug: "oklejanie-samochodow", icon: "lucide:car" },
   { title: "Systemy wystawiennicze", slug: "systemy-wystawiennicze", icon: "lucide:layout-grid" },
+  { title: "Oklejanie samochodów", slug: "oklejanie-samochodow", icon: "lucide:car" },
   { title: "Wycinanie znaków", slug: "wycinanie-znakow", icon: "lucide:scissors" },
   { title: "Tablice LED", slug: "tablice-led", icon: "lucide:lightbulb" },
   { title: "Punkty gastronomiczne", slug: "punkty-gastronomiczne", icon: "lucide:utensils-crossed" },
-  { title: "Piaskowanie artystyczne", slug: "piaskowanie-artystyczne", icon: "lucide:sparkles" },
 ];
 ---
 <section class="section services" id="uslugi">
   <div class="container">
     <div class="section-header">
-      <div class="section-badge fade-in stagger-1">NASZE USŁUGI</div>
-      <h2 class="section-title fade-in stagger-2">Co robimy <span class="accent-text">najlepiej</span></h2>
-      <p class="section-lead fade-in stagger-3">Od koncepcji po montaż – dostarczamy kompletne systemy identyfikacji wizualnej dla Twojego biznesu.</p>
+      <div class="section-badge">NASZE USŁUGI</div>
+      <h2 class="section-title">Co robimy <span class="accent-text">najlepiej</span></h2>
+      <p class="section-lead">Od koncepcji po montaż – dostarczamy kompletne systemy identyfikacji wizualnej dla Twojego biznesu.</p>
     </div>
 
-    <div class="services-bento fade-in stagger-4">
+    <div class="services-bento" data-stagger-grid>
       {services.map((service, index) => (
-        <a href={`/uslugi/${service.slug}/`} class={`bento-item bento-item--${index % 5}`}>
+        <a href={`/uslugi/${service.slug}/`} class={`bento-item bento-item--${index % 4}`}>
           <div class="bento-content">
             <div class="bento-icon">
               <Icon name={service.icon} size={28} />

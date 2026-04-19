@@ -9,11 +9,6 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
-  images={[
-    "/images/portfolio/pylony-totemy/pylon-1.jpg",
-    "/images/portfolio/pylony-totemy/pylon-2.jpg",
-    "/images/portfolio/pylony-totemy/pylon-3.jpg"
-  ]}
 >
   <div slot="content">
     <h3>Profesjonalne pylony reklamowe</h3>
@@ -162,6 +157,118 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
           <h3>Montaż</h3>
           <p>Transport, montaż konstrukcji, podłączenie elektryki, testy</p>
           <span class="process-time">1-2 dni</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div slot="gallery">
+    <div class="gallery-grid">
+      {[
+        "21462884_1843381319023605_8620446557116794248_n.jpg",
+        "25498362_1953069431388126_5168221637860644491_n.jpg",
+        "48425336_2481814798513584_652641845657993216_n.jpg",
+        "48971452_2481814831846914_5322358842258882560_n.jpg",
+        "48972861_2481814491846948_4538017618379931648_n.jpg",
+        "49204709_2481814548513609_1005596412592783360_n.jpg",
+        "49204719_2481814901846907_4741941012031602688_n.jpg",
+        "kancelarie11.jpg",
+        "kancelarie21.jpg",
+        "kancelarie3.jpg",
+        "kasetony26.jpg",
+        "on1.jpg",
+        "plon2.jpg"
+      ].map((img) => (
+        <a href={`/images/pylony/${img}`} class="gallery-item glightbox" data-gallery="pylony">
+          <img src={`/images/pylony/${img}`} alt="Realizacja pylonu reklamowego" loading="lazy" />
+          <div class="gallery-overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</ServiceTemplate>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<script is:inline src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+</script>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: var(--structa-charcoal);
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+</style>2 dni</span>
         </div>
       </div>
     </div>

@@ -1,0 +1,38 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Wymuszenie HTTPS (opcjonalnie, zdejmij komentarz jeśli chcesz)
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # ── PRZEKIEROWANIA 301 (STARE ADRESY URL -> NOWE ADRESY) ──
+  # Precyzyjne mapowanie podstron usługowych dla Google
+  RewriteRule ^index\.php/kasetony-z-dibondu/?$ /uslugi/kasetony-z-dibondu/ [R=301,L]
+  RewriteRule ^index\.php/kasetony-reklamowe/?$ /uslugi/kasetony-z-dibondu/ [R=301,L]
+  RewriteRule ^index\.php/litery-przestrzenne/?$ /uslugi/litery-przestrzenne/ [R=301,L]
+  RewriteRule ^index\.php/litery-blokowe-przestrzenne-swietlne-led/?$ /uslugi/litery-blokowe/ [R=301,L]
+  RewriteRule ^index\.php/oklejanie-samochodow/?$ /uslugi/oklejanie-samochodow/ [R=301,L]
+  RewriteRule ^index\.php/oklejanie-witryn/?$ /uslugi/oklejanie-witryn/ [R=301,L]
+  RewriteRule ^index\.php/piaskowanie-artystyczne/?$ /uslugi/piaskowanie-artystyczne/ [R=301,L]
+  RewriteRule ^index\.php/szyldy-szklane/?$ /uslugi/szyldy-szklane/ [R=301,L]
+  RewriteRule ^index\.php/tablice-led/?$ /uslugi/tablice-led/ [R=301,L]
+  RewriteRule ^index\.php/systemy-wystawiennicze/?$ /uslugi/systemy-wystawiennicze/ [R=301,L]
+  RewriteRule ^index\.php/o-nas/?$ /o-nas/ [R=301,L]
+  RewriteRule ^index\.php/kontakt/?$ /kontakt/ [R=301,L]
+  RewriteRule ^index\.php/polityka-cookies/?$ / [R=301,L]
+  RewriteRule ^index\.php/banery-i-siatki/?$ / [R=301,L]
+  RewriteRule ^index\.php/druk-wielkoformatowy/?$ / [R=301,L]
+
+  # 2. Awaryjne przekierowanie (Catch-all) całej reszty starego index.php
+  # Jeżeli użytkownik wejdzie na indeksowaną stronę której nie określiłeś powyżej
+  # np. /index.php/cokolwiek-innego to zostanie przeniesiony na stronę główną /
+  RewriteCond %{REQUEST_URI} ^/index\.php/?(.*)$
+  RewriteRule ^(.*)$ / [R=301,L]
+
+  # ── REGULY DLA ASTRO (usuwanie .html z URL) ──
+  # Przydatne przy hostingu statycznym
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+</IfModule>

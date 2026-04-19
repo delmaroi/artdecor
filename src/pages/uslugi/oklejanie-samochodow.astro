@@ -8,11 +8,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   heroSubtitle="Reklama mobilna i ochrona lakieru. Oklejanie całopowierzchniowe i częściowe."
   content={true}
   specifications={true}
-  images={[
-    "/images/portfolio/oklejanie-samochodow/auto-1.jpg",
-    "/images/portfolio/oklejanie-samochodow/auto-2.jpg",
-    "/images/portfolio/oklejanie-samochodow/auto-3.jpg"
-  ]}
+  process={true}
 >
   <div slot="content">
     <h3>Reklama mobilna</h3>
@@ -123,4 +119,116 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       </div>
     </div>
   </div>
+
+  <div slot="gallery">
+    <div class="gallery-grid">
+      {[
+        "CAM00123.jpg", "CAM00124.jpg", "DSC00080.JPG", "DSC00290.JPG", "DSC00292.JPG",
+        "IMG_20180713_143048.jpg", "IMG_20180714_002008.jpg", "IMG_20180730_112223.jpg",
+        "IMG_20180730_112309.jpg", "IMG_20180804_204224.jpg", "IMG_20180804_204309.jpg",
+        "IMG_20180914_122110.jpg", "IMG_20180914_122133.jpg", "IMG_20181027_105422.jpg",
+        "IMG_20181027_105526.jpg", "IMG_20190123_143109.jpg", "IMG_20190123_143120.jpg",
+        "IMG_20190221_114924.jpg", "IMG_20190221_115030.jpg", "IMG_20190221_115256.jpg",
+        "IMG_20190313_151527.jpg", "IMG_20190313_151537.jpg", "IMG_20190605_191505.jpg",
+        "IMG_20190605_191524.jpg", "IMG_20190715_161856.jpg", "IMG_20190715_161923.jpg",
+        "IMG_20190717_190144.jpg", "IMG_20190717_190201.jpg", "IMG_20190820_141955.jpg",
+        "IMG_20190820_142008.jpg", "IMG_20190822_152409.jpg", "IMG_20190822_152431.jpg",
+        "IMG_20190823_111455.jpg", "IMG_20190823_111511.jpg", "IMG_20190828_161245.jpg",
+        "IMG_20190828_170159.jpg", "IMG_20191212_142803.jpg", "IMG_20191212_142821.jpg",
+        "abalico.jpg", "abalico2.jpg", "abka.jpg", "abka1.jpg", "aksysytem.jpg",
+        "aksysytem2.jpg", "almot.jpg", "almot2.jpg", "berlingo.jpg", "berlingo1.jpg",
+        "berlingo3.JPG", "bratex.jpg", "bratex2.jpg", "fiorino.jpg", "image-1.jpg",
+        "image-2.jpg", "image.jpg", "mic-oklejenie busa.jpg", "mic-oklejenie busa2.jpg",
+        "mic.jpg", "mic2.jpg", "puchalka.jpg", "puchalka2.jpg", "romwork.jpg",
+        "romwork2.jpg", "vision.jpg", "vision1.jpg", "vision2.jpg"
+      ].map((img) => (
+        <a href={`/images/oklejanie-samochodow/${img}`} class="gallery-item glightbox" data-gallery="samochody">
+          <img src={`/images/oklejanie-samochodow/${img}`} alt="Realizacja oklejania samochodu" loading="lazy" />
+          <div class="gallery-overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
 </ServiceTemplate>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<script is:inline src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+</script>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: var(--structa-charcoal);
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+</style>

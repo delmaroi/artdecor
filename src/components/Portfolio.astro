@@ -63,7 +63,7 @@ const portfolioItems: PortfolioItem[] = [
       ))}
     </div>
 
-    <ul class="portfolio-grid fade-in stagger-4">
+    <ul class="portfolio-grid" data-stagger-grid>
       {portfolioItems.map((item, index) => (
         <li class="portfolio-item" data-category={item.category.toLowerCase().replace(/\s+/g, "-")}>
           <div class="portfolio-card">

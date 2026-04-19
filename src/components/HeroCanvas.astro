@@ -1,0 +1,323 @@
+---
+/**
+ * HeroCanvas — Animated particle constellation background
+ * Creates a premium generative art animation with:
+ * - Floating luminous particles with varying sizes and glow
+ * - Dynamic connection lines between nearby particles
+ * - Subtle wave distortion inspired by aurora effects
+ * - Accent-colored highlights that pulse organically
+ * - Parallax mouse interaction for depth
+ * 
+ * Color palette matches Art Decor site:
+ *   charcoal #232D48, accent #FF5C35, white
+ */
+---
+
+<canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+<script is:inline>
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // ========= CONFIG =========
+  const CHARCOAL  = { r: 35, g: 45, b: 72 };
+  const ACCENT    = { r: 255, g: 92, b: 53 };
+  const WHITE     = { r: 255, g: 255, b: 255 };
+  const PARTICLE_COUNT = 80;
+  const CONNECTION_DIST = 160;
+  const MOUSE_RADIUS = 250;
+  
+  let W, H, dpr;
+  let particles = [];
+  let mouse = { x: -9999, y: -9999 };
+  let time = 0;
+  let animId;
+
+  // ========= RESIZE =========
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // ========= PARTICLE CLASS =========
+  function Particle() {
+    this.reset();
+  }
+
+  Particle.prototype.reset = function() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4;
+    this.radius = Math.random() * 2.5 + 0.8;
+    this.baseRadius = this.radius;
+    // Each particle has a slight color variation
+    this.isAccent = Math.random() < 0.25;
+    this.opacity = Math.random() * 0.5 + 0.3;
+    this.baseOpacity = this.opacity;
+    this.pulseOffset = Math.random() * Math.PI * 2;
+    this.pulseSpeed = Math.random() * 0.01 + 0.005;
+    // Depth layer for parallax (0 = far, 1 = close)
+    this.depth = Math.random() * 0.7 + 0.3;
+  };
+
+  Particle.prototype.update = function(dt) {
+    // Organic drift with subtle sine wave
+    const wave = Math.sin(time * 0.0005 + this.pulseOffset) * 0.15;
+    this.x += (this.vx + wave) * this.depth;
+    this.y += (this.vy + Math.cos(time * 0.0003 + this.pulseOffset) * 0.1) * this.depth;
+
+    // Pulsing size and opacity
+    const pulse = Math.sin(time * this.pulseSpeed + this.pulseOffset);
+    this.radius = this.baseRadius + pulse * 0.6;
+    this.opacity = this.baseOpacity + pulse * 0.15;
+
+    // Mouse interaction — gentle attraction/repulsion
+    const dx = mouse.x - this.x;
+    const dy = mouse.y - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < MOUSE_RADIUS && dist > 0) {
+      const force = (1 - dist / MOUSE_RADIUS) * 0.02;
+      this.x += dx * force * this.depth;
+      this.y += dy * force * this.depth;
+      // Brighten near mouse
+      this.opacity = Math.min(1, this.opacity + (1 - dist / MOUSE_RADIUS) * 0.3);
+    }
+
+    // Wrap around edges with margin
+    const margin = 50;
+    if (this.x < -margin) this.x = W + margin;
+    if (this.x > W + margin) this.x = -margin;
+    if (this.y < -margin) this.y = H + margin;
+    if (this.y > H + margin) this.y = -margin;
+  };
+
+  Particle.prototype.draw = function() {
+    const c = this.isAccent ? ACCENT : WHITE;
+    const glow = this.isAccent ? 12 : 6;
+
+    ctx.save();
+    ctx.globalAlpha = this.opacity;
+
+    // Glow effect
+    ctx.shadowBlur = glow;
+    ctx.shadowColor = `rgba(${c.r}, ${c.g}, ${c.b}, ${this.opacity * 0.7})`;
+
+    // Main dot
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${this.opacity})`;
+    ctx.fill();
+
+    ctx.restore();
+  };
+
+  // ========= CONNECTIONS =========
+  function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i];
+        const b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < CONNECTION_DIST) {
+          const alpha = (1 - dist / CONNECTION_DIST) * 0.15;
+          // If either particle is accent, give the line a warm tint
+          const isWarm = a.isAccent || b.isAccent;
+          const c = isWarm ? ACCENT : WHITE;
+
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${alpha})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  // ========= AURORA GRADIENT WAVES =========
+  function drawAurora() {
+    const gradient = ctx.createLinearGradient(0, 0, W, H);
+    const shift = Math.sin(time * 0.0003) * 0.02;
+
+    gradient.addColorStop(0, `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${0.03 + shift})`);
+    gradient.addColorStop(0.4, 'rgba(35, 45, 72, 0)');
+    gradient.addColorStop(0.7, `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${0.02 + shift * 0.5})`);
+    gradient.addColorStop(1, 'rgba(35, 45, 72, 0)');
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle radial glow near center-top
+    const cx = W * 0.35 + Math.sin(time * 0.0002) * 100;
+    const cy = H * 0.3;
+    const radGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.5);
+    radGrad.addColorStop(0, `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, 0.06)`);
+    radGrad.addColorStop(0.5, `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, 0.02)`);
+    radGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = radGrad;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // ========= FLOATING GEOMETRIC ACCENTS =========
+  function drawGeometricAccents() {
+    ctx.save();
+
+    // Rotating hexagon outline
+    const hx = W * 0.78 + Math.sin(time * 0.0004) * 30;
+    const hy = H * 0.25 + Math.cos(time * 0.0003) * 20;
+    const hSize = 50;
+    const hAngle = time * 0.0002;
+    const hAlpha = 0.06 + Math.sin(time * 0.001) * 0.02;
+
+    ctx.translate(hx, hy);
+    ctx.rotate(hAngle);
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI / 3) * i;
+      const px = Math.cos(a) * hSize;
+      const py = Math.sin(a) * hSize;
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${hAlpha})`;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.restore();
+    ctx.save();
+
+    // Floating diamond
+    const dx2 = W * 0.15 + Math.cos(time * 0.00035) * 25;
+    const dy2 = H * 0.65 + Math.sin(time * 0.0004) * 15;
+    const dSize = 30;
+    const dAngle = time * 0.00015;
+    const dAlpha = 0.05 + Math.sin(time * 0.0008 + 1) * 0.02;
+
+    ctx.translate(dx2, dy2);
+    ctx.rotate(dAngle);
+    ctx.beginPath();
+    ctx.moveTo(0, -dSize);
+    ctx.lineTo(dSize, 0);
+    ctx.lineTo(0, dSize);
+    ctx.lineTo(-dSize, 0);
+    ctx.closePath();
+    ctx.strokeStyle = `rgba(255, 255, 255, ${dAlpha})`;
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+
+    ctx.restore();
+    ctx.save();
+
+    // Orbiting circle
+    const cx3 = W * 0.6 + Math.sin(time * 0.0003) * 40;
+    const cy3 = H * 0.7 + Math.cos(time * 0.00025) * 30;
+    const cAlpha = 0.04 + Math.sin(time * 0.0012) * 0.02;
+
+    ctx.beginPath();
+    ctx.arc(cx3, cy3, 35, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${cAlpha})`;
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  // ========= MAIN LOOP =========
+  function animate(ts) {
+    time = ts || 0;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Background layers
+    drawAurora();
+    drawGeometricAccents();
+
+    // Connections first (behind particles)
+    drawConnections();
+
+    // Update & draw particles
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+
+    animId = requestAnimationFrame(animate);
+  }
+
+  // ========= INIT =========
+  function init() {
+    resize();
+    particles = [];
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push(new Particle());
+    }
+    if (animId) cancelAnimationFrame(animId);
+    animate(0);
+  }
+
+  // ========= EVENTS =========
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      resize();
+      // Re-distribute particles that fell off-screen
+      particles.forEach(function(p) {
+        if (p.x > W || p.y > H) p.reset();
+      });
+    }, 150);
+  });
+
+  canvas.parentElement.addEventListener('mousemove', function(e) {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  canvas.parentElement.addEventListener('mouseleave', function() {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  // Reduce animation when tab is hidden
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      if (animId) cancelAnimationFrame(animId);
+    } else {
+      animate(0);
+    }
+  });
+
+  // Boot
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  // Astro view transitions
+  document.addEventListener('astro:after-swap', init);
+})();
+</script>
+
+<style>
+  #hero-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+</style>

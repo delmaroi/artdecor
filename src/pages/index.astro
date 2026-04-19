@@ -6,10 +6,17 @@ import Hero from "../components/Hero.astro";
 import Services from "../components/Services.astro";
 import Portfolio from "../components/Portfolio.astro";
 import Clients from "../components/Clients.astro";
+import FAQ from "../components/FAQ.astro";
 import ContactBlock from "../components/ContactBlock.astro";
+import { DEFAULT_OG_BASIC_TITLE } from "../lib/seo-constants";
 import "../styles/globals.css";
 ---
-<Layout title="Art Decor Pszczyna – Reklama wizualna | Pylony, totemy, kasetony z dibondu" description="Art Decor Pszczyna – kompleksowa reklama wizualna. Pylony, totemy, kasetony z dibondu, szyldy szklane, oklejanie witryn i samochodów, litery przestrzenne, tablice LED. Profesjonalny park maszynowy. 696 293 362.">
+<Layout
+  title="Art Decor Pszczyna – reklama wizualna | pylony, totemy, kasetony z dibondu, cięcie ploterowe"
+  ogBasicTitle={DEFAULT_OG_BASIC_TITLE}
+  description="Art Decor Pszczyna – agencja reklamowa i kompleksowa reklama wizualna: pylony i totemy, kasetony z dibondu (LED), litery przestrzenne i blokowe, szyldy szklane, oklejanie witryn i samochodów, tablice LED, ploter CNC, cięcie ploterowe folii. Pszczyna i region. Tel. 696 293 362."
+  keywords="Art Decor Pszczyna, reklama wizualna Pszczyna, agencja reklamowa Pszczyna, pylony reklamowe, totemy, kasetony z dibondu, litery przestrzenne LED, litery blokowe, szyldy szklane, oklejanie witryn, oklejanie samochodów, cięcie ploterowe, ploter CNC, frezowanie dibond, druk wielkoformatowy, tablice LED, wycinanie znaków z folii, piaskowanie artystyczne, Śląsk"
+>
   <Header />
   <main>
     <Hero
@@ -21,6 +28,7 @@ import "../styles/globals.css";
     <Services />
     <Portfolio />
     <Clients />
+    <FAQ />
     <ContactBlock />
   </main>
   <Footer />

@@ -1,33 +1,148 @@
 ---
+import { SEO } from "astro-seo";
+import CookieConsent from "../components/CookieConsent.astro";
+import { DEFAULT_OG_IMAGE_PATH } from "../lib/seo-constants";
+
 export interface Props {
   title: string;
   description?: string;
+  /**
+   * Krótszy tytuł pod Open Graph (podglądy w social media). Gdy nie podasz,
+   * użyty zostanie pełny `title` — zwykle właściwe dla podstron usług.
+   * Na stronie głównej warto przekazać stałą z `seo-constants`.
+   */
+  ogBasicTitle?: string;
+  /** Opcjonalna lista słów kluczowych (meta keywords); najczęściej tylko strona główna. */
+  keywords?: string;
+  noindex?: boolean;
 }
 
-const { title, description = "Art Decor Pszczyna – reklama wizualna, pylony, totemy, kasetony z dibondu, szyldy, oklejanie witryn i samochodów. Kompleksowa obsługa firm." } = Astro.props;
+const {
+  title,
+  description = "Art Decor Pszczyna – reklama wizualna: pylony, totemy, kasetony z dibondu, oklejanie witryn i aut, litery przestrzenne, ploter CNC i cięcie ploterowe folii. Tel. 696 293 362.",
+  ogBasicTitle,
+  keywords,
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://www.artdecor.net.pl/");
+const canonicalHref = new URL(Astro.url.pathname, site).href;
+const ogImageUrl = new URL(DEFAULT_OG_IMAGE_PATH, site).href;
+
+const openGraphSocialTitle = ogBasicTitle ?? title;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${site.origin}/#organization`,
+  name: "Art Decor",
+  legalName: "F.H.U. Art Decor",
+  url: site.origin,
+  image: [new URL("/images/logo2.jpeg", site).href, ogImageUrl],
+  telephone: "+48696293362",
+  email: "biuro@artdecor.net.pl",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "ul. Męczenników Oświęcimskich 16",
+    addressLocality: "Pszczyna",
+    postalCode: "43-200",
+    addressRegion: "śląskie",
+    addressCountry: "PL",
+  },
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "województwo śląskie",
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "17:00",
+    },
+  ],
+  sameAs: ["https://www.facebook.com/artdecorreklama/"],
+  knowsAbout: [
+    "reklama wizualna",
+    "pylony reklamowe",
+    "totemy reklamowe",
+    "kasetony z dibondu",
+    "litery przestrzenne",
+    "oklejanie witryn",
+    "oklejanie samochodów",
+    "tablice LED",
+    "cięcie ploterowe",
+    "frezowanie CNC",
+  ],
+} as const;
 ---
 <!DOCTYPE html>
 <html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="description" content={description} />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonicalHref}
+      noindex={noindex}
+      robotsExtras="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+      openGraph={{
+        basic: {
+          title: openGraphSocialTitle,
+          type: "website",
+          image: ogImageUrl,
+          url: canonicalHref,
+        },
+        optional: {
+          siteName: "Art Decor Pszczyna",
+          locale: "pl_PL",
+          description: description,
+        },
+        image: {
+          alt: "Art Decor Pszczyna – realizacje reklamy wizualnej i oznakowania",
+          type: "image/png",
+        },
+      }}
+      twitter={{
+        card: "summary_large_image",
+        title: openGraphSocialTitle,
+        description: description,
+        image: ogImageUrl,
+        imageAlt: "Art Decor Pszczyna – reklama wizualna i produkcja szyldów",
+      }}
+      extend={{
+        link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+        meta: [
+          { name: "generator", content: Astro.generator },
+          { name: "theme-color", content: "#0f1419" },
+          { name: "author", content: "Art Decor Pszczyna" },
+          { name: "geo.region", content: "PL-SL" },
+          { name: "geo.placename", content: "Pszczyna" },
+          ...(keywords ? [{ name: "keywords", content: keywords }] : []),
+        ],
+      }}
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <div class="layout-wrap">
       <slot />
     </div>
+    <CookieConsent />
   </body>
 </html>
+
+<script>
+  import { initAnimations } from "../scripts/animations";
+  initAnimations();
+</script>
 
 <style is:global>
   .layout-wrap {

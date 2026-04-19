@@ -324,3 +324,54 @@ a:hover {
   inset: 0;
   background: linear-gradient(180deg, rgba(35, 45, 72, 0.5) 0%, rgba(35, 45, 72, 0.95) 100%);
 }
+
+/* ── GSAP Animations ──────────────────────────────────────────────────────── */
+
+/* Header scroll shrink */
+.header--scrolled {
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  background: rgba(35, 45, 72, 0.92) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Page transition overlay */
+#page-transition-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--structa-charcoal);
+  z-index: 9999;
+  pointer-events: none;
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+/* ── Native IntersectionObserver Animations ─────────────────────────────── */
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(40px);
+  scale: 0.98;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), scale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-item[data-reveal-dir="left"] { transform: translateX(-40px); }
+.reveal-item[data-reveal-dir="right"] { transform: translateX(40px); }
+
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+  scale: 1;
+}
+
+[data-reveal-delay="0.1"] { transition-delay: 100ms; }
+[data-reveal-delay="0.2"] { transition-delay: 200ms; }
+[data-reveal-delay="0.3"] { transition-delay: 300ms; }
+
+/* Obniżenie ruchu na starszych urządzeniach */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

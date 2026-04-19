@@ -4,11 +4,11 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
 <section class="section clients" id="klienci">
   <div class="container">
     <div class="section-header">
-      <div class="section-badge fade-in stagger-1">NASI ZAUFANI PARTNERZY</div>
-      <h2 class="section-title fade-in stagger-2">Zaufali <span class="accent-text">nam</span></h2>
+      <div class="section-badge">NASI ZAUFANI PARTNERZY</div>
+      <h2 class="section-title">Zaufali <span class="accent-text">nam</span></h2>
     </div>
 
-    <div class="clients-grid fade-in stagger-3">
+    <div class="clients-grid" data-stagger-grid>
       {logos.map((logo, i) => (
         <div class="client-card">
           <div class="client-logo-wrapper">

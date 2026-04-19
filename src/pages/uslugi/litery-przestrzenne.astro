@@ -8,11 +8,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   heroSubtitle="Trójwymiarowe litery z PCV, dibondu, stali. Eleganckie oznakowanie bez podświetlenia."
   content={true}
   specifications={true}
-  images={[
-    "/images/portfolio/litery-przestrzenne/przestrzenne-1.jpg",
-    "/images/portfolio/litery-przestrzenne/przestrzenne-2.jpg",
-    "/images/portfolio/litery-przestrzenne/przestrzenne-3.jpg"
-  ]}
+  process={true}
 >
   <div slot="content">
     <h3>Litery przestrzenne bez podświetlenia</h3>
@@ -117,4 +113,117 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       </div>
     </div>
   </div>
+
+  <div slot="gallery">
+    <div class="gallery-grid">
+      {[
+        "2013-08-04 20.21.15.jpg", "201520_548582431836840_497492438_o.jpg", "3.jpg",
+        "5.jpg", "ABCD0012.JPG", "ABCD0016.JPG", "CAM00039.jpg", "CAM00040.jpg",
+        "CAM00116.jpg", "CAM00142.jpg", "CAM00357.jpg", "CAM00373.jpg", "CAM00559.jpg",
+        "CAM00624.jpg", "CAM00627.jpg", "CAM00650.jpg", "CAM00832.jpg", "CAM01431.jpg",
+        "CAM01650.jpg", "CAM01654.jpg", "DSC00095.JPG", "DSC00169.JPG", "DSC00181.JPG",
+        "DSC00182.JPG", "DSC00188.JPG", "DSC00307d.jpg", "DSC00315.JPG", "DSC00414.JPG",
+        "DSC00485.JPG", "IMAG3079.jpg", "IMAG3082.jpg", "IMAG3084.jpg", "IMG_20190905_101619.jpg",
+        "IMG_20190927_101736.jpg", "IMG_20190927_101802.jpg", "IMG_20191001_101433.jpg",
+        "IMG_20191001_101438.jpg", "IMG_20191002_121504.jpg", "IMG_20191003_134153.jpg",
+        "IMG_20191003_134211.jpg", "IMG_20191122_115748.jpg", "Nowy-3.jpg",
+        "THE EVENT.jpg", "Zdjecia-0175.jpg", "Zdjecie0003.jpg", "Zdjecie0117.jpg",
+        "Zdjecie0122.jpg", "Zdjecie0205.jpg", "Zdjecie0721.jpg", "Zdjecie0724.jpg",
+        "Zdjecie0779.jpg", "Zdjecie0781.jpg", "Zdjecie0828.jpg", "Zdjecie0900.jpg",
+        "apteka-tapeta.jpg", "aptekalykos-litery.jpg", "bielizna -piastowska.jpg",
+        "centrum-echo.jpg", "dermatologia.jpg", "dermatologia2.jpg", "litery-parkiety.jpg",
+        "mal.jpg", "misiek.jpg", "misiek2.jpg", "misiek3.jpg", "misiek4.jpg",
+        "piano.jpg", "piano2.jpg", "piano3.jpg", "piano4.jpg", "pracownia.jpg",
+        "prymstol1.jpg", "prymstol2.jpg", "przzygoda1.jpg", "przzygoda2.jpg",
+        "uprzewoznika-kaseton-restauracja.jpg", "uprzwoznika.jpg", "uprzwoznika1.jpg"
+      ].map((img) => (
+        <a href={`/images/litery_przestrzenne/${img}`} class="gallery-item glightbox" data-gallery="litery">
+          <img src={`/images/litery_przestrzenne/${img}`} alt="Realizacja liter przestrzennych" loading="lazy" />
+          <div class="gallery-overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
 </ServiceTemplate>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<script is:inline src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+</script>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: var(--structa-charcoal);
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+</style>

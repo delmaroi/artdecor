@@ -9,11 +9,6 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
-  images={[
-    "/images/portfolio/litery-blokowe/litera-1.jpg",
-    "/images/portfolio/litery-blokowe/litera-2.jpg",
-    "/images/portfolio/litery-blokowe/litera-3.jpg"
-  ]}
 >
   <div slot="content">
     <h3>Profesjonalne litery przestrzenne</h3>
@@ -151,6 +146,134 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
           <h3>Montaż</h3>
           <p>Instalacja na elewacji lub konstrukcji, podłączenie zasilania 12V</p>
           <span class="process-time">1-2 dni</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div slot="gallery">
+    <div class="gallery-grid">
+      {[
+        "18425266_1703211543040584_5572045325287448189_n.jpg",
+        "18447132_1703211299707275_453458633728311697_n.jpg",
+        "2013-06-28 17.45.16.jpg",
+        "20294255_1795906853771052_8539500405966287383_n.jpg",
+        "20431478_1795906823771055_7560422509914336018_n.jpg",
+        "21151335_1828840790477658_290056185097820479_n.jpg",
+        "21192846_1828840600477677_1575454899759097593_n.jpg",
+        "21617498_1850408084987595_6852094032380319956_n.jpg",
+        "21768362_1859455560749514_748235344694335783_n.jpg",
+        "24301020_1934160653279004_1650144728246484620_n.jpg",
+        "25507962_1953071941387875_3342208558322540309_n.jpg",
+        "25659584_1953071921387877_5438057570383564778_n.jpg",
+        "28576461_2037367586291643_4457444912561247490_n.jpg",
+        "31277549_2100396166655451_7772953188629479424_n.jpg",
+        "38462420_2250500774978322_7672221585469603840_n.jpg",
+        "38670921_2250500818311651_3127383095167156224_n.jpg",
+        "66683583_2290252824344674_946069024863682560_n.jpg",
+        "67221273_2301846923185264_8553949758266277888_n.jpg",
+        "67309999_2301838206519469_1153004556389449728_n.jpg",
+        "67637818_2301838233186133_4661061357599195136_n.jpg",
+        "CAM01562.jpg", "CAM01563.jpg", "CAM01569.jpg",
+        "DSC00019.JPG", "DSC00021.JPG", "DSC00024.JPG", "DSC00026.JPG", "DSC00027.JPG",
+        "IMG_20170311_120718.jpg", "IMG_20190531_162655.jpg", "IMG_20190606_211123.jpg",
+        "IMG_20190606_211153.jpg", "Obraz 001d.jpg", "Prodrex.jpg", "Zdjecie0765.jpg",
+        "Zdjecie0977.jpg", "ansal.jpg", "ansal1.jpg", "ansal2.jpg", "apteka-detal.jpg",
+        "centrum-literki.jpg", "litery swietlne-apteka.jpg", "litery swietlne-uprawa.jpg",
+        "litery swietlne-uprawa2.jpg", "pianina1.jpg", "pianina2.jpg", "pianina3.jpg",
+        "policja-litery.jpg", "policja-litery2.jpg", "prodrex1.jpg", "prodrex2.jpg",
+        "rawona.jpg", "zdjcie0773.jpg", "zdjcie0775.jpg", "zdjcie0780.jpg"
+      ].map((img) => (
+        <a href={`/images/litery_blokowe/${img}`} class="gallery-item glightbox" data-gallery="blokowe">
+          <img src={`/images/litery_blokowe/${img}`} alt="Realizacja liter blokowych LED" loading="lazy" />
+          <div class="gallery-overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</ServiceTemplate>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<script is:inline src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+</script>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: var(--structa-charcoal);
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+</style>       <span class="process-time">1-2 dni</span>
         </div>
       </div>
     </div>

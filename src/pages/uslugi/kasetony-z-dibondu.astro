@@ -9,11 +9,6 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
-  images={[
-    "/images/portfolio/kasetony-z-dibondu/kaseton-1.jpg",
-    "/images/portfolio/kasetony-z-dibondu/kaseton-2.jpg",
-    "/images/portfolio/kasetony-z-dibondu/kaseton-3.jpg"
-  ]}
 >
   <div slot="content">
     <h3>Czym jest Dibond?</h3>
@@ -175,4 +170,141 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       </div>
     </div>
   </div>
+
+  <div slot="gallery">
+    <div class="gallery-grid" id="lightgallery">
+      {[
+        "1-0 (1).jpg", "1-1.jpg", "1-2.jpg", "1-3.jpg", "1-4.jpg",
+        "14650485_1443457202349354_8142922154790400149_n.jpg",
+        "14708149_1443457212349353_6131885743880172286_n.jpg",
+        "2-0.jpg",
+        "21078604_1828826857145718_9011511299946553485_n.jpg",
+        "21105966_1828840677144336_1669656553024684099_n.jpg",
+        "21752059_1852228721472198_1301084505727608237_n.jpg",
+        "23131858_1895409327154137_7969126185119797836_n.jpg",
+        "24312704_1934160603279009_6323659284092934389_n.jpg",
+        "3-0.jpg", "3-1.jpg",
+        "30707310_2090736270954774_399687010865905664_n.jpg",
+        "30708540_2092981687396899_3743146745303924736_n.jpg",
+        "30716120_2092981520730249_5898438661027921920_n.jpg",
+        "33364906_2134951779866556_4512986007812964352_n.jpg",
+        "33387582_2134951806533220_36680347852734464_n.jpg",
+        "4-1.jpg",
+        "48896817_2481814641846933_4889321126871695360_n.jpg",
+        "48902237_2481814241846973_3565401357710000128_n.jpg",
+        "48945355_2481814195180311_3892437764108451840_n.jpg",
+        "48960160_2481813958513668_5966749699258974208_n.jpg",
+        "48967476_2481814065180324_4672631707436843008_n.jpg",
+        "48996040_2481813978513666_7633866350695284736_n.jpg",
+        "49023173_2481814028513661_6038129388543803392_n.jpg",
+        "49025877_2481814681846929_6386224410436567040_n.jpg",
+        "49061424_2481814751846922_3768084974691942400_n.jpg",
+        "49344510_2481814281846969_4305101056586547200_n.jpg",
+        "49375972_2481814151846982_6542892185895829504_n.jpg",
+        "49403641_2481813998513664_6089089699496853504_n.jpg",
+        "5-1.jpg", "5-2.jpg", "5-3.jpg", "6-1.jpg", "6-2.jpg", "71.jpg", "72.jpg", "73.jpg", "74.jpg", "77.jpg", "78.jpg", "79.jpg",
+        "79230097_2589363494433604_1419434434460909568_n.jpg",
+        "79715638_2589363561100264_8174367789960658944_n.jpg",
+        "80.jpg", "83.jpg", "87.jpg", "88.jpg", "9.jpg", "92.jpg", "93.jpg", "95.jpg", "97.jpg", "98.jpg",
+        "CAM03271.jpg", "DSC06118.JPG", "DSC06124.JPG", "IMG_20181010_140425.jpg", "IMG_20190304_162428.jpg",
+        "IMG_20190304_162436.jpg", "IMG_20190401_145108.jpg", "IMG_20190402_073441.jpg", "IMG_20190516_162458.jpg",
+        "IMG_20190607_145718.jpg", "IMG_20190903_175802.jpg", "IMG_20190903_194755.jpg", "IMG_20191014_183018.jpg",
+        "IMG_20191016_200138.jpg", "kontrakt1.jpg", "kontrakt2.jpg", "kontrakt3.jpg", "kontrakt4.jpg",
+        "lilly-kaseton1.jpg", "lilly-kaseton2.jpg", "magnolia-kaseton.jpg", "policja-semafor.jpg",
+        "policja-semafor2.jpg", "pracowniafryzur-kaseton1.jpg", "pracowniafryzur-kaseton2.jpg"
+      ].map((img) => (
+        <a href={`/images/kaseton/${img}`} class="gallery-item glightbox" data-gallery="kaseton">
+          <img src={`/images/kaseton/${img}`} alt="Realizacja kasetonu reklamowego" loading="lazy" />
+          <div class="gallery-overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
 </ServiceTemplate>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<script is:inline src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true,
+      autoplayVideos: true
+    });
+  });
+
+  // Dodatkowa inicjalizacja dla Astro View Transitions (jeśli używane)
+  document.addEventListener('astro:after-swap', () => {
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
+    });
+  });
+</script>
+
+<style>
+  .service-gallery {
+    padding-top: 2rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: var(--structa-charcoal);
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+</style>
