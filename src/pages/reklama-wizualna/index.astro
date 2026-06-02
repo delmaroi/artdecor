@@ -1,0 +1,84 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { Icon } from "astro-icon/components";
+import { cities } from "../../lib/cities-data";
+import "../../styles/globals.css";
+
+const site = Astro.site ?? new URL("https://www.artdecor.net.pl/");
+const pageUrl = `${site.origin}/reklama-wizualna/`;
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": `${pageUrl}#cities`,
+  name: "Reklama wizualna — obsługa miast",
+  itemListElement: cities.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "City",
+      name: c.name,
+      url: `${site.origin}/reklama-wizualna/${c.slug}/`,
+      geo: { "@type": "GeoCoordinates", latitude: c.lat, longitude: c.lng },
+    },
+  })),
+};
+---
+<Layout
+  title="Reklama wizualna na Śląsku — Tychy, Bielsko-Biała, Katowice | Art Decor"
+  description="Art Decor obsługuje całe województwo śląskie: Tychy, Bielsko-Biała, Katowice, Mikołów, Rybnik, Żory. Pylony, kasetony LED, oklejanie. Tel. 696 293 362."
+>
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(itemListJsonLd)} />
+  <Header />
+  <main>
+    <section class="section cities-hero">
+      <div class="container">
+        <h1>Reklama wizualna w woj. śląskim</h1>
+        <p class="lead">
+          Z naszej siedziby w Pszczynie obsługujemy całe województwo śląskie. Wybierz swoje miasto, żeby zobaczyć szczegóły lokalnej obsługi, ceny i czas dojazdu.
+        </p>
+      </div>
+    </section>
+
+    <section class="section cities-grid-wrap">
+      <div class="container">
+        <ul class="cities-grid">
+          {cities.map((c) => (
+            <li>
+              <a href={`/reklama-wizualna/${c.slug}/`} class="city-card glass-card">
+                <header>
+                  <h2>{c.name}</h2>
+                  <span class="distance">{c.distanceFromPszczyna} · {c.drivingTimeMin} min</span>
+                </header>
+                <p class="city-pop">Populacja: {c.population}</p>
+                <p class="city-desc">{c.description.slice(0, 140)}…</p>
+                <span class="link">
+                  Szczegóły obsługi <Icon name="lucide:arrow-right" size={16} />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .cities-hero { padding-block: 6rem 2rem; text-align: center; }
+  .cities-hero h1 { font-family: var(--font-display); font-size: clamp(2.25rem, 5vw, 3.5rem); margin: 0 0 1rem; letter-spacing: -0.02em; }
+  .lead { color: var(--color-text-muted); max-width: 44rem; margin: 0 auto; font-size: 1.125rem; line-height: 1.65; }
+  .cities-grid-wrap { padding-block: 2rem 6rem; }
+  .cities-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.25rem; }
+  .city-card { display: block; padding: 1.75rem; color: var(--color-text); transition: all .25s ease; }
+  .city-card:hover { transform: translateY(-3px); border-color: rgba(255, 92, 53, 0.4); color: var(--color-text); box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+  .city-card header { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 0.5rem; }
+  .city-card h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 0; }
+  .city-card .distance { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-accent); }
+  .city-pop { font-size: 0.8125rem; color: var(--color-text-muted); margin: 0 0 0.5rem; }
+  .city-desc { color: var(--color-text-muted); line-height: 1.55; font-size: 0.95rem; margin: 0 0 1rem; }
+  .link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 700; color: var(--color-accent); }
+</style>

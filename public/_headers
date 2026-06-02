@@ -1,0 +1,35 @@
+# Netlify / Cloudflare Pages — security & caching headers
+# Documentation: https://docs.netlify.com/routing/headers/
+
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  X-DNS-Prefetch-Control: on
+
+# HTML — krótki cache, rewalidacja
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Assety statyczne (Astro hashed) — immutable rok
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Obrazy
+/images/*
+  Cache-Control: public, max-age=2592000
+
+# Fonty (gdyby były lokalne)
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# robots.txt, llms.txt — krótki cache, ważna świeżość
+/robots.txt
+  Cache-Control: public, max-age=3600
+/llms.txt
+  Cache-Control: public, max-age=3600
+/sitemap-*.xml
+  Cache-Control: public, max-age=3600

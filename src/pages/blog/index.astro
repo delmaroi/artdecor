@@ -1,0 +1,86 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { blogPosts } from "../../lib/blog-data";
+import "../../styles/globals.css";
+
+const sorted = [...blogPosts].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+
+const site = Astro.site ?? new URL("https://www.artdecor.net.pl/");
+const blogJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": `${site.origin}/blog/#blog`,
+  url: `${site.origin}/blog/`,
+  name: "Blog Art Decor Pszczyna",
+  description:
+    "Poradniki, porównania materiałów i case studies z zakresu reklamy wizualnej — pylonów, kasetonów LED, liter 3D i oklejania.",
+  publisher: { "@id": `${site.origin}/#organization` },
+  blogPost: sorted.map((p) => ({
+    "@type": "BlogPosting",
+    headline: p.title,
+    description: p.description,
+    url: `${site.origin}/blog/${p.slug}/`,
+    datePublished: p.publishedAt,
+    dateModified: p.modifiedAt ?? p.publishedAt,
+    author: { "@id": `${site.origin}/#organization` },
+  })),
+};
+---
+<Layout
+  title="Blog Art Decor Pszczyna — poradniki, materiały i case studies"
+  description="Praktyczne poradniki o reklamie wizualnej: dibond, plexi, LED, oklejanie. Doświadczenie warsztatu reklamowego z Pszczyny."
+>
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(blogJsonLd)} />
+  <Header />
+  <main>
+    <section class="section blog-hero">
+      <div class="container">
+        <h1>Blog Art Decor Pszczyna</h1>
+        <p class="blog-lead">Poradniki, porównania materiałów i case studies z warsztatu reklamowego.</p>
+      </div>
+    </section>
+
+    <section class="section blog-list">
+      <div class="container">
+        <ul class="posts">
+          {sorted.map((p) => (
+            <li class="post-card glass-card">
+              <article>
+                <header>
+                  <p class="post-tags">{p.tags.join(" · ")}</p>
+                  <h2 class="post-title">
+                    <a href={`/blog/${p.slug}/`}>{p.title}</a>
+                  </h2>
+                </header>
+                <p class="post-desc">{p.description}</p>
+                <footer class="post-meta">
+                  <time datetime={p.publishedAt}>{p.publishedAt}</time>
+                  <span> · {p.readingTimeMin} min czytania</span>
+                </footer>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .blog-hero { padding-block: 6rem 2rem; text-align: center; }
+  .blog-hero h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 3.5rem); margin: 0 0 1rem; }
+  .blog-lead { color: var(--color-text-muted); max-width: 42rem; margin: 0 auto; font-size: 1.125rem; }
+  .blog-list { padding-block: 2rem 6rem; }
+  .posts { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+  .post-card { padding: 2rem; transition: all var(--transition-base, .3s ease); }
+  .post-card:hover { border-color: rgba(255, 92, 53, 0.3); }
+  .post-tags { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 0.5rem; }
+  .post-title { font-family: var(--font-display); font-size: 1.5rem; margin: 0 0 0.75rem; line-height: 1.25; }
+  .post-title a { color: var(--color-text); }
+  .post-title a:hover { color: var(--color-accent); }
+  .post-desc { color: var(--color-text-muted); line-height: 1.6; margin: 0 0 1rem; }
+  .post-meta { font-size: 0.875rem; color: var(--color-text-muted); }
+</style>

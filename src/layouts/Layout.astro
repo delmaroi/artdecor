@@ -31,16 +31,33 @@ const ogImageUrl = new URL(DEFAULT_OG_IMAGE_PATH, site).href;
 
 const openGraphSocialTitle = ogBasicTitle ?? title;
 
+const organizationId = `${site.origin}/#organization`;
+
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": `${site.origin}/#organization`,
+  "@type": ["LocalBusiness", "ProfessionalService"],
+  "@id": organizationId,
+  // Wikidata: Q1390083 (sign making) — wzmacnia entity recognition dla AI
+  additionalType: "https://www.wikidata.org/wiki/Q1390083",
   name: "Art Decor",
+  alternateName: ["Art Decor Pszczyna", "F.H.U. Art Decor"],
   legalName: "F.H.U. Art Decor",
+  description:
+    "Agencja reklamowa Art Decor — kompleksowa reklama wizualna w Pszczynie i woj. śląskim. Pylony, kasetony LED, litery 3D, szyldy, oklejanie witryn i samochodów, tablice LED, piaskowanie artystyczne.",
   url: site.origin,
   image: [new URL("/images/logo2.jpeg", site).href, ogImageUrl],
+  logo: new URL("/images/logo_kolor2.svg", site).href,
   telephone: "+48696293362",
   email: "biuro@artdecor.net.pl",
+  // TODO: po weryfikacji NIP/REGON zaktualizować poniższe pola
+  // taxID: "PLXXXXXXXXXX",
+  // vatID: "PLXXXXXXXXXX",
+  // iso6523Code: "0184:XXXXXXXXXX",
+  foundingDate: "2008",
+  slogan: "Reklama wizualna z charakterem",
+  priceRange: "$$",
+  paymentAccepted: ["Cash", "Credit Card", "Bank Transfer", "Invoice"],
+  currenciesAccepted: "PLN",
   address: {
     "@type": "PostalAddress",
     streetAddress: "ul. Męczenników Oświęcimskich 16",
@@ -49,10 +66,23 @@ const jsonLd = {
     addressRegion: "śląskie",
     addressCountry: "PL",
   },
-  areaServed: {
-    "@type": "AdministrativeArea",
-    name: "województwo śląskie",
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 49.9789,
+    longitude: 18.9494,
   },
+  hasMap: "https://www.google.com/maps/search/?api=1&query=Art+Decor+Pszczyna+Męczenników+Oświęcimskich+16",
+  areaServed: [
+    { "@type": "City", name: "Pszczyna" },
+    { "@type": "City", name: "Tychy" },
+    { "@type": "City", name: "Bielsko-Biała" },
+    { "@type": "City", name: "Katowice" },
+    { "@type": "City", name: "Mikołów" },
+    { "@type": "City", name: "Rybnik" },
+    { "@type": "City", name: "Żory" },
+    { "@type": "AdministrativeArea", name: "województwo śląskie" },
+    { "@type": "Country", name: "Polska" },
+  ],
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
@@ -61,19 +91,63 @@ const jsonLd = {
       closes: "17:00",
     },
   ],
-  sameAs: ["https://www.facebook.com/artdecorreklama/"],
+  sameAs: [
+    "https://www.facebook.com/artdecorreklama/",
+    // TODO: dodać Wikidata Q-item po utworzeniu wpisu encji
+    // "https://www.wikidata.org/wiki/Q...",
+  ],
   knowsAbout: [
     "reklama wizualna",
     "pylony reklamowe",
     "totemy reklamowe",
     "kasetony z dibondu",
     "litery przestrzenne",
+    "litery blokowe LED",
+    "szyldy szklane",
     "oklejanie witryn",
     "oklejanie samochodów",
+    "car wrapping",
     "tablice LED",
     "cięcie ploterowe",
     "frezowanie CNC",
+    "piaskowanie artystyczne",
+    "systemy wystawiennicze",
+    "roll-up",
+    "dibond",
+    "Oracal 641",
+    "Oracal 751",
+    "Oracal 970RA",
+    "moduły LED SMD 5050",
   ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Usługi reklamowe Art Decor Pszczyna",
+    itemListElement: [
+      "pylony-totemy",
+      "kasetony-z-dibondu",
+      "litery-blokowe",
+      "litery-przestrzenne",
+      "szyldy-szklane",
+      "oklejanie-witryn",
+      "oklejanie-samochodow",
+      "tablice-led",
+      "systemy-wystawiennicze",
+      "wycinanie-znakow",
+      "piaskowanie-artystyczne",
+      "punkty-gastronomiczne",
+    ].map((slug) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", "@id": `${site.origin}/uslugi/${slug}/#service` },
+    })),
+  },
+  // TODO: po weryfikacji właściciela odkomentować i uzupełnić Person schema
+  // founder: {
+  //   "@type": "Person",
+  //   name: "[Imię Nazwisko]",
+  //   jobTitle: "Właściciel / Lead designer",
+  //   worksFor: { "@id": organizationId },
+  //   sameAs: ["https://www.linkedin.com/in/..."],
+  // },
 } as const;
 ---
 <!DOCTYPE html>
@@ -115,7 +189,7 @@ const jsonLd = {
         link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
         meta: [
           { name: "generator", content: Astro.generator },
-          { name: "theme-color", content: "#0f1419" },
+          { name: "theme-color", content: "#232D48" },
           { name: "author", content: "Art Decor Pszczyna" },
           { name: "geo.region", content: "PL-SL" },
           { name: "geo.placename", content: "Pszczyna" },
@@ -123,13 +197,11 @@ const jsonLd = {
         ],
       }}
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <link rel="preload" href="/fonts/font-7.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/font-9.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
   </head>
   <body>
     <div class="layout-wrap">

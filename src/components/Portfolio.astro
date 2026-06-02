@@ -68,7 +68,14 @@ const portfolioItems: PortfolioItem[] = [
         <li class="portfolio-item" data-category={item.category.toLowerCase().replace(/\s+/g, "-")}>
           <div class="portfolio-card">
             <div class="portfolio-image-wrapper">
-              <img src={item.image} alt={item.title} loading="lazy" />
+              <img
+                src={item.image}
+                alt={`${item.title} — realizacja Art Decor Pszczyna, kategoria: ${item.category}`}
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="800"
+              />
               <div class="portfolio-overlay">
                 <div class="portfolio-content">
                   <p class="portfolio-category">{item.category}</p>

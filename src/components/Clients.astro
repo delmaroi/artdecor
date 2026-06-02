@@ -12,7 +12,15 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
       {logos.map((logo, i) => (
         <div class="client-card">
           <div class="client-logo-wrapper">
-            <img src={logo} alt={`Logo klienta ${i + 1}`} class="client-logo" loading="lazy" />
+            <img
+              src={logo}
+              alt={`Logo klienta Art Decor Pszczyna #${i + 1} — współpraca w zakresie reklamy wizualnej`}
+              class="client-logo"
+              loading="lazy"
+              decoding="async"
+              width="200"
+              height="100"
+            />
           </div>
         </div>
       ))}

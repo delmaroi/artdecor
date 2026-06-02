@@ -1,0 +1,174 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { blogPosts } from "../../lib/blog-data";
+import "../../styles/globals.css";
+
+const slug = "dibond-czy-plexi-roznice-w-reklamie";
+const post = blogPosts.find((p) => p.slug === slug)!;
+const site = Astro.site ?? new URL("https://www.artdecor.net.pl/");
+const pageUrl = `${site.origin}/blog/${slug}/`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `${pageUrl}#article`,
+  mainEntityOfPage: pageUrl,
+  headline: post.title,
+  description: post.description,
+  image: [new URL(post.cover ?? "/images/og-default.png", site).href],
+  datePublished: post.publishedAt,
+  dateModified: post.modifiedAt ?? post.publishedAt,
+  author: { "@id": `${site.origin}/#organization` },
+  publisher: { "@id": `${site.origin}/#organization` },
+  inLanguage: "pl-PL",
+  keywords: post.tags.join(", "),
+  wordCount: 850,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Strona główna", item: `${site.origin}/` },
+    { "@type": "ListItem", position: 2, name: "Blog", item: `${site.origin}/blog/` },
+    { "@type": "ListItem", position: 3, name: post.title, item: pageUrl },
+  ],
+};
+---
+<Layout
+  title={`${post.title} — Blog Art Decor Pszczyna`}
+  description={post.description}
+>
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(articleJsonLd)} />
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbJsonLd)} />
+  <Header />
+  <main>
+    <article class="blog-post">
+      <header class="post-header section">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Ścieżka nawigacji">
+            <a href="/">Strona główna</a>
+            <span aria-hidden="true">/</span>
+            <a href="/blog/">Blog</a>
+            <span aria-hidden="true">/</span>
+            <span>{post.title}</span>
+          </nav>
+          <p class="post-tags">{post.tags.join(" · ")}</p>
+          <h1>{post.title}</h1>
+          <p class="post-lead">{post.description}</p>
+          <div class="post-meta">
+            <time datetime={post.publishedAt}>{post.publishedAt}</time>
+            <span> · {post.readingTimeMin} min czytania · {post.author}</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="section post-body">
+        <div class="container narrow">
+          <p class="tldr">
+            <strong>TL;DR:</strong> Dibond to kompozytowa płyta aluminium-polietylen-aluminium — sztywna, lekka, doskonała na obudowy kasetonów, pylonów i litery 3D bez podświetlenia. Plexi (PMMA) to przezroczyste tworzywo akrylowe — używane głównie do fronów podświetlanych grafik i liter LED. W praktyce oba materiały stosujemy razem: dibond na konstrukcję, plexi na świecące elementy.
+          </p>
+
+          <h2>Czym jest dibond?</h2>
+          <p>
+            Dibond to znak handlowy płyty kompozytowej składającej się z dwóch warstw aluminium (0,2–0,3 mm) i rdzenia z polietylenu (najczęściej 3 mm). Najpopularniejsze zamienniki o tej samej budowie to <strong>Tubond, Etalbond, Starbond, Plabond, Aludecor</strong>. Płyta o grubości 3 mm waży tylko 3,8 kg/m², jest sztywna, łatwa w obróbce i mrozoodporna.
+          </p>
+          <p>
+            Stosujemy ją do produkcji obudów kasetonów reklamowych, poszyć pylonów, liter blokowych i przestrzennych, paneli elewacyjnych. Powierzchnia pokryta jest termoutwardzalnym lakierem poliestrowym dostępnym w paletach RAL (mat i błysk) oraz w wersjach szczotkowanych (stal, miedź, złoto).
+          </p>
+
+          <h2>Czym jest plexi (PMMA)?</h2>
+          <p>
+            Plexi to potoczna nazwa polimetakrylanu metylu (PMMA) — przezroczystego tworzywa sztucznego o właściwościach optycznych zbliżonych do szkła, ale 17× lżejszego i 10× bardziej odpornego na uderzenia. W reklamie wizualnej stosujemy głównie <strong>plexi opal</strong> (mleczne, przepuszczające światło LED) i <strong>plexi przezroczyste</strong> (na detale i osłony).
+          </p>
+          <p>
+            Plexi można też termoformować — czyli rozgrzewać do ~150°C i wyciskać w formie 3D. Tak powstają wypukłe loga i napisy na frontach pylonów oraz kasetonów (efekt głębi, plastyczność).
+          </p>
+
+          <h2>Bezpośrednie porównanie</h2>
+          <p>Najważniejsze różnice w 8 wymiarach:</p>
+          <table class="cmp">
+            <thead>
+              <tr><th>Cecha</th><th>Dibond (kompozyt Al-PE-Al)</th><th>Plexi (PMMA)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Przepuszczalność światła</td><td>0% (nieprzezroczysty)</td><td>92% (przezroczyste), 30–70% (opal)</td></tr>
+              <tr><td>Ciężar (3 mm)</td><td>3,8 kg/m²</td><td>3,6 kg/m²</td></tr>
+              <tr><td>Sztywność</td><td>Wysoka</td><td>Średnia (większe arkusze wymagają ram)</td></tr>
+              <tr><td>Cena (3 mm, m²)</td><td>~110–150 zł netto</td><td>~140–220 zł netto</td></tr>
+              <tr><td>Obróbka</td><td>Frezowanie CNC, gięcie, cięcie</td><td>Frezowanie, cięcie laserem, termoformowanie</td></tr>
+              <tr><td>Odporność na UV</td><td>10+ lat (lakier poliestrowy)</td><td>15+ lat (PMMA jest UV-stabilne)</td></tr>
+              <tr><td>Mrozoodporność</td><td>Doskonała (-40°C)</td><td>Bardzo dobra (-30°C)</td></tr>
+              <tr><td>Typowe zastosowanie</td><td>Obudowa kasetonu, poszycie pylonu, litera blokowa</td><td>Front podświetlany kasetonu, grafika świetlna, litera LED</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Co wybrać do typowych reklam?</h2>
+          <h3>Kaseton podświetlany LED</h3>
+          <p>
+            Obudowa: dibond 3 mm (boki, tył). Front: plexi opal 3–5 mm z naklejoną/wyciętą grafiką. To kombinacja, w której każdy materiał robi to, w czym jest najlepszy — dibond zapewnia sztywność i wytrzymałość konstrukcji, plexi rozprasza światło z modułów LED w sposób równomierny.
+          </p>
+
+          <h3>Pylon reklamowy 3–7 m</h3>
+          <p>
+            Poszycie konstrukcji nośnej: dibond 4 mm (sztywność, mrozoodporność). Grafika podświetlana: plexi opal z plexi termoformowaną 3D (efekt głębi). Dibond pełni rolę „skóry" konstrukcji, plexi rolę „twarzy" reklamy.
+          </p>
+
+          <h3>Litery 3D bez podświetlenia</h3>
+          <p>
+            Dibond 3 mm (najczęściej) lub plexi pełne 8–19 mm w wersji premium z efektem szklistej tafli. Plexi można też anodować lub barwić w masie — efekt drogi, kolor głęboki. Dibond jest tańszy i lżejszy, plexi szlachetniejsza wizualnie.
+          </p>
+
+          <h3>Litery 3D podświetlane LED</h3>
+          <p>
+            Korpus z aluminium lub PCV. Front z plexi opal (front-lit) lub dibondu z plexi „halo" za literą (back-lit). To klasyczna konfiguracja channel letters — dibond na strukturę, plexi na świecące elementy.
+          </p>
+
+          <h2>Kiedy dibond, a kiedy plexi — szybka decyzja</h2>
+          <ul>
+            <li><strong>Wybierz dibond, gdy</strong> potrzebujesz sztywnej, dużej powierzchni, która ma być widoczna w dzień, w jednym kolorze RAL — np. obudowa kasetonu, panel elewacyjny, baza pylonu.</li>
+            <li><strong>Wybierz plexi, gdy</strong> reklama ma świecić nocą, mieć efekt głębi 3D albo wyglądać szlachetnie (litery wnętrzowe, recepcja, gabinet, restauracja premium).</li>
+            <li><strong>Najczęściej łącz oba</strong> — ~80% naszych realizacji to hybryda dibond + plexi, każdy materiał robi to, do czego jest stworzony.</li>
+          </ul>
+
+          <h2>Praktyczne wskazówki z warsztatu</h2>
+          <p>
+            <strong>Termoformowana plexi na froncie pylonu</strong> przyciąga wzrok 3× skuteczniej niż płaska grafika — testowaliśmy to na stacjach paliw. <strong>Dibond szczotkowany</strong> w kolorze stali świetnie wygląda na recepcjach kancelarii i klinik medycznych — daje efekt premium za 30–40% ceny prawdziwej blachy nierdzewnej. <strong>Plexi przezroczystego nie używamy na zewnątrz</strong> — kurz i UV po 2–3 latach powodują mleczenie. Zewnętrznie zawsze plexi opal (mleczna z masy) z gwarancją koloru 10+ lat.
+          </p>
+
+          <h2>Podsumowanie</h2>
+          <p>
+            Dibond i plexi to nie konkurencja, lecz materiały komplementarne. Dibond robi strukturę, plexi robi efekt świetlny. W większości realizacji znajdziesz oba — i to optymalne rozwiązanie kosztowe i wizualne. Jeśli planujesz reklamę i nie wiesz, co wybrać, <a href="/kontakt/">zadzwoń: 696 293 362</a> — doradzimy dobór materiału do konkretnego budżetu, lokalizacji i koncepcji wizualnej.
+          </p>
+        </div>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .blog-post .post-header { padding-block: 6rem 2rem; background: linear-gradient(180deg, rgba(255, 92, 53, 0.04), transparent); }
+  .breadcrumb { display: flex; gap: 0.5rem; font-size: 0.875rem; color: var(--color-text-muted); margin: 0 0 1.5rem; }
+  .breadcrumb a { color: var(--color-text-muted); }
+  .breadcrumb a:hover { color: var(--color-accent); }
+  .post-tags { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 0.75rem; }
+  .blog-post h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 0 0 1rem; }
+  .post-lead { font-size: 1.125rem; line-height: 1.7; color: var(--color-text-muted); max-width: 50rem; margin: 0 0 1.5rem; }
+  .post-meta { color: var(--color-text-muted); font-size: 0.9rem; }
+  .post-body { padding-block: 2rem 6rem; }
+  .narrow { max-width: 52rem; }
+  .tldr { padding: 1.25rem 1.5rem; background: rgba(255, 92, 53, 0.05); border-left: 3px solid var(--color-accent); border-radius: 0 8px 8px 0; margin: 0 0 2.5rem; line-height: 1.65; }
+  .post-body h2 { font-family: var(--font-display); font-size: 1.75rem; margin: 2.5rem 0 1rem; }
+  .post-body h3 { font-family: var(--font-display); font-size: 1.25rem; margin: 1.75rem 0 0.5rem; }
+  .post-body p { line-height: 1.75; color: var(--color-text); margin: 0 0 1.25rem; }
+  .post-body ul { margin: 1rem 0 1.5rem; padding-left: 1.5rem; line-height: 1.75; }
+  .post-body li { margin-bottom: 0.5rem; }
+  .post-body a { color: var(--color-accent); border-bottom: 1px solid currentColor; }
+  table.cmp { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; font-size: 0.95rem; }
+  table.cmp th, table.cmp td { padding: 0.6rem 0.85rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--color-border); }
+  table.cmp th { background: rgba(255, 92, 53, 0.06); font-weight: 700; }
+  table.cmp tr:nth-child(even) td { background: rgba(0, 0, 0, 0.02); }
+</style>

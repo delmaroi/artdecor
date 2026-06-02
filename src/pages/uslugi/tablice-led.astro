@@ -2,16 +2,35 @@
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
 ---
 <ServiceTemplate
-  title="Tablice LED - Art Decor Pszczyna"
-  description="Elektroniczne tablice LED do wyświetlania reklam i informacji. Pełny kolor, programowalne."
+  title="Tablice LED — Art Decor Pszczyna | wyświetlacze tekstowe i full color"
+  description="Elektroniczne tablice LED do dynamicznej reklamy: wyświetlacze tekstowe i pełnokolorowe RGB, sterowanie zdalne. Pszczyna i Śląsk. Tel. 696 293 362."
   heroTitle="Tablice LED"
   heroSubtitle="Nowoczesne elektroniczne tablice LED do dynamicznej reklamy i informacji."
+  slug="tablice-led"
+  serviceType="LED display advertising systems"
+  serviceAlternateNames={["Wyświetlacz LED", "Reklama dynamiczna LED", "Tablica informacyjna LED", "Ekran LED reklamowy", "DOOH LED"]}
+  priceFrom={1800}
+  answerBlock="Tablica LED to elektroniczny wyświetlacz reklamowy z modułów LED, programowalny, ze sterowaniem zdalnym przez WiFi/USB/Ethernet. Dostępne wersje tekstowe (1-kolor lub RGB) oraz pełnokolorowe full-color (rozdzielczość P4/P5/P6/P10). Stosowane na elewacjach, w gastronomii, parkingach i przy drogach. Cena od 1 800 zł netto."
   content={true}
   specifications={true}
   images={[
     "/images/portfolio/tablice-led/led-1.jpg",
     "/images/portfolio/tablice-led/led-2.jpg",
     "/images/portfolio/tablice-led/led-3.jpg"
+  ]}
+  faqs={[
+    {
+      q: "Czym różni się P4 od P10 w tablicach LED?",
+      a: "P (pixel pitch) to odległość między diodami w mm. P10 — diody co 10 mm, idealne na duże tablice oglądane z dystansu 10+ m. P6 — z 6+ m. P4 — z 4+ m (sklepy, wnętrza). Im mniejsze P, tym wyższa rozdzielczość i cena (P4 ~3× droższe niż P10)."
+    },
+    {
+      q: "Czy tablicę LED można programować zdalnie?",
+      a: "Tak — wszystkie nasze tablice mają moduł sterujący z WiFi i USB. Treść zmieniasz z komputera lub telefonu (aplikacja producenta). Możesz planować wyświetlanie na harmonogram (np. menu śniadaniowe rano, obiad w południe, promocje wieczorem)."
+    },
+    {
+      q: "Jakie zużycie prądu ma tablica LED?",
+      a: "Średnie zużycie tablicy 1 m² P10: 250–400 W przy 100% jasności (rzadko używanej). Realnie 100–200 W. Roczny koszt prądu typowej tablicy 2×1 m: 400–800 zł. Diody LED zużywają 5–10× mniej prądu niż neony i 2–3× mniej niż tradycyjne podświetlenie."
+    }
   ]}
 >
   <div slot="content">

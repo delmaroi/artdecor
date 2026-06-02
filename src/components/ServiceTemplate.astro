@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
+import FAQ from "./FAQ.astro";
 import { Carousel } from "astro-carousel";
 import { Icon } from "astro-icon/components";
 import GradientTitle from "./GradientTitle.astro";
@@ -9,14 +10,100 @@ import "../styles/globals.css";
 import "../styles/service-pages.css";
 import type { ServiceTemplateProps } from "../types/index";
 
-const { title, description, heroTitle, heroSubtitle, content, specifications, process, images = [], ctaText = "Zapytaj o wycenę", ctaHref = "/kontakt/" } = Astro.props as ServiceTemplateProps;
+const {
+  title,
+  description,
+  heroTitle,
+  heroSubtitle,
+  content,
+  specifications,
+  process,
+  images = [],
+  ctaText = "Zapytaj o wycenę",
+  ctaHref = "/kontakt/",
+  slug,
+  answerBlock,
+  serviceAlternateNames,
+  priceFrom,
+  serviceType,
+  faqs,
+} = Astro.props as ServiceTemplateProps;
+
+const site = Astro.site ?? new URL("https://www.artdecor.net.pl/");
+const pageUrl = new URL(Astro.url.pathname, site).href;
+const organizationId = `${site.origin}/#organization`;
+
+// Service JSON-LD — emitowane gdy mamy slug
+const serviceJsonLd = slug
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${pageUrl}#service`,
+      name: heroTitle,
+      ...(serviceAlternateNames && serviceAlternateNames.length > 0
+        ? { alternateName: serviceAlternateNames }
+        : {}),
+      ...(serviceType ? { serviceType } : {}),
+      description,
+      url: pageUrl,
+      provider: { "@id": organizationId },
+      areaServed: [
+        { "@type": "City", name: "Pszczyna" },
+        { "@type": "AdministrativeArea", name: "województwo śląskie" },
+        { "@type": "Country", name: "Polska" },
+      ],
+      ...(priceFrom
+        ? {
+            offers: {
+              "@type": "Offer",
+              priceCurrency: "PLN",
+              price: priceFrom,
+              priceSpecification: {
+                "@type": "PriceSpecification",
+                priceCurrency: "PLN",
+                minPrice: priceFrom,
+                description: `Od ${priceFrom} zł netto`,
+              },
+              availability: "https://schema.org/InStock",
+              areaServed: "PL",
+            },
+          }
+        : {}),
+    }
+  : null;
+
+// BreadcrumbList JSON-LD
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Strona główna",
+      item: site.origin + "/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Usługi",
+      item: `${site.origin}/#uslugi`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: heroTitle,
+      item: pageUrl,
+    },
+  ],
+};
 
 // Map image strings to objects required by astro-carousel
-const carouselImages = images.map(img => {
+const carouselImages = images.map((img, idx) => {
   const src = typeof img === 'string' ? img : img.src;
   return {
     src,
-    alt: heroTitle,
+    alt: `${heroTitle} — realizacja ${idx + 1}`,
     width: 1200,
     height: 800,
     format: "webp"
@@ -24,6 +111,10 @@ const carouselImages = images.map(img => {
 });
 ---
 <Layout title={title} description={description}>
+  {serviceJsonLd && (
+    <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(serviceJsonLd)} />
+  )}
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbJsonLd)} />
   <Header />
   <main>
     <!-- Hero Section -->
@@ -32,15 +123,20 @@ const carouselImages = images.map(img => {
         <div class="service-hero-gradient"></div>
       </div>
       <div class="container service-hero-inner">
-        <div class="breadcrumb">
+        <nav class="breadcrumb" aria-label="Ścieżka nawigacji">
           <a href="/">Strona główna</a>
-          <span>/</span>
+          <span aria-hidden="true">/</span>
           <a href="/#uslugi">Usługi</a>
-          <span>/</span>
+          <span aria-hidden="true">/</span>
           <span>{heroTitle}</span>
-        </div>
+        </nav>
         <GradientTitle title={heroTitle} gradientWords={1} tag="h1" class="service-hero-title" />
         {heroSubtitle && <p class="service-hero-subtitle">{heroSubtitle}</p>}
+        {answerBlock && (
+          <p class="service-answer-block" aria-label="Krótka definicja usługi">
+            {answerBlock}
+          </p>
+        )}
         <a href={ctaHref} class="service-cta">
           {ctaText}
           <Icon name="lucide:arrow-right" size={20} />
@@ -110,6 +206,10 @@ const carouselImages = images.map(img => {
         )}
       </div>
     </section>
+
+    {faqs && faqs.length > 0 && (
+      <FAQ faqs={faqs} />
+    )}
 
     <!-- CTA Section -->
     <section class="section service-cta-section">
@@ -200,8 +300,21 @@ const carouselImages = images.map(img => {
   .service-hero-subtitle {
     font-size: clamp(1.1rem, 2vw, 1.25rem);
     color: var(--color-text-muted);
-    margin: 0 0 2.5rem;
+    margin: 0 0 1.5rem;
     line-height: 1.7;
+  }
+
+  .service-answer-block {
+    display: block;
+    padding: 1.25rem 1.5rem;
+    margin: 0 0 2rem;
+    background: rgba(255, 92, 53, 0.05);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 var(--radius-md, 8px) var(--radius-md, 8px) 0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-text);
+    max-width: 720px;
   }
 
   .service-cta {

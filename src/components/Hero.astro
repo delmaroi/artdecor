@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import GradientTitle from "./GradientTitle.astro";
-import HeroCanvas from "./HeroCanvas.astro";
+import HeroCanvasArtDeco from "./HeroCanvasArtDeco.astro";
 
 export interface Props {
   title: string;
@@ -15,7 +15,7 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
 <section class="hero">
   <div class="hero-bg" aria-hidden="true">
     <div class="hero-image-layer"></div>
-    <HeroCanvas />
+    <HeroCanvasArtDeco />
     <div class="hero-overlay-gradient"></div>
     <div class="hero-noise noise-overlay"></div>
   </div>
@@ -70,17 +70,30 @@ const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kase
   .hero-image-layer {
     position: absolute;
     inset: 0;
-    background-image: url('/images/hero-bg.png');
+    background-image: url('/images/hero-bg-artdeco.svg');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.35) contrast(1.1);
+    background-repeat: no-repeat;
+    filter: brightness(0.85) contrast(1.05) saturate(1.05);
     z-index: 1;
+    animation: heroArtDecoBreath 18s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroArtDecoBreath {
+    0%   { transform: scale(1.00); filter: brightness(0.82) contrast(1.05) saturate(1.02); }
+    100% { transform: scale(1.04); filter: brightness(0.92) contrast(1.08) saturate(1.10); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-image-layer { animation: none; }
   }
 
   .hero-overlay-gradient {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(35, 45, 72, 0.3) 0%, rgba(35, 45, 72, 0.75) 100%);
+    background:
+      radial-gradient(ellipse at 50% 35%, rgba(35, 45, 72, 0.15) 0%, rgba(22, 29, 46, 0.55) 60%, rgba(22, 29, 46, 0.82) 100%),
+      linear-gradient(180deg, rgba(35, 45, 72, 0.25) 0%, rgba(22, 29, 46, 0.6) 100%);
     z-index: 3;
   }
 

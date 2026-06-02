@@ -22,4 +22,16 @@ export interface ServiceTemplateProps {
   images?: (string | { src: string })[];
   ctaText?: string;
   ctaHref?: string;
+  /** Slug usługi — używany do canonical i BreadcrumbList. Np. "pylony-totemy". */
+  slug?: string;
+  /** Krótka, samodzielna definicja usługi (2–3 zdania) — answer-block dla AI. */
+  answerBlock?: string;
+  /** Alternatywne nazwy usługi dla schema.org (synonimy używane przez klientów). */
+  serviceAlternateNames?: string[];
+  /** Cena minimalna w PLN netto (opcjonalnie — wzbogaca Service schema o Offer). */
+  priceFrom?: number;
+  /** Typ usługi po angielsku dla schema.org `serviceType`. */
+  serviceType?: string;
+  /** Lista konkretnych FAQ dla tej usługi (każda strona usługi ma własne FAQPage). */
+  faqs?: { q: string; a: string }[];
 }

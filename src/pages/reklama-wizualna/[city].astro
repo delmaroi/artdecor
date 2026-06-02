@@ -1,0 +1,242 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { Icon } from "astro-icon/components";
+import { cities, type CityData } from "../../lib/cities-data";
+import "../../styles/globals.css";
+
+export function getStaticPaths() {
+  return cities.map((city) => ({
+    params: { city: city.slug },
+    props: { city },
+  }));
+}
+
+interface Props { city: CityData; }
+const { city } = Astro.props;
+
+const site = Astro.site ?? new URL("https://www.artdecor.net.pl/");
+const pageUrl = `${site.origin}/reklama-wizualna/${city.slug}/`;
+const organizationId = `${site.origin}/#organization`;
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: `Reklama wizualna ${city.prepositional} — Art Decor`,
+  serviceType: "Visual advertising and signage manufacturing",
+  description: city.description,
+  url: pageUrl,
+  provider: { "@id": organizationId },
+  areaServed: {
+    "@type": "City",
+    name: city.name,
+    geo: { "@type": "GeoCoordinates", latitude: city.lat, longitude: city.lng },
+  },
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "PLN",
+    availability: "https://schema.org/InStock",
+    areaServed: city.name,
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Strona główna", item: `${site.origin}/` },
+    { "@type": "ListItem", position: 2, name: "Reklama wizualna", item: `${site.origin}/reklama-wizualna/` },
+    { "@type": "ListItem", position: 3, name: city.name, item: pageUrl },
+  ],
+};
+
+const cityFaqs = [
+  {
+    q: `Czy obsługujecie ${city.name}?`,
+    a: `Tak, regularnie realizujemy zlecenia ${city.prepositional}. Z naszej siedziby w Pszczynie do ${city.name} jest ${city.distanceFromPszczyna}, dojazd zajmuje ok. ${city.drivingTimeMin} minut. Pomiar i montaż wykonujemy w jednym przejeździe — bez dodatkowych kosztów logistyki dla typowych realizacji.`,
+  },
+  {
+    q: `Ile kosztuje pylon lub kaseton ${city.prepositional}?`,
+    a: `Cena jest taka sama jak w Pszczynie — nie naliczamy dopłaty „za odległość". Pylon od 6 000 zł netto, kaseton LED od 1 200 zł netto/m², litery blokowe LED od 250 zł netto/szt. Logistyka i montaż wliczone dla projektów powyżej 3 000 zł netto.`,
+  },
+  {
+    q: `Jak szybko możecie zrealizować zlecenie ${city.prepositional}?`,
+    a: `Standardowy czas to 5–14 dni roboczych — projekt 2–3 dni, produkcja 5–10 dni, montaż 1 dzień. Dla pilnych zleceń (np. otwarcie lokalu) potrafimy zrobić szyld lub witrynę w 48–72 h.`,
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: cityFaqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+---
+<Layout
+  title={`Reklama wizualna ${city.prepositional} — Art Decor Pszczyna | pylony, kasetony LED, oklejanie`}
+  description={`${city.description} Tel. 696 293 362.`}
+>
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(serviceJsonLd)} />
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbJsonLd)} />
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(faqJsonLd)} />
+  <Header />
+  <main>
+    <section class="section city-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ścieżka nawigacji">
+          <a href="/">Strona główna</a>
+          <span aria-hidden="true">/</span>
+          <a href="/reklama-wizualna/">Reklama wizualna</a>
+          <span aria-hidden="true">/</span>
+          <span>{city.name}</span>
+        </nav>
+        <h1>Reklama wizualna <span class="city-name">{city.prepositional.replace(/^w /, "")}</span></h1>
+        <p class="city-lead">{city.description}</p>
+
+        <div class="city-stats">
+          <div class="stat">
+            <Icon name="lucide:map-pin" size={20} />
+            <div><strong>{city.distanceFromPszczyna}</strong><span>z Pszczyny</span></div>
+          </div>
+          <div class="stat">
+            <Icon name="lucide:car" size={20} />
+            <div><strong>{city.drivingTimeMin} min</strong><span>dojazd</span></div>
+          </div>
+          <div class="stat">
+            <Icon name="lucide:zap" size={20} />
+            <div><strong>5–14 dni</strong><span>realizacja</span></div>
+          </div>
+        </div>
+
+        <a href="/kontakt/" class="city-cta">
+          Zapytaj o wycenę dla {city.name}
+          <Icon name="lucide:arrow-right" size={18} />
+        </a>
+      </div>
+    </section>
+
+    <section class="section city-context">
+      <div class="container narrow">
+        <h2>Czego potrzebują firmy {city.prepositional}?</h2>
+        <p>{city.localContext}</p>
+
+        <h3>Obszar obsługi</h3>
+        <p>Realizujemy projekty {city.prepositional} oraz w okolicznych dzielnicach: {city.neighborhoods.join(", ")}.</p>
+      </div>
+    </section>
+
+    <section class="section city-services">
+      <div class="container">
+        <h2>Co wykonujemy {city.prepositional}</h2>
+        <div class="services-grid">
+          <a class="service-card glass-card" href="/uslugi/pylony-totemy/">
+            <h3>Pylony i totemy</h3>
+            <p>Wolnostojące konstrukcje 3–7 m, podświetlenie LED, fundament B20.</p>
+            <span class="price">od 6 000 zł netto</span>
+          </a>
+          <a class="service-card glass-card" href="/uslugi/kasetony-z-dibondu/">
+            <h3>Kasetony LED z dibondu</h3>
+            <p>Frezowane CNC, plexi opal, moduły SMD 5050, gwarancja 24 mies.</p>
+            <span class="price">od 1 200 zł netto/m²</span>
+          </a>
+          <a class="service-card glass-card" href="/uslugi/litery-blokowe/">
+            <h3>Litery blokowe LED</h3>
+            <p>Przestrzenne litery 3D podświetlane od wewnątrz, 15–120 cm.</p>
+            <span class="price">od 250 zł netto/szt.</span>
+          </a>
+          <a class="service-card glass-card" href="/uslugi/oklejanie-samochodow/">
+            <h3>Oklejanie samochodów</h3>
+            <p>Car wrapping, reklama na flotę, folie Oracal 970RA, 3M 1080.</p>
+            <span class="price">od 400 zł netto</span>
+          </a>
+          <a class="service-card glass-card" href="/uslugi/oklejanie-witryn/">
+            <h3>Oklejanie witryn</h3>
+            <p>One-Way Vision, folia mleczna, kolorowe wydruki UV.</p>
+            <span class="price">od 90 zł netto/m²</span>
+          </a>
+          <a class="service-card glass-card" href="/uslugi/tablice-led/">
+            <h3>Tablice LED</h3>
+            <p>Wyświetlacze full-color P4–P10, sterowanie WiFi.</p>
+            <span class="price">od 1 800 zł netto</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section city-faq">
+      <div class="container narrow">
+        <h2>Najczęstsze pytania o reklamę {city.prepositional}</h2>
+        {cityFaqs.map((f) => (
+          <details class="city-faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="section city-cta-final">
+      <div class="container narrow">
+        <h2>Porozmawiajmy o Twoim projekcie {city.prepositional}</h2>
+        <div class="cta-buttons">
+          <a href="tel:+48696293362" class="btn btn-primary">
+            <Icon name="lucide:phone" size={18} /> 696 293 362
+          </a>
+          <a href="/kontakt/" class="btn btn-secondary">Formularz wyceny</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .city-hero { padding-block: 6rem 3rem; background: linear-gradient(180deg, rgba(255, 92, 53, 0.04), transparent); }
+  .breadcrumb { display: flex; gap: 0.5rem; font-size: 0.875rem; color: var(--color-text-muted); margin: 0 0 1.5rem; }
+  .breadcrumb a { color: var(--color-text-muted); }
+  .breadcrumb a:hover { color: var(--color-accent); }
+  .city-hero h1 { font-family: var(--font-display); font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.15; margin: 0 0 1rem; letter-spacing: -0.02em; }
+  .city-hero .city-name { color: var(--color-accent); }
+  .city-lead { font-size: 1.125rem; line-height: 1.7; color: var(--color-text-muted); max-width: 52rem; margin: 0 0 2rem; }
+  .city-stats { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 0 0 2rem; }
+  .city-stats .stat { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: rgba(255, 92, 53, 0.06); border-radius: 12px; }
+  .city-stats .stat strong { display: block; font-size: 1.125rem; color: var(--color-text); }
+  .city-stats .stat span { font-size: 0.8125rem; color: var(--color-text-muted); }
+  .city-cta { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 1.75rem; background: var(--gradient-primary); color: white; border-radius: 100px; font-weight: 700; }
+  .city-cta:hover { color: white; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 92, 53, 0.3); }
+
+  .city-context { padding-block: 3rem; }
+  .city-context h2 { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.25rem); margin: 0 0 1rem; }
+  .city-context h3 { font-family: var(--font-display); font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
+  .city-context p { line-height: 1.75; color: var(--color-text-muted); margin: 0 0 1rem; }
+  .narrow { max-width: 56rem; }
+
+  .city-services { padding-block: 3rem; background: rgba(0,0,0,0.02); }
+  .city-services h2 { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.25rem); margin: 0 0 2rem; text-align: center; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+  .service-card { display: block; padding: 1.5rem; color: var(--color-text); transition: all .25s ease; }
+  .service-card:hover { transform: translateY(-3px); border-color: rgba(255, 92, 53, 0.4); color: var(--color-text); }
+  .service-card h3 { font-family: var(--font-display); font-size: 1.125rem; margin: 0 0 0.5rem; }
+  .service-card p { color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.55; margin: 0 0 0.75rem; }
+  .service-card .price { display: inline-block; font-size: 0.8125rem; color: var(--color-accent); font-weight: 700; }
+
+  .city-faq { padding-block: 3rem; }
+  .city-faq h2 { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.25rem); margin: 0 0 1.5rem; }
+  .city-faq-item { padding: 1rem 1.25rem; margin: 0 0 0.75rem; background: rgba(0, 0, 0, 0.02); border: 1px solid var(--color-border); border-radius: 8px; }
+  .city-faq-item summary { font-weight: 700; cursor: pointer; }
+  .city-faq-item p { margin: 0.75rem 0 0; line-height: 1.65; color: var(--color-text-muted); }
+
+  .city-cta-final { padding-block: 4rem; text-align: center; }
+  .city-cta-final h2 { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.25rem); margin: 0 0 1.5rem; }
+  .cta-buttons { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.75rem; border-radius: 100px; font-weight: 700; }
+  .btn-primary { background: var(--gradient-primary); color: white; }
+  .btn-primary:hover { color: white; transform: translateY(-2px); }
+  .btn-secondary { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--color-text); }
+  .btn-secondary:hover { border-color: var(--color-accent); }
+</style>
