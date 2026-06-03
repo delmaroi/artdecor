@@ -4,6 +4,8 @@ import Header from "./Header.astro";
 import Footer from "./Footer.astro";
 import FAQ from "./FAQ.astro";
 import { Carousel } from "astro-carousel";
+import { Image } from "astro:assets";
+import { asset } from "../lib/images";
 import { Icon } from "astro-icon/components";
 import GradientTitle from "./GradientTitle.astro";
 import "../styles/globals.css";
@@ -98,15 +100,18 @@ const breadcrumbJsonLd = {
   ],
 };
 
-// Map image strings to objects required by astro-carousel
-const carouselImages = images.map((img, idx) => {
-  const src = typeof img === 'string' ? img : img.src;
+// Normalizacja: każdy element galerii → publiczna ścieżka "/images/..."
+const imagePaths = images.map((img) => (typeof img === "string" ? img : img.src));
+
+// Karuzela (astro-carousel) wymaga src:string — podajemy zoptymalizowany asset
+// (oraz intrinsiczne wymiary z ImageMetadata zamiast zgadywanych 1200×800).
+const carouselImages = imagePaths.map((path, idx) => {
+  const meta = asset(path);
   return {
-    src,
+    src: meta.src,
     alt: `${heroTitle} — realizacja ${idx + 1}`,
-    width: 1200,
-    height: 800,
-    format: "webp"
+    width: meta.width,
+    height: meta.height,
   };
 });
 ---
@@ -182,13 +187,13 @@ const carouselImages = images.map((img, idx) => {
         {images && images.length > 0 ? (
           <div id="carouselTargetList">
             <div class="gallery-grid">
-              {images.map((img, index) => (
+              {imagePaths.map((path, index) => (
                 <a
                   href={`?image=${index}`}
                   class="gallery-item glass-card"
                   data-carousel-index={index}
                 >
-                  <img src={typeof img === 'string' ? img : img.src} alt={`${heroTitle} - Realizacja ${index + 1}`} loading="lazy" />
+                  <Image src={asset(path)} alt={`${heroTitle} - Realizacja ${index + 1}`} width={800} loading="lazy" />
                   <div class="gallery-overlay">
                     <div class="view-icon">
                       <Icon name="lucide:expand" size={24} />

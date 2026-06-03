@@ -2,6 +2,8 @@ export interface Service {
   title: string;
   slug: string;
   icon: string;
+  /** Krótki, unikalny opis usługi (1 zdanie) — używany w kafelkach bento na home. */
+  desc?: string;
 }
 
 export interface PortfolioItem {
