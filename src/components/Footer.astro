@@ -1,14 +1,52 @@
 ---
 import { Icon } from "astro-icon/components";
+import { footerCta } from "../lib/narrative-data";
+import { foundedYear } from "../lib/company-data";
 
 const year = new Date().getFullYear();
+
+// Tytuł pasa CTA łamiemy na linie tak samo jak w SectionHeader, żeby wjeżdżał
+// linia po linii (obsługa w `src/scripts/animations.ts`, blok 7).
+const ctaLines = footerCta.title.split("\n").map((line) => {
+  const at = line.indexOf(footerCta.accent);
+  return at === -1
+    ? { before: line, accent: "", after: "" }
+    : {
+        before: line.slice(0, at),
+        accent: footerCta.accent,
+        after: line.slice(at + footerCta.accent.length),
+      };
+});
 ---
 <footer class="footer">
   <div class="container">
+    <section class="footer-cta" aria-labelledby="footer-cta-title">
+      {/* Wyrażenia w linii stykają się celowo — patrz komentarz w SectionHeader.astro. */}
+      <h2 id="footer-cta-title" class="footer-cta-title reveal-lines">
+        {ctaLines.map((line, index) => (
+          <span class="sh-line"><span class="sh-line-inner">{line.before}{line.accent && <em>{line.accent}</em>}{line.after}</span>{index < ctaLines.length - 1 ? " " : ""}</span>
+        ))}
+      </h2>
+
+      <div class="footer-cta-aside">
+        <p class="footer-cta-lead">{footerCta.lead}</p>
+        <div class="footer-cta-actions">
+          <a href={footerCta.primary.href} class="footer-cta-btn">
+            {footerCta.primary.text}
+            <Icon name="lucide:arrow-up-right" size={18} />
+          </a>
+          <a href="tel:+48696293362" class="footer-cta-phone">
+            <Icon name="lucide:phone" size={18} />
+            696 293 362
+          </a>
+        </div>
+      </div>
+    </section>
+
     <div class="footer-top">
       <div class="f-item f-item--brand">
         <img src="/images/logo_kolor2.svg" alt="Art Decor Logo" class="f-logo" />
-        <p class="f-desc">Tworzymy wizualną jakość, która buduje wizerunek Twojej firmy od 1996 roku.</p>
+        <p class="f-desc">Tworzymy wizualną jakość, która buduje wizerunek Twojej firmy od {foundedYear} roku.</p>
         <div class="f-socials">
           <a href="https://www.facebook.com/artdecorreklama/" target="_blank" rel="noopener noreferrer" class="f-social-link" aria-label="Facebook Art Decor">
             <Icon name="mdi:facebook" size={22} />
@@ -62,11 +100,147 @@ const year = new Date().getFullYear();
 
 <style>
   .footer {
-    background: var(--structa-black);
+    background: var(--structa-charcoal);
     color: var(--structa-white);
     padding-top: 5rem;
     margin-top: 4rem;
     overflow: hidden;
+  }
+
+  /* ── Pas CTA: domknięcie narracji strony ──────────────────────────────
+     Powtarza to samo wezwanie co sekcja Kontakt, ale jako statement —
+     ostatnia rzecz, którą widać przed danymi teleadresowymi. */
+  .footer-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding-bottom: 4.5rem;
+    margin-bottom: 4.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  @media (min-width: 900px) {
+    .footer-cta {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 4rem;
+      padding-bottom: 5.5rem;
+      margin-bottom: 5.5rem;
+    }
+  }
+
+  .footer-cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    color: var(--structa-white);
+    margin: 0;
+  }
+
+  .footer-cta-title em {
+    font-style: normal;
+    color: var(--structa-accent);
+  }
+
+  .footer-cta-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    flex-shrink: 0;
+  }
+
+  .footer-cta-lead {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+  }
+
+  .footer-cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* Szerokość kolumny wyznacza rząd przycisków, nie limit na kontenerze.
+     Wcześniej `max-width: 40ch` siedziało na `.footer-cta-aside` i dusiło ją
+     poniżej sumy szerokości obu przycisków, więc `flex-wrap` łamał je na dwie
+     linie. Limit nakładamy więc na sam akapit — kolumna przy `flex-shrink: 0`
+     dobiera wtedy szerokość do szerszego z dwojga.
+
+     Blok musi stać PO regułach bazowych: `flex-wrap: wrap` ma tę samą
+     specyficzność, więc wcześniej nadpisywałoby `nowrap`. */
+  @media (min-width: 900px) {
+    .footer-cta-lead {
+      max-width: 40ch;
+    }
+
+    .footer-cta-actions {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .footer-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 1.85rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border-radius: 100px;
+    background: var(--structa-accent);
+    color: #fff;
+    white-space: nowrap;
+    transition: all var(--transition-base);
+  }
+
+  .footer-cta-btn:hover {
+    background: var(--structa-accent-hover);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 92, 53, 0.35);
+  }
+
+  .footer-cta-btn svg {
+    transition: transform var(--transition-base);
+  }
+
+  .footer-cta-btn:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .footer-cta-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--structa-white);
+    white-space: nowrap;
+    transition: all var(--transition-base);
+  }
+
+  .footer-cta-phone:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--structa-white);
+  }
+
+  @media (max-width: 599px) {
+    .footer-cta-actions {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
   }
 
   .footer-top {

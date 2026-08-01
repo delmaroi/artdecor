@@ -1,19 +1,19 @@
 ---
 import { Icon } from "astro-icon/components";
+import SectionHeader from "./SectionHeader.astro";
+import SectionRule from "./SectionRule.astro";
 import { services } from "../lib/services-data";
 ---
 <section class="section services" id="uslugi">
   <div class="container">
-    <div class="services-header">
-      <div>
-        <p class="eyebrow">Nasze usługi</p>
-        <h2 class="services-title">Co robimy <em>najlepiej</em></h2>
-      </div>
-      <p class="services-lead">
-        Od koncepcji po montaż – dostarczamy kompletne systemy identyfikacji
-        wizualnej dla Twojego biznesu.
-      </p>
-    </div>
+    <SectionRule />
+    <SectionHeader
+      eyebrow="Nasze usługi"
+      title={"Co robimy\nnajlepiej"}
+      accent="najlepiej"
+      lead="Od koncepcji po montaż – dostarczamy kompletne systemy identyfikacji wizualnej dla Twojego biznesu."
+      align="split"
+    />
 
     <ul class="svc-list" data-stagger-grid>
       {services.map((service, index) => (
@@ -37,48 +37,7 @@ import { services } from "../lib/services-data";
     background: var(--structa-offwhite);
   }
 
-  .services-header {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 4rem;
-  }
-
-  @media (min-width: 900px) {
-    .services-header {
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 4rem;
-    }
-  }
-
-  .eyebrow {
-    margin: 0 0 1.25rem;
-  }
-
-  .services-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5.5vw, 4.25rem);
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    line-height: 1.02;
-    margin: 0;
-    color: var(--structa-black);
-  }
-
-  .services-title em {
-    font-style: normal;
-    color: var(--structa-accent);
-  }
-
-  .services-lead {
-    color: var(--structa-gray-text);
-    max-width: 42ch;
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    margin: 0;
-  }
+  /* Nagłówek sekcji renderuje SectionHeader.astro — style w globals.css. */
 
   .svc-list {
     list-style: none;
@@ -160,7 +119,7 @@ import { services } from "../lib/services-data";
 
   /* Hover: rząd wypełnia się atramentem */
   .svc-link:hover {
-    background: var(--structa-black);
+    background: var(--structa-charcoal);
     color: var(--structa-white);
   }
 

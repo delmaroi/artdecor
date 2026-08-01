@@ -1,0 +1,26 @@
+---
+/**
+ * Poziomy szew sekcji ze znacznikami narożnymi w kolorze akcentu.
+ *
+ * Wstawiaj jako pierwsze dziecko `.container` — wtedy końce szwu trafiają
+ * dokładnie w pionowe prowadnice z `LayoutRails.astro`, a znaczniki narożne
+ * lądują na ich przecięciu. To jest cały sens tego elementu: bez wyrównania
+ * do kontenera przecięcie się rozjeżdża i motyw przestaje czytać się jako
+ * siatka konstrukcyjna.
+ *
+ * Style: `src/styles/globals.css`, sekcja „Prowadnice".
+ */
+
+export interface Props {
+  /** Zdejmuje dolny odstęp — gdy szew ma stykać się bezpośrednio z treścią. */
+  flush?: boolean;
+  class?: string;
+}
+
+const { flush = false, class: className = "" } = Astro.props;
+
+const cls = ["section-rule", flush ? "section-rule--flush" : "", className]
+  .filter(Boolean)
+  .join(" ");
+---
+<div class={cls} aria-hidden="true"></div>

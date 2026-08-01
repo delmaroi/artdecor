@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
+import SectionHeader from "./SectionHeader.astro";
+import SectionRule from "./SectionRule.astro";
 import { homeFaqs, type FaqItem } from "../lib/faq-data";
 
 export interface Props {
@@ -29,14 +31,18 @@ const faqJsonLd = {
 
 <section class="section faq-section" id="faq">
   <div class="container faq-layout">
+    <SectionRule class="faq-rule" />
+
     <div class="faq-section-header">
-      <p class="eyebrow">Pytania i odpowiedzi</p>
-      <h2 class="faq-heading">Często zadawane <em>pytania</em></h2>
-      <p class="faq-lead">Masz wątpliwości? Przygotowaliśmy odpowiedzi na najczęstsze pytania naszych klientów.</p>
-      <a href="/kontakt/" class="faq-cta">
-        Zadaj własne pytanie
-        <Icon name="lucide:arrow-up-right" size={18} />
-      </a>
+      <SectionHeader
+        eyebrow="Pytania i odpowiedzi"
+        title={"Często zadawane\npytania"}
+        accent="pytania"
+        lead="Masz wątpliwości? Przygotowaliśmy odpowiedzi na najczęstsze pytania naszych klientów."
+        cta={{ text: "Zadaj własne pytanie", href: "/kontakt/" }}
+        align="stack"
+        class="faq-header-inner"
+      />
     </div>
 
     <div class="faq-list">
@@ -119,47 +125,23 @@ const faqJsonLd = {
     }
   }
 
-  .faq-section-header .eyebrow {
-    margin: 0 0 1.25rem;
+  /* Szew musi objąć obie kolumny siatki, inaczej stanie się jej trzecim
+     elementem i rozbije układ nagłówek | lista. */
+  .faq-layout :global(.faq-rule) {
+    grid-column: 1 / -1;
   }
 
-  .faq-heading {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 3.75rem);
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    line-height: 1.05;
-    margin: 0 0 1.25rem;
-    color: var(--structa-black);
+  /* Nagłówek sekcji renderuje SectionHeader.astro — style w globals.css.
+     Tutaj tylko zdejmujemy jego domyślny odstęp dolny: w układzie dwukolumnowym
+     nagłówek jest kolumną boczną, a nie belką nad treścią. */
+  .faq-section-header :global(.faq-header-inner) {
+    margin-bottom: 2rem;
   }
 
-  .faq-heading em {
-    font-style: normal;
-    color: var(--structa-accent);
-  }
-
-  .faq-lead {
-    color: var(--structa-gray-text);
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    margin: 0 0 2rem;
-    max-width: 40ch;
-  }
-
-  .faq-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
-    font-size: 0.9375rem;
-    color: var(--structa-black);
-    border-bottom: 2px solid var(--structa-accent);
-    padding-bottom: 0.35rem;
-    transition: color var(--transition-fast);
-  }
-
-  .faq-cta:hover {
-    color: var(--structa-accent);
+  @media (min-width: 900px) {
+    .faq-section-header :global(.faq-header-inner) {
+      margin-bottom: 0;
+    }
   }
 
   .faq-list {

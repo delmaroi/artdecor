@@ -1,15 +1,15 @@
 :root {
   /* Colors - Structa Palette (granat #232D48 jako kolor główny) */
-  --structa-charcoal: #232D48;
-  --structa-offwhite: #F7F7F7;
-  --structa-white: #FFFFFF;
-  --structa-accent: #FF5C35;
-  --structa-accent-hover: #E04D2A;
+  --structa-charcoal: #232d48;
+  --structa-offwhite: #f7f7f7;
+  --structa-white: #ffffff;
+  --structa-accent: #ff5c35;
+  --structa-accent-hover: #e04d2a;
   --structa-gray-text: #666666;
-  --structa-black: #161D2E;
+  --structa-black: #161d2e;
   --structa-border: rgba(35, 45, 72, 0.1);
   --structa-glass-bg: rgba(255, 255, 255, 0.85);
-  --ink-soft: #2A3655;
+  --ink-soft: #2a3655;
   --paper-line: rgba(35, 45, 72, 0.14);
 
   /* Background Colors - Light Theme */
@@ -32,13 +32,25 @@
 
   /* Secondary Accent - Charcoal */
   --color-secondary-start: var(--structa-charcoal);
-  --color-secondary-end: #2A3655;
+  --color-secondary-end: #2a3655;
   --color-secondary: var(--structa-charcoal);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--structa-accent) 0%, var(--structa-accent-hover) 100%);
-  --gradient-secondary: linear-gradient(135deg, var(--structa-charcoal) 0%, #2A3655 100%);
-  --gradient-bg: linear-gradient(180deg, var(--structa-offwhite) 0%, var(--structa-white) 100%);
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--structa-accent) 0%,
+    var(--structa-accent-hover) 100%
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--structa-charcoal) 0%,
+    #2a3655 100%
+  );
+  --gradient-bg: linear-gradient(
+    180deg,
+    var(--structa-offwhite) 0%,
+    var(--structa-white) 100%
+  );
 
   /* Glassmorphism */
   --glass-bg: var(--structa-glass-bg);
@@ -47,31 +59,57 @@
   --blur: blur(16px);
 
   /* Typography */
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+    sans-serif;
   --font-display: "Outfit", "Inter", system-ui, sans-serif;
 
   /* Spacing Scale (8pt-based, modularna skala odstępów) */
   --space-3xs: 0.25rem; /* 4px */
-  --space-2xs: 0.5rem;  /* 8px */
-  --space-xs: 0.75rem;  /* 12px */
-  --space-sm: 1rem;     /* 16px */
-  --space-md: 1.5rem;   /* 24px */
-  --space-lg: 2rem;     /* 32px */
-  --space-xl: 3rem;     /* 48px */
-  --space-2xl: 4rem;    /* 64px */
-  --space-3xl: 6rem;    /* 96px */
-  --space-4xl: 8rem;    /* 128px */
+  --space-2xs: 0.5rem; /* 8px */
+  --space-xs: 0.75rem; /* 12px */
+  --space-sm: 1rem; /* 16px */
+  --space-md: 1.5rem; /* 24px */
+  --space-lg: 2rem; /* 32px */
+  --space-xl: 3rem; /* 48px */
+  --space-2xl: 4rem; /* 64px */
+  --space-3xl: 6rem; /* 96px */
+  --space-4xl: 8rem; /* 128px */
 
   /* Layout */
   --container: min(1320px, 100vw - 3rem);
   --container-narrow: min(960px, 100vw - 3rem);
 
+  /* Rytm pionowy sekcji — jedno źródło prawdy dla całego serwisu.
+     Duże światło jest głównym nośnikiem hierarchii: sekcje mają oddychać,
+     a nie stykać się ze sobą. */
+  --section-py: 4.5rem; /*  72px – mobile  */
+  --section-py-lg: 9rem; /* 144px – desktop */
+  --section-head-gap: 3rem; /* nagłówek sekcji → treść (mobile)  */
+  --section-head-gap-lg: 4.5rem; /*                     (desktop) */
+
+  /* Prowadnice („blueprint") — pionowe linie na krawędziach kontenera,
+     poziome szwy sekcji, znaczniki narożne i szrafowanie.
+     `--rail-line` jest celowo w tonie średnim: jedna wartość musi być czytelna
+     zarówno na jasnym #F7F7F7, jak i na ciemnym #232D48, bo prowadnice są
+     jednym elementem `position: fixed` biegnącym przez całą stronę. */
+  --rail-line: rgba(122, 132, 155, 0.28);
+  --rail-line-strong: rgba(122, 132, 155, 0.45);
+  --rail-tick-size: 10px;
+
+  /* Wcięcie treści względem prowadnic — treść ma oddychać wewnątrz ramy,
+     a nie dotykać linii. 0 na mobile, bo tam prowadnice są ukryte, a szerokość
+     `--container` sama zostawia już 1.5rem marginesu na stronę.
+     Szwy sekcji kompensują tę wartość ujemnym marginesem, żeby nadal kończyć
+     się dokładnie na prowadnicach — patrz `.section-rule`. */
+  --container-pad: 0rem;
+
   /* Border Radius for Bento */
-  --radius-sm: 0.5rem;   /* 8px */
-  --radius: 1rem;       /* 16px */
-  --radius-lg: 1.5rem;    /* 24px */
-  --radius-xl: 2rem;      /* 32px */
-  --radius-2xl: 2.5rem;   /* 40px */
+  --radius-sm: 0.5rem; /* 8px */
+  --radius: 1rem; /* 16px */
+  --radius-lg: 1.5rem; /* 24px */
+  --radius-xl: 2rem; /* 32px */
+  --radius-2xl: 2.5rem; /* 40px */
 
   /* Shadows */
   --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
@@ -86,7 +124,6 @@
   --transition-base: 350ms cubic-bezier(0.2, 0, 0, 1);
   --transition-slow: 600ms cubic-bezier(0.2, 0, 0, 1);
 }
-
 
 *,
 *::before,
@@ -112,7 +149,12 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.1;
@@ -121,8 +163,12 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.75rem, 7vw, 5.5rem); }
-h2 { font-size: clamp(2.25rem, 4.5vw, 3.75rem); }
+h1 {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+}
+h2 {
+  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+}
 
 p {
   margin: 0;
@@ -149,14 +195,23 @@ a:hover {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  /* padding-inline: 1rem; */
+  padding-inline: var(--container-pad);
 }
 
-/* @media (min-width: 640px) {
-  .container {
-    padding-inline: 1.5rem;
+/* Wcięcie rośnie razem z ekranem: im szersza rama, tym więcej światła
+   w środku. Progi trzymamy na :root, bo z tej samej wartości korzystają
+   szwy sekcji (ujemny margines) — muszą być zawsze zsynchronizowane. */
+@media (min-width: 768px) {
+  :root {
+    --container-pad: 1.5rem;
   }
-} */
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --container-pad: 2.5rem;
+  }
+}
 
 .container-narrow {
   width: 100%;
@@ -167,13 +222,172 @@ a:hover {
 
 /* Section */
 .section {
-  padding-block: var(--space-lg); /* 32px – mobile */
+  padding-block: var(--section-py);
   position: relative;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-block: var(--space-2xl); /* 64px – desktop: większy oddech między sekcjami */
+    padding-block: var(--section-py-lg);
+  }
+}
+
+/* Sekcje logicznie sklejone (np. Proces zaraz pod Problemem) — nie dublują
+   światła na styku, więc czytają się jako jeden blok narracyjny. */
+.section--tight {
+  padding-block-start: 0;
+}
+
+/* Sekcja startująca zaraz po zmianie tła — zdejmuje górne światło,
+   bo krawędź koloru sama w sobie jest już separatorem. */
+.section--flush-top {
+  padding-block-start: 0;
+}
+
+.section--flush-bottom {
+  padding-block-end: 0;
+}
+
+/* ── Prowadnice („blueprint") ─────────────────────────────────────────────
+   Siatka konstrukcyjna widoczna pod treścią: dwie pionowe linie na krawędziach
+   kontenera biegnące przez całą stronę, poziome szwy sekcji ze znacznikami
+   narożnymi w kolorze akcentu i pasy ukośnego szrafowania.
+
+   Prowadnice pionowe renderuje `src/components/LayoutRails.astro` — jeden
+   element `position: fixed` wpięty raz w Layout, nie per sekcja. Dzięki temu
+   linie są nieprzerwane niezależnie od tego, jakie tło ma dana sekcja.       */
+
+.layout-rails {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* z-index 1 wystarcza, by linie malowały się nad tłami sekcji
+   (`position: relative`, `z-index: auto`), a wciąż pod headerem (z-index 1000). */
+.layout-rails::before,
+.layout-rails::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rail-line);
+}
+
+.layout-rails::before {
+  left: calc(50% - var(--container) / 2);
+}
+
+.layout-rails::after {
+  left: calc(50% + var(--container) / 2 - 1px);
+}
+
+/* Na wąskich ekranach kontener praktycznie dotyka krawędzi — linie przy samym
+   brzegu czytają się jak artefakt, więc je chowamy. */
+@media (max-width: 767px) {
+  .layout-rails {
+    display: none;
+  }
+}
+
+/* Poziomy szew sekcji ze znacznikami narożnymi.
+   Wstawiaj jako pierwsze dziecko `.container` w sekcji. */
+.section-rule {
+  position: relative;
+  height: 0;
+  border-top: 1px solid var(--rail-line);
+  margin-bottom: 2.5rem;
+  /* Kompensuje wcięcie kontenera: szew i jego znaczniki narożne muszą kończyć
+     się na prowadnicach, nie na krawędzi wciętej treści. */
+  margin-inline: calc(-1 * var(--container-pad));
+}
+
+@media (min-width: 768px) {
+  .section-rule {
+    margin-bottom: 3.5rem;
+  }
+}
+
+.section-rule::before,
+.section-rule::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  width: var(--rail-tick-size);
+  height: var(--rail-tick-size);
+  border-top: 2px solid var(--structa-accent);
+}
+
+.section-rule::before {
+  left: 0;
+  border-left: 2px solid var(--structa-accent);
+}
+
+.section-rule::after {
+  right: 0;
+  border-right: 2px solid var(--structa-accent);
+}
+
+/* Wariant bez dolnego odstępu — gdy szew ma stykać się z treścią. */
+.section-rule--flush {
+  margin-bottom: 0;
+}
+
+/* Pas ukośnego szrafowania — separator „terenu budowy" między sekcjami. */
+.hatch-band {
+  height: 3.5rem;
+  border-block: 1px solid var(--rail-line);
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--rail-line) 0,
+    var(--rail-line) 1px,
+    transparent 1px,
+    transparent 9px
+  );
+}
+
+@media (min-width: 768px) {
+  .hatch-band {
+    height: 5rem;
+  }
+}
+
+/* Kolumna bloków pikselowych — akcent na marginesie sekcji. */
+.pixel-blocks {
+  display: grid;
+  grid-template-columns: repeat(2, var(--pixel-size, 26px));
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.pixel-blocks span {
+  aspect-ratio: 1;
+}
+
+.pixel-blocks span[data-tone="accent"] {
+  background: var(--structa-accent);
+}
+.pixel-blocks span[data-tone="paper"] {
+  background: var(--structa-white);
+}
+.pixel-blocks span[data-tone="ink"] {
+  background: var(--structa-black);
+}
+.pixel-blocks span[data-tone="mute"] {
+  background: var(--rail-line-strong);
+}
+.pixel-blocks span[data-tone="empty"] {
+  background: transparent;
+}
+
+/* Bloki siedzą w marginesie POZA kontenerem (max 1320px), więc pokazujemy je
+   dopiero gdy ten margines istnieje: (1440 - 1320) / 2 = 60px na stronę,
+   a kolumna zajmuje 2 × 20px. Poniżej tego progu nachodziłyby na treść. */
+@media (max-width: 1439px) {
+  .pixel-blocks {
+    display: none;
   }
 }
 
@@ -228,7 +442,8 @@ a:hover {
 }
 
 @keyframes glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(254, 107, 0, 0.2);
   }
   50% {
@@ -237,7 +452,8 @@ a:hover {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0);
   }
   50% {
@@ -246,23 +462,52 @@ a:hover {
 }
 
 @keyframes orb-float {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 @keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  20% { transform: translate(-15%, 5%); }
-  30% { transform: translate(7%, -25%); }
-  40% { transform: translate(-5%, 25%); }
-  50% { transform: translate(-15%, 10%); }
-  60% { transform: translate(15%, 0%); }
-  70% { transform: translate(0%, 15%); }
-  80% { transform: translate(3%, 35%); }
-  90% { transform: translate(-10%, 10%); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    transform: translate(7%, -25%);
+  }
+  40% {
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    transform: translate(15%, 0%);
+  }
+  70% {
+    transform: translate(0%, 15%);
+  }
+  80% {
+    transform: translate(3%, 35%);
+  }
+  90% {
+    transform: translate(-10%, 10%);
+  }
 }
 
 /* Utility Classes */
@@ -271,7 +516,7 @@ a:hover {
   inset: -200%;
   width: 400%;
   height: 400%;
-  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
   opacity: 0.15;
   pointer-events: none;
   animation: grain 8s steps(10) infinite;
@@ -296,10 +541,18 @@ a:hover {
   animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.stagger-1 { animation-delay: 100ms; }
-.stagger-2 { animation-delay: 200ms; }
-.stagger-3 { animation-delay: 300ms; }
-.stagger-4 { animation-delay: 400ms; }
+.stagger-1 {
+  animation-delay: 100ms;
+}
+.stagger-2 {
+  animation-delay: 200ms;
+}
+.stagger-3 {
+  animation-delay: 300ms;
+}
+.stagger-4 {
+  animation-delay: 400ms;
+}
 
 /* Selection */
 ::selection {
@@ -337,8 +590,203 @@ a:hover {
 
 /* Marquee (usługi w hero, logotypy klientów) */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Nagłówek sekcji ──────────────────────────────────────────────────────
+   Jeden wzorzec dla całego serwisu: etykieta → tytuł → lead → opcjonalne CTA.
+   Klasy .section-header / .section-badge / .section-title / .section-lead są
+   kontraktem, na którym operuje `src/scripts/animations.ts`. Renderuje je
+   wyłącznie `src/components/SectionHeader.astro` — nie duplikuj tej struktury
+   ręcznie w komponentach.                                                    */
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: var(--section-head-gap);
+}
+
+@media (min-width: 768px) {
+  .section-header {
+    margin-bottom: var(--section-head-gap-lg);
+  }
+}
+
+.section-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.section-header .section-badge {
+  margin: 0;
+}
+
+/* Celowo zawężone do wnętrza `.section-header`: `.section-title` i
+   `.section-lead` występują też luzem na starszych podstronach (o-nas,
+   ServiceTemplate) i globalna reguła zmieniłaby tam layout. Te miejsca
+   przechodzą na SectionHeader osobno. */
+.section-header .section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  margin: 0;
+  color: var(--structa-black);
+  text-wrap: balance;
+}
+
+.section-header .section-title em {
+  font-style: normal;
+  color: var(--structa-accent);
+}
+
+.section-header .section-lead {
+  color: var(--structa-gray-text);
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.section-header-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--structa-black);
+  border-bottom: 1px solid var(--paper-line);
+  padding-bottom: 0.35rem;
+  transition:
+    color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.section-header-cta:hover {
+  color: var(--structa-accent);
+  border-color: var(--structa-accent);
+}
+
+.section-header-cta :global(svg),
+.section-header-cta svg {
+  transition: transform var(--transition-base);
+}
+
+.section-header-cta:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Wariant „split": tytuł po lewej, lead + CTA po prawej — wzorzec już
+   używany w Services/Portfolio, teraz wspólny. */
+.section-header--split .section-header-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .section-header--split {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .section-header--split .section-header-main {
+    flex: 1 1 auto;
+  }
+
+  .section-header--split .section-header-aside {
+    flex: 0 1 42ch;
+  }
+}
+
+/* Wariant „center": duży statement na środku, dla sekcji-manifestów. */
+.section-header--center {
+  align-items: center;
+  text-align: center;
+}
+
+.section-header--center .section-header-main,
+.section-header--center .section-header-aside {
+  align-items: center;
+}
+
+.section-header--center .section-lead {
+  max-width: 58ch;
+}
+
+.section-header--center .section-header-cta {
+  align-self: center;
+}
+
+/* Wariant „stack": wszystko do lewej, bez podziału na kolumny. */
+.section-header--stack .section-lead {
+  max-width: 58ch;
+}
+
+/* Nagłówek na ciemnym tle (sekcja Problem → rozwiązanie). */
+.section-header--on-dark .section-title {
+  color: var(--structa-white);
+}
+
+.section-header--on-dark .section-lead {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.section-header--on-dark .section-badge {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.section-header--on-dark .section-header-cta {
+  color: var(--structa-white);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.section-header--on-dark .section-header-cta:hover {
+  color: var(--structa-accent);
+  border-color: var(--structa-accent);
+}
+
+/* ── Reveal linia-po-linii ────────────────────────────────────────────────
+   Tytuł łamany świadomie na linie (prop `title` z \n) wjeżdża spod własnej
+   linii bazowej, kolejno. Stagger ustawia animations.ts przez inline delay. */
+
+.sh-line {
+  display: block;
+}
+
+.reveal-lines .sh-line-inner {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.7em);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-lines.is-visible .sh-line-inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-lines .sh-line-inner {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* Global Hero Background */
@@ -352,7 +800,7 @@ a:hover {
 .hero-image-layer {
   position: absolute;
   inset: 0;
-  background-image: url('/images/hero-bg.png');
+  background-image: url("/images/hero-bg.png");
   background-size: cover;
   background-position: center;
   filter: brightness(0.65) contrast(1.1);
@@ -361,7 +809,11 @@ a:hover {
 .hero-overlay-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(35, 45, 72, 0.5) 0%, rgba(35, 45, 72, 0.95) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(35, 45, 72, 0.5) 0%,
+    rgba(35, 45, 72, 0.95) 100%
+  );
 }
 
 /* ── GSAP Animations ──────────────────────────────────────────────────────── */
@@ -390,11 +842,18 @@ a:hover {
   opacity: 0;
   transform: translateY(40px);
   scale: 0.98;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), scale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    scale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal-item[data-reveal-dir="left"] { transform: translateX(-40px); }
-.reveal-item[data-reveal-dir="right"] { transform: translateX(40px); }
+.reveal-item[data-reveal-dir="left"] {
+  transform: translateX(-40px);
+}
+.reveal-item[data-reveal-dir="right"] {
+  transform: translateX(40px);
+}
 
 .reveal-item.is-visible {
   opacity: 1;
@@ -402,9 +861,15 @@ a:hover {
   scale: 1;
 }
 
-[data-reveal-delay="0.1"] { transition-delay: 100ms; }
-[data-reveal-delay="0.2"] { transition-delay: 200ms; }
-[data-reveal-delay="0.3"] { transition-delay: 300ms; }
+[data-reveal-delay="0.1"] {
+  transition-delay: 100ms;
+}
+[data-reveal-delay="0.2"] {
+  transition-delay: 200ms;
+}
+[data-reveal-delay="0.3"] {
+  transition-delay: 300ms;
+}
 
 /* Obniżenie ruchu na starszych urządzeniach */
 @media (prefers-reduced-motion: reduce) {

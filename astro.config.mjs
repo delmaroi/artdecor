@@ -42,6 +42,7 @@ export default defineConfig({
           "expand",
           "search",
           "settings",
+          "flame",
           "thermometer",
           "sparkles",
           "printer",

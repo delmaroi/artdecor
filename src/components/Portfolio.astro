@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
+import SectionHeader from "./SectionHeader.astro";
+import SectionRule from "./SectionRule.astro";
 import { asset } from "../lib/images";
 import type { PortfolioItem } from "../types/index";
 
@@ -46,15 +48,15 @@ const portfolioItems: PortfolioItem[] = [
 ---
 <section class="section portfolio" id="portfolio">
   <div class="container">
-    <div class="portfolio-header">
-      <div>
-        <p class="eyebrow">Portfolio</p>
-        <h2 class="portfolio-heading">Nasze ostatnie <em>realizacje</em></h2>
-      </div>
-      <p class="portfolio-lead">
-        Zobacz, jak pomagamy naszym klientom wyróżnić się na tle konkurencji.
-      </p>
-    </div>
+    <SectionRule />
+    <SectionHeader
+      eyebrow="Portfolio"
+      title={"Nasze ostatnie\nrealizacje"}
+      accent="realizacje"
+      lead="Zobacz, jak pomagamy naszym klientom wyróżnić się na tle konkurencji."
+      cta={{ text: "Wszystkie realizacje", href: "/realizacje/" }}
+      align="split"
+    />
 
     <div class="portfolio-filters" role="group" aria-label="Filtruj realizacje">
       {categories.map((cat, index) => (
@@ -103,48 +105,7 @@ const portfolioItems: PortfolioItem[] = [
     background: var(--structa-white);
   }
 
-  .portfolio-header {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  @media (min-width: 900px) {
-    .portfolio-header {
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 4rem;
-    }
-  }
-
-  .portfolio-header .eyebrow {
-    margin: 0 0 1.25rem;
-  }
-
-  .portfolio-heading {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5.5vw, 4.25rem);
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    line-height: 1.02;
-    margin: 0;
-    color: var(--structa-black);
-  }
-
-  .portfolio-heading em {
-    font-style: normal;
-    color: var(--structa-accent);
-  }
-
-  .portfolio-lead {
-    color: var(--structa-gray-text);
-    max-width: 40ch;
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    margin: 0;
-  }
+  /* Nagłówek sekcji renderuje SectionHeader.astro — style w globals.css. */
 
   .portfolio-filters {
     display: flex;
@@ -174,7 +135,7 @@ const portfolioItems: PortfolioItem[] = [
   }
 
   .filter-btn[aria-pressed="true"] {
-    background: var(--structa-black);
+    background: var(--structa-charcoal);
     border-color: var(--structa-black);
     color: var(--structa-white);
   }

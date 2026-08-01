@@ -1,0 +1,109 @@
+---
+import { Icon } from "astro-icon/components";
+
+/**
+ * Wspólny nagłówek sekcji — etykieta → tytuł → lead → opcjonalne CTA.
+ *
+ * Jedyne miejsce w serwisie, które renderuje strukturę
+ * `.section-header / .section-badge / .section-title / .section-lead`.
+ * Ta struktura jest kontraktem dla `src/scripts/animations.ts` — nie odtwarzaj
+ * jej ręcznie w komponentach, bo animacja wejścia przestanie działać.
+ *
+ * Style mieszkają w `src/styles/globals.css` (sekcja „Nagłówek sekcji"),
+ * a nie tutaj, bo korzystają z nich też strony wpięte poza tym komponentem.
+ *
+ * Tytuł łam świadomie znakiem `\n` — każda linia dostaje własny `<span>`
+ * i wjeżdża osobno przy scrollu:
+ *
+ *   <SectionHeader title={"Co robimy\nnajlepiej"} accent="najlepiej" />
+ */
+
+export interface Props {
+  /** Mała etykieta nad tytułem, wersaliki z kropką (np. „Nasze usługi"). */
+  eyebrow?: string;
+  /** Tytuł sekcji. `\n` wymusza łamanie linii. */
+  title: string;
+  /** Fragment tytułu do wyróżnienia kolorem akcentu. Musi być dokładnym podciągiem `title`. */
+  accent?: string;
+  /** Akapit wprowadzający. */
+  lead?: string;
+  /** Opcjonalny link tekstowy ze strzałką. */
+  cta?: { text: string; href: string };
+  /** Układ: split (tytuł | lead obok), center (manifest), stack (wszystko do lewej). */
+  align?: "split" | "center" | "stack";
+  /** Wersja na ciemnym tle. */
+  onDark?: boolean;
+  /** Poziom nagłówka — sekcje podrzędne mogą potrzebować h3. */
+  as?: "h1" | "h2" | "h3";
+  /** Dodatkowe klasy na wrapperze. */
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  accent,
+  lead,
+  cta,
+  align = "split",
+  onDark = false,
+  as: Heading = "h2",
+  class: className = "",
+} = Astro.props;
+
+// Każda linia tytułu osobno, żeby animacja wejścia szła linia po linii.
+// Wewnątrz linii akcent rozbijamy na [przed, akcent, po] — bez `set:html`,
+// więc treść nigdy nie jest interpretowana jako znaczniki.
+const lines = title.split("\n").map((line) => {
+  if (!accent || !line.includes(accent)) {
+    return { before: line, accent: "", after: "" };
+  }
+  const at = line.indexOf(accent);
+  return {
+    before: line.slice(0, at),
+    accent,
+    after: line.slice(at + accent.length),
+  };
+});
+
+const wrapperClass = [
+  "section-header",
+  `section-header--${align}`,
+  onDark ? "section-header--on-dark" : "",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const hasAside = Boolean(lead || cta);
+---
+
+<div class={wrapperClass}>
+  <div class="section-header-main">
+    {eyebrow && <p class="eyebrow section-badge">{eyebrow}</p>}
+
+    {/* Wyrażenia w linii muszą stykać się w źródle — nowa linia między nimi
+        renderuje się jako spacja i rozrywa tytuł wokół akcentu.
+        Spacja po każdej linii poza ostatnią jest natomiast konieczna: łamanie
+        robi CSS, więc bez niej dostępna nazwa nagłówka i tekst dla crawlerów
+        to jeden sklejony ciąg („Co robimynajlepiej"). Przy `display: block`
+        zwija się wizualnie do zera. */}
+    <Heading class="section-title reveal-lines">
+      {lines.map((line, index) => (
+        <span class="sh-line"><span class="sh-line-inner">{line.before}{line.accent && <em>{line.accent}</em>}{line.after}</span>{index < lines.length - 1 ? " " : ""}</span>
+      ))}
+    </Heading>
+  </div>
+
+  {hasAside && (
+    <div class="section-header-aside">
+      {lead && <p class="section-lead">{lead}</p>}
+      {cta && (
+        <a href={cta.href} class="section-header-cta">
+          {cta.text}
+          <Icon name="lucide:arrow-up-right" size={18} />
+        </a>
+      )}
+    </div>
+  )}
+</div>

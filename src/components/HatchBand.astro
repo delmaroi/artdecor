@@ -1,0 +1,19 @@
+---
+/**
+ * Pas ukośnego szrafowania — separator między sekcjami, wizualny odpowiednik
+ * „terenu budowy". Używaj oszczędnie: to akcent, nie domyślny separator.
+ * Dwa pasy pod rząd zabijają efekt.
+ *
+ * Renderuje się na pełną szerokość okna, więc kładź go MIĘDZY sekcjami,
+ * a nie wewnątrz `.container`.
+ *
+ * Style: `src/styles/globals.css`, sekcja „Prowadnice".
+ */
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+<div class={`hatch-band ${className}`.trim()} aria-hidden="true"></div>

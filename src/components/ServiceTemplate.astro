@@ -122,32 +122,26 @@ const carouselImages = imagePaths.map((path, idx) => {
   <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbJsonLd)} />
   <Header />
   <main>
-    <!-- Hero Section -->
-    <section class="service-hero">
-      <div class="service-hero-bg" aria-hidden="true">
-        <div class="service-hero-gradient"></div>
-      </div>
-      <div class="container service-hero-inner">
-        <nav class="breadcrumb" aria-label="Ścieżka nawigacji">
-          <a href="/">Strona główna</a>
-          <span aria-hidden="true">/</span>
-          <a href="/#uslugi">Usługi</a>
-          <span aria-hidden="true">/</span>
-          <span>{heroTitle}</span>
-        </nav>
-        <GradientTitle title={heroTitle} gradientWords={1} tag="h1" class="service-hero-title" />
-        {heroSubtitle && <p class="service-hero-subtitle">{heroSubtitle}</p>}
-        {answerBlock && (
-          <p class="service-answer-block" aria-label="Krótka definicja usługi">
-            {answerBlock}
-          </p>
-        )}
-        <a href={ctaHref} class="service-cta">
-          {ctaText}
-          <Icon name="lucide:arrow-right" size={20} />
-        </a>
-      </div>
-    </section>
+    <Hero
+      variant="page"
+      breadcrumb={[
+        { label: "Strona główna", href: "/" },
+        { label: "Usługi", href: "/#uslugi" },
+        { label: heroTitle },
+      ]}
+      title={heroTitle}
+      subtitle={heroSubtitle}
+      ctaText={ctaText}
+      ctaHref={ctaHref}
+      secondaryCtaText="Zobacz realizacje"
+      secondaryCtaHref="/realizacje/"
+    >
+      {answerBlock && (
+        <p class="service-answer-block" aria-label="Krótka definicja usługi">
+          {answerBlock}
+        </p>
+      )}
+    </Hero>
 
     <!-- Content Section -->
     {content && (

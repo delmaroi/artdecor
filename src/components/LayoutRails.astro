@@ -1,0 +1,14 @@
+---
+/**
+ * Pionowe prowadnice biegnące przez całą stronę na krawędziach kontenera.
+ *
+ * Jeden element `position: fixed` wpięty raz w `Layout.astro` — nie renderuj
+ * go per sekcja. Gdyby linie były rysowane wewnątrz sekcji, przerywałyby się
+ * na każdej zmianie tła i na marginesach; jako element stały są nieprzerwane.
+ *
+ * Style: `src/styles/globals.css`, sekcja „Prowadnice".
+ * Kolor (`--rail-line`) jest w tonie średnim, żeby jedna wartość działała
+ * i na jasnych, i na ciemnych sekcjach.
+ */
+---
+<div class="layout-rails" aria-hidden="true"></div>

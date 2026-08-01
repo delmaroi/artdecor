@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Art Deco hero background">
+  <defs>
+    <!-- Deep brand gradient -->
+    <radialGradient id="bgRadial" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#2C3A5C"/>
+      <stop offset="50%" stop-color="#232D48"/>
+      <stop offset="100%" stop-color="#161D2E"/>
+    </radialGradient>
+
+    <!-- Subtle vertical vignette -->
+    <linearGradient id="vignette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#161D2E" stop-opacity="0.55"/>
+      <stop offset="40%" stop-color="#161D2E" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#161D2E" stop-opacity="0.7"/>
+    </linearGradient>
+
+    <!-- Copper / brass metallic gradient for art deco lines -->
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF8A5C"/>
+      <stop offset="35%" stop-color="#FF5C35"/>
+      <stop offset="65%" stop-color="#D6A05C"/>
+      <stop offset="100%" stop-color="#8B6F3D"/>
+    </linearGradient>
+
+    <linearGradient id="brassSoft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFB37A" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#FF5C35" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#8B6F3D" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <radialGradient id="sunGlow" cx="50%" cy="100%" r="80%">
+      <stop offset="0%" stop-color="#FF5C35" stop-opacity="0.45"/>
+      <stop offset="40%" stop-color="#FF5C35" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FF5C35" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Chevron tile pattern (top + bottom borders) -->
+    <pattern id="chevronPattern" x="0" y="0" width="60" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 0 30 L 30 0 L 60 30" fill="none" stroke="url(#brass)" stroke-width="1.2" stroke-opacity="0.55"/>
+      <path d="M 0 24 L 30 -6 L 60 24" fill="none" stroke="url(#brass)" stroke-width="0.6" stroke-opacity="0.3"/>
+    </pattern>
+
+    <!-- Fine grid -->
+    <pattern id="fineGrid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#FF5C35" stroke-opacity="0.04" stroke-width="0.5"/>
+    </pattern>
+
+    <!-- Filters -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3"/>
+      <feComponentTransfer><feFuncA type="linear" slope="1.4"/></feComponentTransfer>
+    </filter>
+
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8"/>
+      <feComponentTransfer><feFuncA type="linear" slope="1.6"/></feComponentTransfer>
+    </filter>
+
+    <!-- Reusable: art deco sunburst -->
+    <g id="sunburst">
+      <!-- Long rays -->
+      <g stroke="url(#brass)" stroke-opacity="0.55" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(7)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-7)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(14)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-14)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(21)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-21)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(28)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-28)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(35)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-35)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(45)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-45)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(55)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-55)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(65)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-65)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(78)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-78)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(90)"/>
+        <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.6" transform="rotate(-90)"/>
+      </g>
+      <!-- Short inner rays for density -->
+      <g stroke="url(#brassSoft)" stroke-opacity="0.5" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(3.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-3.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(10.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-10.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(17.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-17.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(24.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-24.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(31.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-31.5)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(40)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-40)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(50)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-50)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(60)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-60)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(72)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-72)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(84)"/>
+        <line x1="0" y1="0" x2="0" y2="-320" stroke-width="0.8" transform="rotate(-84)"/>
+      </g>
+      <!-- Concentric arches -->
+      <g fill="none" stroke="url(#brass)" stroke-opacity="0.55">
+        <path d="M -420 0 A 420 420 0 0 1 420 0" stroke-width="1.6"/>
+        <path d="M -360 0 A 360 360 0 0 1 360 0" stroke-width="1.1"/>
+        <path d="M -300 0 A 300 300 0 0 1 300 0" stroke-width="0.9" stroke-opacity="0.4"/>
+        <path d="M -240 0 A 240 240 0 0 1 240 0" stroke-width="0.7" stroke-opacity="0.3"/>
+        <path d="M -180 0 A 180 180 0 0 1 180 0" stroke-width="0.6" stroke-opacity="0.25"/>
+      </g>
+      <!-- Center sun disc -->
+      <circle cx="0" cy="0" r="22" fill="url(#brass)" filter="url(#softGlow)"/>
+      <circle cx="0" cy="0" r="14" fill="#FFD9A8" opacity="0.9"/>
+    </g>
+
+    <!-- Reusable: art deco corner ornament -->
+    <g id="cornerOrnament">
+      <!-- Stepped fan -->
+      <g fill="none" stroke="url(#brass)" stroke-opacity="0.7">
+        <path d="M 0 0 L 220 0" stroke-width="1.6"/>
+        <path d="M 0 0 L 0 220" stroke-width="1.6"/>
+        <path d="M 30 30 L 200 30 L 200 200" stroke-width="1.1"/>
+        <path d="M 60 60 L 180 60 L 180 180" stroke-width="0.9"/>
+        <path d="M 90 90 L 160 90 L 160 160" stroke-width="0.7"/>
+        <!-- Diagonal accent lines -->
+        <path d="M 0 0 L 130 130" stroke-width="0.6" stroke-opacity="0.4"/>
+        <path d="M 30 0 L 0 30" stroke-width="0.6" stroke-opacity="0.5"/>
+        <path d="M 60 0 L 0 60" stroke-width="0.6" stroke-opacity="0.4"/>
+        <path d="M 90 0 L 0 90" stroke-width="0.6" stroke-opacity="0.3"/>
+      </g>
+      <!-- Decorative diamond inside corner -->
+      <g transform="translate(140 140)" stroke="url(#brass)" fill="none" stroke-opacity="0.7">
+        <path d="M 0 -22 L 22 0 L 0 22 L -22 0 Z" stroke-width="1.2"/>
+        <path d="M 0 -12 L 12 0 L 0 12 L -12 0 Z" stroke-width="0.8" stroke-opacity="0.5"/>
+        <circle cx="0" cy="0" r="3" fill="url(#brass)"/>
+      </g>
+    </g>
+
+    <!-- Reusable: stepped skyscraper silhouette (Chrysler-like) -->
+    <g id="skyscraper">
+      <path d="M -120 0
+               L -120 -260
+               L -90 -260 L -90 -340
+               L -60 -340 L -60 -420
+               L -30 -420 L -30 -480
+               L 0 -540
+               L 30 -480 L 30 -420
+               L 60 -420 L 60 -340
+               L 90 -340 L 90 -260
+               L 120 -260 L 120 0 Z"
+            fill="url(#brassSoft)" opacity="0.18"/>
+      <path d="M -120 0
+               L -120 -260
+               L -90 -260 L -90 -340
+               L -60 -340 L -60 -420
+               L -30 -420 L -30 -480
+               L 0 -540
+               L 30 -480 L 30 -420
+               L 60 -420 L 60 -340
+               L 90 -340 L 90 -260
+               L 120 -260 L 120 0"
+            fill="none" stroke="url(#brass)" stroke-opacity="0.4" stroke-width="1"/>
+      <!-- Vertical pin stripes -->
+      <g stroke="url(#brass)" stroke-opacity="0.18" stroke-width="0.6">
+        <line x1="-100" y1="-260" x2="-100" y2="0"/>
+        <line x1="-80" y1="-260" x2="-80" y2="0"/>
+        <line x1="-40" y1="-340" x2="-40" y2="0"/>
+        <line x1="-20" y1="-420" x2="-20" y2="0"/>
+        <line x1="0" y1="-480" x2="0" y2="0"/>
+        <line x1="20" y1="-420" x2="20" y2="0"/>
+        <line x1="40" y1="-340" x2="40" y2="0"/>
+        <line x1="80" y1="-260" x2="80" y2="0"/>
+        <line x1="100" y1="-260" x2="100" y2="0"/>
+      </g>
+    </g>
+  </defs>
+
+  <!-- =================== BACKGROUND =================== -->
+  <rect width="1920" height="1080" fill="url(#bgRadial)"/>
+  <rect width="1920" height="1080" fill="url(#fineGrid)"/>
+
+  <!-- Bottom warm glow (sunset behind skyline) -->
+  <rect width="1920" height="1080" fill="url(#sunGlow)"/>
+
+  <!-- =================== CENTERED SUNBURST =================== -->
+  <g transform="translate(960 1080)" opacity="0.85">
+    <use href="#sunburst"/>
+  </g>
+
+  <!-- =================== SKYLINE =================== -->
+  <g transform="translate(960 1080)">
+    <!-- Side towers -->
+    <g transform="translate(-580 0) scale(0.6)" opacity="0.7"><use href="#skyscraper"/></g>
+    <g transform="translate(-360 0) scale(0.8)" opacity="0.8"><use href="#skyscraper"/></g>
+    <g transform="translate(0 0) scale(1.0)"><use href="#skyscraper"/></g>
+    <g transform="translate(360 0) scale(0.8)" opacity="0.8"><use href="#skyscraper"/></g>
+    <g transform="translate(580 0) scale(0.6)" opacity="0.7"><use href="#skyscraper"/></g>
+  </g>
+
+  <!-- =================== TOP CHEVRON BORDER =================== -->
+  <rect x="0" y="0" width="1920" height="40" fill="url(#chevronPattern)" opacity="0.5"/>
+  <rect x="0" y="44" width="1920" height="1" fill="url(#brass)" opacity="0.35"/>
+
+  <!-- =================== CORNER ORNAMENTS =================== -->
+  <g transform="translate(60 60)" opacity="0.8"><use href="#cornerOrnament"/></g>
+  <g transform="translate(1860 60) scale(-1 1)" opacity="0.8"><use href="#cornerOrnament"/></g>
+  <g transform="translate(60 1020) scale(1 -1)" opacity="0.55"><use href="#cornerOrnament"/></g>
+  <g transform="translate(1860 1020) scale(-1 -1)" opacity="0.55"><use href="#cornerOrnament"/></g>
+
+  <!-- =================== SIDE ART DECO COLUMNS =================== -->
+  <g opacity="0.4">
+    <!-- Left column -->
+    <g transform="translate(180 540)">
+      <line x1="0" y1="-360" x2="0" y2="360" stroke="url(#brass)" stroke-width="1"/>
+      <line x1="-10" y1="-340" x2="-10" y2="340" stroke="url(#brass)" stroke-width="0.5" opacity="0.6"/>
+      <line x1="10" y1="-340" x2="10" y2="340" stroke="url(#brass)" stroke-width="0.5" opacity="0.6"/>
+      <!-- Capitals -->
+      <path d="M -28 -360 L 28 -360 L 22 -340 L -22 -340 Z" fill="url(#brass)" opacity="0.7"/>
+      <path d="M -28 360 L 28 360 L 22 340 L -22 340 Z" fill="url(#brass)" opacity="0.7"/>
+      <!-- Diamond medallions along column -->
+      <g fill="url(#brass)" opacity="0.7">
+        <path d="M 0 -200 L 6 -190 L 0 -180 L -6 -190 Z"/>
+        <path d="M 0 0 L 8 -10 L 0 -20 L -8 -10 Z" transform="translate(0 10)"/>
+        <path d="M 0 200 L 6 190 L 0 180 L -6 190 Z"/>
+      </g>
+    </g>
+    <!-- Right column (mirror) -->
+    <g transform="translate(1740 540)">
+      <line x1="0" y1="-360" x2="0" y2="360" stroke="url(#brass)" stroke-width="1"/>
+      <line x1="-10" y1="-340" x2="-10" y2="340" stroke="url(#brass)" stroke-width="0.5" opacity="0.6"/>
+      <line x1="10" y1="-340" x2="10" y2="340" stroke="url(#brass)" stroke-width="0.5" opacity="0.6"/>
+      <path d="M -28 -360 L 28 -360 L 22 -340 L -22 -340 Z" fill="url(#brass)" opacity="0.7"/>
+      <path d="M -28 360 L 28 360 L 22 340 L -22 340 Z" fill="url(#brass)" opacity="0.7"/>
+      <g fill="url(#brass)" opacity="0.7">
+        <path d="M 0 -200 L 6 -190 L 0 -180 L -6 -190 Z"/>
+        <path d="M 0 0 L 8 -10 L 0 -20 L -8 -10 Z" transform="translate(0 10)"/>
+        <path d="M 0 200 L 6 190 L 0 180 L -6 190 Z"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- =================== FLOATING DIAMOND MEDALLIONS =================== -->
+  <g opacity="0.35">
+    <g transform="translate(420 280)" stroke="url(#brass)" fill="none">
+      <path d="M 0 -40 L 40 0 L 0 40 L -40 0 Z" stroke-width="1.2"/>
+      <path d="M 0 -25 L 25 0 L 0 25 L -25 0 Z" stroke-width="0.8" opacity="0.7"/>
+      <circle cx="0" cy="0" r="4" fill="url(#brass)"/>
+    </g>
+    <g transform="translate(1500 320)" stroke="url(#brass)" fill="none">
+      <path d="M 0 -36 L 36 0 L 0 36 L -36 0 Z" stroke-width="1.2"/>
+      <path d="M 0 -22 L 22 0 L 0 22 L -22 0 Z" stroke-width="0.8" opacity="0.7"/>
+      <circle cx="0" cy="0" r="4" fill="url(#brass)"/>
+    </g>
+    <g transform="translate(960 200)" stroke="url(#brass)" fill="none">
+      <!-- Larger central medallion under title -->
+      <circle cx="0" cy="0" r="60" stroke-width="1" opacity="0.5"/>
+      <circle cx="0" cy="0" r="40" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="24" stroke-width="0.7" opacity="0.5"/>
+      <path d="M 0 -60 L 0 60 M -60 0 L 60 0" stroke-width="0.6" opacity="0.4"/>
+      <path d="M -42 -42 L 42 42 M -42 42 L 42 -42" stroke-width="0.5" opacity="0.3"/>
+    </g>
+  </g>
+
+  <!-- =================== ATMOSPHERIC OVERLAY =================== -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

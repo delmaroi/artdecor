@@ -3,91 +3,120 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import SectionRule from "../components/SectionRule.astro";
+import HatchBand from "../components/HatchBand.astro";
 import { Icon } from "astro-icon/components";
+import {
+  foundedYear,
+  aboutIntro,
+  aboutPillars,
+  machinery,
+  aboutStats,
+} from "../lib/about-data";
 import "../styles/globals.css";
 ---
-<Layout title="O nas – Art Decor Pszczyna | Tradycja od 1993 roku" description="Poznaj historię Art Decor Pszczyna. Od 1993 roku tworzymy nowoczesną reklamę wizualną. Własny park maszynowy: CNC, termoformowanie, druk, ploter tnący.">
+<Layout
+  title={`O nas – Art Decor Pszczyna | Reklama wizualna od ${foundedYear} roku`}
+  description={`Art Decor Pszczyna – agencja reklamy wizualnej od ${foundedYear} roku. Projekt, produkcja i montaż w jednym miejscu: własny ploter CNC, druk wielkoformatowy, termoformowanie i cięcie folii. Pięć maszyn, jeden wykonawca, jedna odpowiedzialność.`}
+>
   <Header />
   <main>
     <Hero
       title="Pasja i doświadczenie"
-      subtitle="Tradycja budowana od 1996 roku i kompleksowa reklama wizualna – od projektu po montaż. Własny park maszynowy: CNC, druk, cięcie, termoformowanie i piaskowanie artystyczne."
+      subtitle={`Reklama wizualna od ${foundedYear} roku – od projektu po montaż. Własny park maszynowy: CNC, druk, cięcie, termoformowanie.`}
       ctaText="Skontaktuj się"
       ctaHref="/kontakt/"
     />
 
-    <section class="section">
+    <section class="section about-intro-section">
       <div class="container">
-        <div class="content-card glass-card about-intro" data-reveal data-reveal-dir="up">
-          <h2>Kompleksowa reklama wizualna</h2>
-          <p>
-            Jesteśmy agencją reklamową zajmującą się kompleksową obsługą firm i klientów indywidualnych w zakresie szeroko pojętej reklamy wizualnej. Połączenie świeżości wraz z nowatorskimi rozwiązaniami pozwala nam tworzyć produkty, które przyciągają uwagę i budują profesjonalny wizerunek.
-          </p>
-          <p>
-            Projektowane przez nas reklamy cechują się nowoczesnym wzornictwem i możliwością zastosowania różnorodnych technik produkcji. Całość usług realizujemy kompleksowo, opierając się wyłącznie o prace naszego zespołu oraz własne zasoby sprzętowe – <strong>od projektu po montaż</strong>.
-          </p>
+        <SectionRule />
+        <SectionHeader
+          eyebrow={aboutIntro.eyebrow}
+          title={aboutIntro.title}
+          accent={aboutIntro.accent}
+          align="stack"
+        />
+
+        <div class="about-prose" data-stagger-grid>
+          {aboutIntro.paragraphs.map((text) => (
+            <p class="about-para">{text}</p>
+          ))}
         </div>
 
-        <div class="about-grid">
-          <div class="content-card glass-card highlights-card" data-reveal data-reveal-dir="up">
-            <div class="highlights-grid" data-stagger-grid>
-              <div class="highlight-item">
-                <div class="highlight-icon">30+</div>
-                <p>Lat doświadczenia</p>
-              </div>
-              <div class="highlight-item">
-                <div class="highlight-icon">100%</div>
-                <p>Własna produkcja</p>
-              </div>
-              <div class="highlight-item">
-                <div class="highlight-icon">∞</div>
-                <p>Pasja do designu</p>
-              </div>
+        <dl class="about-stats" data-stagger-grid>
+          {aboutStats.map((stat) => (
+            <div class="about-stat">
+              <dt>{stat.value}</dt>
+              <dd>{stat.label}</dd>
             </div>
-          </div>
+          ))}
+        </dl>
+      </div>
+    </section>
 
-          <div class="machinery-card glass-card" data-reveal data-reveal-delay="0.1" data-reveal-dir="up">
-            <h3>Park maszynowy</h3>
-            <ul class="machinery-list">
-              <li>
-                <span class="icon" aria-hidden="true"><Icon name="lucide:settings" size={24} /></span>
-                <div>
-                  <strong>Ploter frezujący CNC</strong>
-                  <p>Precyzyjna obróbka płyt dibond, plexi i PCV.</p>
-                </div>
-              </li>
-              <li>
-                <span class="icon" aria-hidden="true"><Icon name="lucide:thermometer" size={24} /></span>
-                <div>
-                  <strong>Termoformierka</strong>
-                  <p>Wytwarzanie wypukłych elementów z tworzyw sztucznych.</p>
-                </div>
-              </li>
-              <li>
-                <span class="icon" aria-hidden="true"><Icon name="lucide:printer" size={24} /></span>
-                <div>
-                  <strong>Ploter drukujący</strong>
-                  <p>Wydruki wielkoformatowe UV i solwentowe wysokiej jakości.</p>
-                </div>
-              </li>
-              <li>
-                <span class="icon" aria-hidden="true"><Icon name="lucide:scissors" size={24} /></span>
-                <div>
-                  <strong>Ploter tnący</strong>
-                  <p>Precyzyjne wycinanie liter i znaków z folii.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+    <section class="section pillars">
+      <div class="container">
+        <SectionRule />
+        <SectionHeader
+          eyebrow={aboutPillars.eyebrow}
+          title={aboutPillars.title}
+          accent={aboutPillars.accent}
+          lead={aboutPillars.lead}
+          align="split"
+        />
+
+        <ol class="pillar-list" data-stagger-grid>
+          {aboutPillars.items.map((item, index) => (
+            <li class="pillar">
+              <span class="pillar-num">{String(index + 1).padStart(2, "0")}</span>
+              <h3 class="pillar-title">{item.title}</h3>
+              <p class="pillar-body">{item.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <HatchBand />
+
+    <section class="section machinery">
+      <div class="container">
+        <SectionRule />
+        <SectionHeader
+          eyebrow={machinery.eyebrow}
+          title={machinery.title}
+          accent={machinery.accent}
+          lead={machinery.lead}
+          align="split"
+        />
+
+        <ul class="machine-grid" data-stagger-grid>
+          {machinery.items.map((machine) => (
+            <li class="machine">
+              <span class="machine-icon" aria-hidden="true">
+                <Icon name={machine.icon} size={24} />
+              </span>
+              <h3 class="machine-name">{machine.name}</h3>
+              <p class="machine-body">{machine.body}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
 
     <section class="section about-cta">
-      <div class="container text-center">
-        <h2 class="section-title" data-reveal>Masz pomysł na <span class="gradient-text">reklamę?</span></h2>
-        <p class="section-lead" data-reveal data-reveal-delay="0.1">Zrealizujemy go dla Ciebie – od koncepcji po gotowy produkt na Twoim budynku.</p>
-        <a href="/kontakt/" class="cta-button primary" data-reveal data-reveal-delay="0.2">Skontaktuj się z nami</a>
+      <div class="container">
+        <SectionRule />
+        <SectionHeader
+          eyebrow="Kontakt"
+          title={"Masz pomysł\nna reklamę?"}
+          accent="na reklamę?"
+          lead="Zrealizujemy go od koncepcji po gotowy produkt na Twoim budynku. Wycena jest bezpłatna."
+          cta={{ text: "Skontaktuj się z nami", href: "/kontakt/" }}
+          align="split"
+        />
       </div>
     </section>
   </main>
@@ -95,164 +124,234 @@ import "../styles/globals.css";
 </Layout>
 
 <style>
-  .about-intro {
-    margin-bottom: 3rem;
+  /* Nagłówki sekcji renderuje SectionHeader.astro — style w globals.css. */
+
+  .about-intro-section {
+    background: var(--structa-offwhite);
   }
 
-  .about-grid {
+  /* ── Wstęp ─────────────────────────────────────────────────────────── */
+
+  /* Wstęp wypełnia pełną szerokość sekcji, ale nie jako jeden szeroki blok —
+     przy 1320px dałoby to linie po ~150 znaków, czyli dwa razy powyżej progu
+     czytelności. Trzy kolumny wypełniają tę samą szerokość, trzymając linię
+     w okolicach 60 znaków. */
+  .about-prose {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
-    align-items: start;
-    justify-items: stretch;
-    width: 100%;
-  }
-
-  .about-grid > * {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    box-sizing: border-box;
-  }
-
-  .highlights-card {
-    width: 100%;
-  }
-
-  .content-card {
-    padding: 1.5rem;
-    height: 100%;
-  }
-
-  .content-card h2 {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem;
-    color: var(--color-text);
-  }
-
-  .content-card p {
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
-    color: var(--color-text-muted);
-  }
-
-  .highlights-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
-    width: 100%;
   }
 
-  .highlight-item {
-    text-align: center;
+  @media (min-width: 700px) {
+    .about-prose {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
   }
 
-  .highlight-icon {
-    font-family: var(--font-display);
-    font-size: 2.25rem;
-    font-weight: 800;
-    color: var(--color-accent);
-    margin-bottom: 0.5rem;
-    text-shadow: 0 4px 12px rgba(254, 107, 0, 0.15);
+  @media (min-width: 1100px) {
+    .about-prose {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
   }
 
-  .highlight-item p {
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  /* Pierwszy akapit prowadzi wzrok w tekst. Wyróżnienie działa tylko wtedy,
+     gdy akapity są pod sobą — w rzędzie równorzędnych kolumn nierówny stopień
+     pisma czyta się jak błąd składu, więc powyżej progu je wyłączamy. */
+  .about-para:first-child {
+    font-size: clamp(1.125rem, 1.7vw, 1.375rem);
+    line-height: 1.6;
+    color: var(--structa-black);
+  }
+
+  @media (min-width: 700px) {
+    .about-para:first-child {
+      font-size: 1.0625rem;
+      line-height: 1.75;
+      color: var(--structa-gray-text);
+    }
+  }
+
+  .about-para {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--structa-gray-text);
     margin: 0;
-    color: var(--color-text-muted);
   }
 
-  .machinery-card {
-    padding: 2.5rem;
-  }
-
-  .machinery-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem;
-    color: var(--color-text);
-  }
-
-  .machinery-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .about-stats {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem 2rem;
-    align-items: start;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 4rem 0 0;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--paper-line);
   }
 
-  .machinery-list li {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    min-width: 0;
+  @media (min-width: 700px) {
+    .about-stats {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
   }
 
-  .machinery-list .icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-    padding-top: 0.125rem;
+  .about-stat dt {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: var(--structa-accent);
   }
 
-  .machinery-list strong {
-    display: block;
-    font-size: 1rem;
-    color: var(--color-text);
-    margin-bottom: 0.25rem;
+  .about-stat dd {
+    margin: 0.75rem 0 0;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--structa-gray-text);
+    max-width: 22ch;
   }
 
-  .machinery-list p {
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
+  /* ── Filary ────────────────────────────────────────────────────────── */
+
+  .pillars {
+    background: var(--structa-white);
+  }
+
+  .pillar-list {
+    list-style: none;
     margin: 0;
-    line-height: 1.4;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--paper-line);
   }
 
-  .about-cta {
-    background: #f8faff;
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
+  @media (min-width: 900px) {
+    .pillar-list {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 3.5rem;
+    }
   }
 
-  .cta-button {
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding-block: 2.25rem;
+    border-bottom: 1px solid var(--paper-line);
+  }
+
+  @media (min-width: 900px) {
+    .pillar {
+      padding-block: 2.75rem 0;
+      border-bottom: none;
+    }
+  }
+
+  .pillar-num {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--structa-accent);
+  }
+
+  .pillar-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--structa-black);
+    margin: 0;
+  }
+
+  .pillar-body {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--structa-gray-text);
+    margin: 0;
+  }
+
+  /* ── Park maszynowy ────────────────────────────────────────────────── */
+
+  .machinery {
+    background: var(--structa-offwhite);
+  }
+
+  .machine-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 700px) {
+    .machine-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .machine-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .machine {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 2rem;
+    background: var(--structa-white);
+    border: 1px solid var(--structa-border);
+    border-radius: var(--radius-lg);
+    transition: border-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .machine:hover {
+    border-color: var(--structa-accent);
+    transform: translateY(-4px);
+  }
+
+  .machine-icon {
     display: inline-flex;
     align-items: center;
-    padding: 1.125rem 2.5rem;
-    border-radius: var(--radius-xl);
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--structa-offwhite);
+    color: var(--structa-accent);
+    flex-shrink: 0;
+  }
+
+  .machine-name {
+    font-family: var(--font-display);
+    font-size: 1.1875rem;
     font-weight: 700;
-    transition: all var(--transition-base);
-    margin-top: 2rem;
-    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--structa-black);
+    margin: 0;
   }
 
-  .cta-button.primary {
-    background: var(--gradient-primary);
-    color: white;
-    box-shadow: 0 8px 30px rgba(254, 107, 0, 0.25);
+  .machine-body {
+    font-size: 0.9688rem;
+    line-height: 1.65;
+    color: var(--structa-gray-text);
+    margin: 0;
   }
 
-  .cta-button.primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(254, 107, 0, 0.35);
-    color: white;
-  }
+  /* ── CTA ───────────────────────────────────────────────────────────── */
 
-  @media (max-width: 640px) {
-    .highlights-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .machinery-list {
-      grid-template-columns: 1fr;
-    }
+  .about-cta {
+    background: var(--structa-white);
   }
 </style>

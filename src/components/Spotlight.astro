@@ -1,0 +1,83 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import SectionRule from "./SectionRule.astro";
+import { spotlight } from "../lib/narrative-data";
+---
+<section class="section spotlight" id="spotlight">
+  <div class="container">
+    <SectionRule />
+    <SectionHeader
+      eyebrow={spotlight.eyebrow}
+      title={spotlight.title}
+      accent={spotlight.accent}
+      lead={spotlight.lead}
+      cta={spotlight.cta}
+      align="split"
+    />
+
+    <ul class="spotlight-points" data-stagger-grid>
+      {spotlight.points.map((point, index) => (
+        <li class="spotlight-point">
+          <span class="spotlight-point-num">{String(index + 1).padStart(2, "0")}</span>
+          <p>{point}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .spotlight {
+    background: var(--structa-offwhite);
+  }
+
+  .spotlight-points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--paper-line);
+  }
+
+  @media (min-width: 900px) {
+    .spotlight-points {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 3rem;
+    }
+  }
+
+  .spotlight-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--paper-line);
+  }
+
+  @media (min-width: 900px) {
+    .spotlight-point {
+      flex-direction: column;
+      gap: 1rem;
+      padding-block: 2.25rem 0;
+      border-bottom: none;
+    }
+  }
+
+  .spotlight-point-num {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--structa-accent);
+    flex-shrink: 0;
+    line-height: 1.6;
+  }
+
+  .spotlight-point p {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--structa-black);
+    max-width: 34ch;
+  }
+</style>

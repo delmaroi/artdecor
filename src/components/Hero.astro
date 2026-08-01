@@ -1,15 +1,49 @@
 ---
 import { Icon } from "astro-icon/components";
 import { services } from "../lib/services-data";
+import { foundedYear } from "../lib/company-data";
+
+export interface BreadcrumbItem {
+  label: string;
+  /** Pomiń na ostatnim elemencie — to bieżąca strona, nie link. */
+  href?: string;
+}
 
 export interface Props {
   title: string;
   subtitle?: string;
+  /** Etykieta nad tytułem. Ignorowana, gdy podasz `breadcrumb`. */
+  eyebrow?: string;
+  /** Ścieżka okruszków — zajmuje miejsce etykiety `eyebrow`. */
+  breadcrumb?: BreadcrumbItem[];
   ctaText?: string;
   ctaHref?: string;
+  /** `null` ukrywa przycisk poboczny. */
+  secondaryCtaText?: string | null;
+  secondaryCtaHref?: string;
+  /**
+   * „home" — pełna wysokość i statystyki firmy (strona główna, O nas).
+   * „page" — niższy, bez statystyk (podstrony: realizacje, usługi).
+   * Oba warianty dzielą tło, typografię i pasek marquee, więc podstrony
+   * czytają się jak ta sama strona, a nie jak osobny szablon.
+   */
+  variant?: "home" | "page";
 }
 
-const { title, subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kasetony z dibondu, szyldy, oklejanie witryn i samochodów.", ctaText = "Skontaktuj się", ctaHref = "/kontakt/" } = Astro.props;
+const {
+  title,
+  subtitle = "Kompleksowa reklama wizualna – pylony, totemy, kasetony z dibondu, szyldy, oklejanie witryn i samochodów.",
+  eyebrow = "Agencja reklamy wizualnej — Pszczyna",
+  breadcrumb,
+  ctaText = "Skontaktuj się",
+  ctaHref = "/kontakt/",
+  secondaryCtaText = "Zobacz realizacje",
+  secondaryCtaHref = "/realizacje/",
+  variant = "home",
+} = Astro.props;
+
+const isPage = variant === "page";
+const hasExtra = Astro.slots.has("default");
 
 // Ostatnie słowo tytułu dostaje akcent typograficzny
 const words = title.trim().split(" ");
@@ -18,7 +52,7 @@ const titleStart = words.join(" ");
 
 const marqueeItems = services.map((s) => s.title);
 ---
-<section class="hero">
+<section class:list={["hero", isPage && "hero--page"]}>
   <div class="hero-bg" aria-hidden="true">
     <video class="hero-video" autoplay muted loop playsinline preload="metadata">
       <source src="/videos/hero-loop.mp4" type="video/mp4" />
@@ -29,10 +63,23 @@ const marqueeItems = services.map((s) => s.title);
   </div>
 
   <div class="container hero-inner">
-    <p class="hero-eyebrow">
-      <span class="pulse-dot"></span>
-      Agencja reklamy wizualnej — Pszczyna
-    </p>
+    {breadcrumb ? (
+      <nav class="hero-breadcrumb" aria-label="Ścieżka nawigacji">
+        {breadcrumb.map((crumb, index) => (
+          <>
+            {index > 0 && <span class="hero-breadcrumb-sep" aria-hidden="true">/</span>}
+            {crumb.href
+              ? <a href={crumb.href}>{crumb.label}</a>
+              : <span aria-current="page">{crumb.label}</span>}
+          </>
+        ))}
+      </nav>
+    ) : (
+      <p class="hero-eyebrow">
+        <span class="pulse-dot"></span>
+        {eyebrow}
+      </p>
+    )}
 
     <h1 class="hero-title">
       {titleStart} <em>{lastWord}</em>
@@ -48,16 +95,25 @@ const marqueeItems = services.map((s) => s.title);
             <Icon name="lucide:arrow-up-right" size={18} />
           </a>
         )}
-        <a href="/realizacje/" class="btn btn-secondary">
-          Zobacz realizacje
-        </a>
+        {secondaryCtaText && (
+          <a href={secondaryCtaHref} class="btn btn-secondary">
+            {secondaryCtaText}
+          </a>
+        )}
       </div>
     </div>
 
+    {hasExtra && (
+      <div class="hero-extra">
+        <slot />
+      </div>
+    )}
+
+    {!isPage && (
     <dl class="hero-stats">
       <div class="hero-stat">
         <dt>Na rynku</dt>
-        <dd>od 1996</dd>
+        <dd>od {foundedYear}</dd>
       </div>
       <div class="hero-stat">
         <dt>Specjalizacje</dt>
@@ -72,6 +128,7 @@ const marqueeItems = services.map((s) => s.title);
         <dd>projekt → montaż</dd>
       </div>
     </dl>
+    )}
   </div>
 
   <div class="hero-marquee" aria-hidden="true">
@@ -99,7 +156,7 @@ const marqueeItems = services.map((s) => s.title);
     justify-content: flex-end;
     padding-top: 9rem;
     overflow: hidden;
-    background: var(--structa-black);
+    background: var(--structa-charcoal);
     color: var(--structa-white);
   }
 
@@ -128,12 +185,16 @@ const marqueeItems = services.map((s) => s.title);
     opacity: 0.6;
   }
 
+  /* rgba(35, 45, 72) to --structa-charcoal (#232D48). Wartości muszą być
+     zapisane liczbowo, bo gradienty potrzebują kanału alfa — trzymaj je
+     zsynchronizowane z tokenem, inaczej hero rozjedzie się kolorystycznie
+     z pozostałymi ciemnymi sekcjami. */
   .hero-video-overlay {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 50% 30%, rgba(35, 45, 72, 0.2) 0%, rgba(22, 29, 46, 0.6) 60%, rgba(22, 29, 46, 0.88) 100%),
-      linear-gradient(180deg, rgba(22, 29, 46, 0.35) 0%, rgba(22, 29, 46, 0.75) 100%);
+      radial-gradient(ellipse at 50% 30%, rgba(35, 45, 72, 0.2) 0%, rgba(35, 45, 72, 0.6) 60%, rgba(35, 45, 72, 0.88) 100%),
+      linear-gradient(180deg, rgba(35, 45, 72, 0.35) 0%, rgba(35, 45, 72, 0.75) 100%);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -155,7 +216,25 @@ const marqueeItems = services.map((s) => s.title);
   .hero-inner {
     position: relative;
     z-index: 10;
-    padding-inline: 1.5rem;
+    /* Wcięcie poziome dziedziczy z `.container` (--container-pad) — własna
+       wartość podwajałaby je i hero rozjechałoby się z resztą sekcji. */
+  }
+
+  /* Wariant podstrony: ta sama oprawa, mniej wysokości i bez statystyk firmy.
+     Bez tego hero zajmowałby na podstronie usługi cały ekran, spychając
+     właściwą treść poniżej zgięcia. */
+  .hero--page {
+    min-height: min(62svh, 42rem);
+    padding-top: 10rem;
+  }
+
+  .hero--page .hero-title {
+    font-size: clamp(2.5rem, 6.5vw, 5rem);
+    margin-bottom: 2rem;
+  }
+
+  .hero--page .hero-bottom {
+    margin-bottom: 3rem;
   }
 
   .hero-eyebrow {
@@ -168,6 +247,43 @@ const marqueeItems = services.map((s) => s.title);
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.55);
     margin-bottom: 2rem;
+  }
+
+  /* Breadcrumb zajmuje miejsce etykiety `eyebrow` — ten sam stopień pisma
+     i ten sam odstęp do tytułu, żeby nie powstał drugi poziom drobnicy. */
+  .hero-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .hero-breadcrumb a {
+    color: rgba(255, 255, 255, 0.55);
+    transition: color var(--transition-fast);
+  }
+
+  .hero-breadcrumb a:hover {
+    color: var(--structa-white);
+  }
+
+  .hero-breadcrumb [aria-current="page"] {
+    color: var(--structa-accent);
+  }
+
+  .hero-breadcrumb-sep {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Slot na treść specyficzną dla strony (np. definicja usługi pod CTA). */
+  .hero-extra {
+    margin-bottom: 3rem;
+    max-width: 62ch;
   }
 
   .pulse-dot {
@@ -198,12 +314,12 @@ const marqueeItems = services.map((s) => s.title);
 
   .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 9.5vw, 7.25rem);
+    font-size: clamp(3rem, 5.5vw, 7.25rem);
     font-weight: 800;
     line-height: 0.98;
     letter-spacing: -0.045em;
     margin: 0 0 2.5rem;
-    max-width: 15ch;
+    max-width: 25ch;
     text-wrap: balance;
   }
 

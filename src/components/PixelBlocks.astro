@@ -1,0 +1,46 @@
+---
+/**
+ * Kolumna bloków pikselowych — akcent na marginesie ciemnej sekcji.
+ *
+ * Wzór jest celowo nieregularny (schodkowy), a nie losowany: przy losowaniu
+ * przy każdym buildzie układ by się zmieniał, a to element identyfikacji,
+ * nie szum. Kolejność par to [lewa kolumna, prawa kolumna].
+ *
+ * Style: `src/styles/globals.css`, sekcja „Prowadnice".
+ */
+
+export interface Props {
+  /** Rozmiar boku pojedynczego bloku. */
+  size?: string;
+  class?: string;
+}
+
+const { size = "26px", class: className = "" } = Astro.props;
+
+type Tone = "accent" | "paper" | "mute" | "empty";
+
+const pattern: [Tone, Tone][] = [
+  ["accent", "empty"],
+  ["empty", "accent"],
+  ["empty", "paper"],
+  ["mute", "empty"],
+  ["empty", "accent"],
+  ["paper", "empty"],
+  ["empty", "mute"],
+  ["paper", "empty"],
+  ["accent", "empty"],
+  ["empty", "accent"],
+];
+---
+<div
+  class={`pixel-blocks ${className}`.trim()}
+  style={`--pixel-size: ${size}`}
+  aria-hidden="true"
+>
+  {pattern.map(([left, right]) => (
+    <>
+      <span data-tone={left}></span>
+      <span data-tone={right}></span>
+    </>
+  ))}
+</div>

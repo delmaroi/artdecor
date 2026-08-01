@@ -1,0 +1,123 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import SectionRule from "./SectionRule.astro";
+import PixelBlocks from "./PixelBlocks.astro";
+import { problemSolution } from "../lib/narrative-data";
+---
+<section class="section problem-solution" id="dlaczego-my">
+  <div class="hero-grid grid-pattern" aria-hidden="true"></div>
+  <PixelBlocks size="20px" class="ps-pixels" />
+
+  <div class="container ps-inner">
+    <SectionRule />
+    <SectionHeader
+      eyebrow={problemSolution.eyebrow}
+      title={problemSolution.title}
+      accent={problemSolution.accent}
+      lead={problemSolution.lead}
+      align="split"
+      onDark
+    />
+
+    <ol class="ps-columns" data-stagger-grid>
+      {problemSolution.columns.map((col) => (
+        <li class="ps-column">
+          <span class="ps-label">{col.label}</span>
+          <h3 class="ps-title">{col.title}</h3>
+          <p class="ps-body">{col.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .problem-solution {
+    background: var(--structa-charcoal);
+    color: var(--structa-white);
+    overflow: hidden;
+  }
+
+  /* Delikatna siatka jak w hero — spina ciemne sekcje wizualnie. */
+  .problem-solution .grid-pattern {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 70%);
+  }
+
+  .ps-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Bloki lądują w marginesie poza kontenerem: `right` przyklejone do lewej
+     prowadnicy sprawia, że kolumna kończy się dokładnie na niej.
+     Widoczność od 1440px reguluje globals.css — poniżej nie ma tam miejsca. */
+  .problem-solution :global(.ps-pixels) {
+    position: absolute;
+    top: var(--section-py-lg);
+    right: calc(50% + var(--container) / 2);
+    z-index: 1;
+  }
+
+  .ps-columns {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    counter-reset: none;
+  }
+
+  @media (min-width: 900px) {
+    .ps-columns {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 3.5rem;
+    }
+  }
+
+  .ps-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding-block: 2.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  @media (min-width: 900px) {
+    .ps-column {
+      padding-block: 2.75rem 0;
+      border-bottom: none;
+    }
+  }
+
+  .ps-label {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--structa-accent);
+  }
+
+  .ps-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--structa-white);
+    margin: 0;
+  }
+
+  .ps-body {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 40ch;
+    margin: 0;
+  }
+</style>

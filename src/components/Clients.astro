@@ -1,13 +1,18 @@
 ---
 import { Image } from "astro:assets";
+import SectionHeader from "./SectionHeader.astro";
 import { asset } from "../lib/images";
 
 const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png`);
 ---
 <section class="section clients" id="klienci">
-  <div class="container clients-header">
-    <p class="eyebrow">Nasi zaufani partnerzy</p>
-    <h2 class="clients-title">Zaufali <em>nam</em></h2>
+  <div class="container">
+    <SectionHeader
+      eyebrow="Nasi zaufani partnerzy"
+      title="Zaufali nam"
+      accent="nam"
+      align="stack"
+    />
   </div>
 
   <div class="clients-marquee" role="list" aria-label="Logotypy klientów Art Decor">
@@ -37,27 +42,7 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
     overflow: hidden;
   }
 
-  .clients-header {
-    margin-bottom: 3.5rem;
-  }
-
-  .clients-header .eyebrow {
-    margin: 0 0 1.25rem;
-  }
-
-  .clients-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5.5vw, 4.25rem);
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    margin: 0;
-    color: var(--structa-black);
-  }
-
-  .clients-title em {
-    font-style: normal;
-    color: var(--structa-accent);
-  }
+  /* Nagłówek sekcji renderuje SectionHeader.astro — style w globals.css. */
 
   .clients-marquee {
     position: relative;
