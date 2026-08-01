@@ -9,6 +9,7 @@ import type { ImageMetadata } from "astro";
 const assets = {
   ...import.meta.glob<{ default: ImageMetadata }>("../assets/portfolio/**/*.{jpg,jpeg,png}", { eager: true }),
   ...import.meta.glob<{ default: ImageMetadata }>("../assets/klienci/*.{png,jpg,jpeg}", { eager: true }),
+  ...import.meta.glob<{ default: ImageMetadata }>("../assets/facebook/*.{jpg,jpeg,png}", { eager: true }),
 };
 
 /**

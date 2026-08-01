@@ -43,6 +43,7 @@ export default defineConfig({
           "search",
           "settings",
           "flame",
+          "play",
           "thermometer",
           "sparkles",
           "printer",

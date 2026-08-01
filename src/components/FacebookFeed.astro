@@ -1,0 +1,458 @@
+---
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import SectionHeader from "./SectionHeader.astro";
+import SectionRule from "./SectionRule.astro";
+import { asset } from "../lib/images";
+import {
+  facebookPage,
+  facebookSection,
+  videos,
+  posts,
+} from "../lib/facebook-data";
+
+/**
+ * Sekcja „Co u nas słychać" — wybrane filmy i posty z profilu na Facebooku.
+ *
+ * Treść pochodzi z `src/lib/facebook-data.ts` (kuratorska, bez API).
+ *
+ * Film ładuje się dopiero po kliknięciu — do tego momentu widać własną
+ * miniaturę, a strona nie pobiera niczego z serwerów Meta. Dzięki temu
+ * sekcja nie ustawia ciasteczek przed zgodą użytkownika i nie spowalnia
+ * pierwszego renderu o SDK Facebooka. Kafelki postów renderujemy całkowicie
+ * po swojemu — to zwykłe odnośniki, żadnego osadzania.
+ */
+
+const dateFormatter = new Intl.DateTimeFormat("pl-PL", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const formatDate = (iso: string) => dateFormatter.format(new Date(iso));
+
+// Pierwszy film jest bohaterem sekcji, reszta idzie do kolumny obok razem
+// z postami. Kolejność w kolumnie: najpierw filmy, potem zdjęcia.
+const [featuredVideo, ...sideVideos] = videos;
+
+const aspectOf = (v: { orientation?: "vertical" | "horizontal" }) =>
+  v.orientation === "horizontal" ? "16 / 9" : "9 / 16";
+
+// Puste `href` = brak wklejonego adresu. Kafelek prowadzi wtedy na profil,
+// zamiast próbować osadzić nieistniejący film.
+const hrefOf = (v: { href: string }) => v.href.trim();
+---
+<section class="section fb-feed" id="facebook">
+  <div class="container">
+    <SectionRule />
+    <SectionHeader
+      eyebrow={facebookSection.eyebrow}
+      title={facebookSection.title}
+      accent={facebookSection.accent}
+      lead={facebookSection.lead}
+      cta={facebookSection.cta}
+      align="split"
+    />
+
+    <div class="fb-grid" data-stagger-grid>
+      <article class="fb-featured">
+        <div
+          class="fb-player"
+          data-fb-player
+          data-href={hrefOf(featuredVideo) || undefined}
+          style={`aspect-ratio: ${aspectOf(featuredVideo)}`}
+        >
+          <Image
+            src={asset(featuredVideo.poster)}
+            alt={featuredVideo.posterAlt}
+            class="fb-poster"
+            widths={[360, 720, 1080]}
+            sizes="(min-width: 900px) 34vw, 100vw"
+            loading="lazy"
+            decoding="async"
+          />
+
+          {hrefOf(featuredVideo) ? (
+            <button type="button" class="fb-play" data-fb-play>
+              <span class="fb-play-icon" aria-hidden="true">
+                <Icon name="lucide:play" size={26} />
+              </span>
+              <span class="fb-play-label">Odtwórz film</span>
+            </button>
+          ) : (
+            <a href={facebookPage} class="fb-play" target="_blank" rel="noopener noreferrer">
+              <span class="fb-play-icon" aria-hidden="true">
+                <Icon name="lucide:play" size={26} />
+              </span>
+              <span class="fb-play-label">Zobacz na Facebooku</span>
+            </a>
+          )}
+        </div>
+
+        <div class="fb-featured-text">
+          <time class="fb-date" datetime={featuredVideo.date}>
+            {formatDate(featuredVideo.date)}
+          </time>
+          <h3 class="fb-featured-title">{featuredVideo.title}</h3>
+          {featuredVideo.excerpt && <p class="fb-excerpt">{featuredVideo.excerpt}</p>}
+        </div>
+      </article>
+
+      <div class="fb-posts">
+        {sideVideos.map((video) => (
+          <article class="fb-post fb-post--video">
+            <div
+              class="fb-player fb-player--card"
+              data-fb-player
+              data-href={hrefOf(video) || undefined}
+              style={`aspect-ratio: ${aspectOf(video)}`}
+            >
+              <Image
+                src={asset(video.poster)}
+                alt={video.posterAlt}
+                class="fb-poster"
+                widths={[280, 560]}
+                sizes="(min-width: 900px) 28vw, 100vw"
+                loading="lazy"
+                decoding="async"
+              />
+
+              {hrefOf(video) ? (
+                <button type="button" class="fb-play fb-play--card" data-fb-play>
+                  <span class="fb-play-icon" aria-hidden="true">
+                    <Icon name="lucide:play" size={20} />
+                  </span>
+                </button>
+              ) : (
+                <a href={facebookPage} class="fb-play fb-play--card" target="_blank" rel="noopener noreferrer">
+                  <span class="fb-play-icon" aria-hidden="true">
+                    <Icon name="lucide:play" size={20} />
+                  </span>
+                </a>
+              )}
+            </div>
+
+            <div class="fb-post-text">
+              <time class="fb-date" datetime={video.date}>{formatDate(video.date)}</time>
+              <h3 class="fb-post-title">{video.title}</h3>
+              {video.excerpt && <p class="fb-excerpt">{video.excerpt}</p>}
+            </div>
+          </article>
+        ))}
+
+        {posts.map((post) => (
+          <article class="fb-post">
+            <a
+              href={post.href.trim() || facebookPage}
+              class="fb-post-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div class="fb-post-media">
+                <Image
+                  src={asset(post.image)}
+                  alt={post.imageAlt}
+                  widths={[240, 480]}
+                  sizes="(min-width: 900px) 30vw, 100vw"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="fb-post-text">
+                <time class="fb-date" datetime={post.date}>{formatDate(post.date)}</time>
+                <h3 class="fb-post-title">{post.title}</h3>
+                <p class="fb-excerpt">{post.excerpt}</p>
+                <span class="fb-post-more">
+                  Zobacz post
+                  <Icon name="lucide:arrow-up-right" size={16} />
+                </span>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Odtwarzacz Facebooka wstrzykujemy dopiero na kliknięcie. Przed nim strona
+  // nie kontaktuje się z serwerami Meta — patrz komentarz w nagłówku komponentu.
+  document.querySelectorAll<HTMLElement>("[data-fb-player]").forEach((player) => {
+    const button = player.querySelector<HTMLButtonElement>("[data-fb-play]");
+    const href = player.dataset.href;
+    if (!button || !href) return;
+
+    button.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      const params = new URLSearchParams({
+        href,
+        show_text: "false",
+        autoplay: "true",
+        width: String(Math.round(player.clientWidth) || 640),
+      });
+
+      iframe.src = `https://www.facebook.com/plugins/video.php?${params}`;
+      iframe.title = "Film z profilu Art Decor na Facebooku";
+      iframe.className = "fb-iframe";
+      iframe.allow =
+        "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute("scrolling", "no");
+
+      player.replaceChildren(iframe);
+    });
+  });
+</script>
+
+<style>
+  .fb-feed {
+    background: var(--structa-white);
+  }
+
+  .fb-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  /* Asymetria: film jest bohaterem sekcji, posty mu towarzyszą.
+     Kolumna filmu jest wąska, bo Reels są pionowe — przy szerokiej kolumnie
+     kadr 9:16 urósłby na wysokość ponad ekran. */
+  @media (min-width: 900px) {
+    .fb-grid {
+      grid-template-columns: clamp(260px, 26vw, 340px) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: start;
+    }
+  }
+
+  /* ── Film ──────────────────────────────────────────────────────────── */
+
+  .fb-featured {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+
+  /* Proporcje przychodzą inline z danych (`orientation`) — Reels to 9:16,
+     zwykłe filmy 16:9. Kadr na sztywno w CSS dawałby czarne pasy przy
+     niewłaściwym typie. */
+  .fb-player {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--structa-charcoal);
+  }
+
+  .fb-player--card {
+    border-radius: 0;
+    max-height: 22rem;
+  }
+
+  .fb-player :global(.fb-poster) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fb-player :global(.fb-iframe) {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  /* Przycisk przykrywa całą miniaturę — cel kliknięcia to kafelek, a nie
+     samo kółko z trójkątem. */
+  .fb-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: 0;
+    cursor: pointer;
+    background: linear-gradient(
+      180deg,
+      rgba(35, 45, 72, 0.15) 0%,
+      rgba(35, 45, 72, 0.65) 100%
+    );
+    color: var(--structa-white);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    transition: background var(--transition-base);
+  }
+
+  .fb-play:hover {
+    background: linear-gradient(
+      180deg,
+      rgba(35, 45, 72, 0.25) 0%,
+      rgba(35, 45, 72, 0.75) 100%
+    );
+    color: var(--structa-white);
+  }
+
+  .fb-play:focus-visible {
+    outline: 2px solid var(--structa-accent);
+    outline-offset: -4px;
+  }
+
+  .fb-play-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: var(--structa-accent);
+    color: #fff;
+    padding-left: 4px; /* optyczne wyśrodkowanie trójkąta */
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .fb-play:hover .fb-play-icon {
+    transform: scale(1.08);
+    box-shadow: 0 12px 32px rgba(255, 92, 53, 0.4);
+  }
+
+  .fb-play-label {
+    letter-spacing: 0.02em;
+  }
+
+  /* Kafelek boczny: sam przycisk, bez podpisu — tytuł jest już pod kadrem. */
+  .fb-play--card .fb-play-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .fb-post--video .fb-post-text {
+    padding-top: 1.25rem;
+  }
+
+  .fb-featured-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .fb-featured-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--structa-black);
+    margin: 0;
+  }
+
+  /* ── Posty ─────────────────────────────────────────────────────────── */
+
+  .fb-posts {
+    display: grid;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+
+  @media (min-width: 600px) and (max-width: 899px) {
+    .fb-posts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .fb-post {
+    border: 1px solid var(--structa-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .fb-post:hover {
+    border-color: var(--structa-accent);
+    transform: translateY(-4px);
+  }
+
+  .fb-post-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+  }
+
+  .fb-post-media {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--structa-offwhite);
+  }
+
+  .fb-post-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .fb-post:hover .fb-post-media :global(img) {
+    transform: scale(1.04);
+  }
+
+  .fb-post-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    flex: 1;
+  }
+
+  .fb-post-title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--structa-black);
+    margin: 0;
+  }
+
+  .fb-post-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--structa-accent);
+  }
+
+  /* ── Wspólne ───────────────────────────────────────────────────────── */
+
+  .fb-date {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--structa-gray-text);
+  }
+
+  .fb-excerpt {
+    font-size: 0.9688rem;
+    line-height: 1.65;
+    color: var(--structa-gray-text);
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fb-post:hover,
+    .fb-play:hover .fb-play-icon,
+    .fb-post:hover .fb-post-media :global(img) {
+      transform: none;
+    }
+  }
+</style>
