@@ -46,13 +46,17 @@ const portfolioItems: PortfolioItem[] = [
 ---
 <section class="section portfolio" id="portfolio">
   <div class="container">
-    <div class="section-header">
-      <div class="section-badge fade-in stagger-1">PORTFOLIO</div>
-      <h2 class="section-title fade-in stagger-2">Nasze ostatnie <span class="accent-text">realizacje</span></h2>
-      <p class="section-lead fade-in stagger-3">Zobacz, jak pomagamy naszym klientom wyróżnić się na tle konkurencji.</p>
+    <div class="portfolio-header">
+      <div>
+        <p class="eyebrow">Portfolio</p>
+        <h2 class="portfolio-heading">Nasze ostatnie <em>realizacje</em></h2>
+      </div>
+      <p class="portfolio-lead">
+        Zobacz, jak pomagamy naszym klientom wyróżnić się na tle konkurencji.
+      </p>
     </div>
 
-    <div class="portfolio-filters fade-in stagger-4">
+    <div class="portfolio-filters" role="group" aria-label="Filtruj realizacje">
       {categories.map((cat, index) => (
         <button
           type="button"
@@ -66,9 +70,9 @@ const portfolioItems: PortfolioItem[] = [
     </div>
 
     <ul class="portfolio-grid" data-stagger-grid>
-      {portfolioItems.map((item, index) => (
+      {portfolioItems.map((item) => (
         <li class="portfolio-item" data-category={item.category.toLowerCase().replace(/\s+/g, "-")}>
-          <div class="portfolio-card">
+          <figure class="portfolio-card">
             <div class="portfolio-image-wrapper">
               <Image
                 src={asset(item.image)}
@@ -77,18 +81,17 @@ const portfolioItems: PortfolioItem[] = [
                 decoding="async"
                 width={800}
               />
-              <div class="portfolio-overlay">
-                <div class="portfolio-content">
-                  <p class="portfolio-category">{item.category}</p>
-                  <h3 class="portfolio-title">{item.title}</h3>
-                  <div class="portfolio-view">
-                    <span>Zobacz projekt</span>
-                    <Icon name="lucide:arrow-up-right" size={20} />
-                  </div>
-                </div>
-              </div>
+              <span class="portfolio-hover-icon" aria-hidden="true">
+                <Icon name="lucide:arrow-up-right" size={20} />
+              </span>
             </div>
-          </div>
+            <figcaption class="portfolio-caption">
+              <div>
+                <p class="portfolio-category">{item.category}</p>
+                <h3 class="portfolio-title">{item.title}</h3>
+              </div>
+            </figcaption>
+          </figure>
         </li>
       ))}
     </ul>
@@ -96,46 +99,83 @@ const portfolioItems: PortfolioItem[] = [
 </section>
 
 <style>
-  .section-header {
-    text-align: center;
-    margin-bottom: 4rem;
+  .portfolio {
+    background: var(--structa-white);
+  }
+
+  .portfolio-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 900px) {
+    .portfolio-header {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+  }
+
+  .portfolio-header .eyebrow {
+    margin: 0 0 1.25rem;
+  }
+
+  .portfolio-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    margin: 0;
+    color: var(--structa-black);
+  }
+
+  .portfolio-heading em {
+    font-style: normal;
+    color: var(--structa-accent);
+  }
+
+  .portfolio-lead {
+    color: var(--structa-gray-text);
+    max-width: 40ch;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    margin: 0;
   }
 
   .portfolio-filters {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 4rem;
-    justify-content: center;
-    padding: 0.5rem;
-    background: var(--structa-white);
-    border: 1px solid var(--structa-border);
-    border-radius: 100px;
-    width: fit-content;
-    margin-inline: auto;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--paper-line);
   }
 
   .filter-btn {
-    padding: 0.6rem 1.25rem;
+    padding: 0.55rem 1.15rem;
     background: transparent;
-    border: none;
+    border: 1px solid var(--paper-line);
     border-radius: 100px;
     color: var(--structa-gray-text);
+    font-family: var(--font-sans);
     font-size: 0.8125rem;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: all var(--transition-fast);
   }
 
   .filter-btn:hover {
+    border-color: var(--structa-black);
     color: var(--structa-black);
-    background: var(--structa-offwhite);
   }
 
   .filter-btn[aria-pressed="true"] {
     background: var(--structa-black);
+    border-color: var(--structa-black);
     color: var(--structa-white);
   }
 
@@ -145,7 +185,7 @@ const portfolioItems: PortfolioItem[] = [
     padding: 0;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: 1rem;
+    gap: 2.5rem 1.5rem;
   }
 
   @media (min-width: 640px) {
@@ -160,94 +200,76 @@ const portfolioItems: PortfolioItem[] = [
     }
   }
 
-  .portfolio-item {
-    transition: all var(--transition-base);
-  }
-
   .portfolio-card {
-    position: relative;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: var(--structa-charcoal);
-    aspect-ratio: 1 / 1;
+    margin: 0;
   }
 
   .portfolio-image-wrapper {
     position: relative;
-    width: 100%;
-    height: 100%;
+    border-radius: var(--radius-lg);
     overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: var(--structa-offwhite);
   }
 
   .portfolio-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform var(--transition-slow);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .portfolio-card:hover img {
-    transform: scale(1.1);
+  .portfolio-item:hover .portfolio-card img {
+    transform: scale(1.06);
   }
 
-  .portfolio-overlay {
+  .portfolio-hover-icon {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(255, 92, 53, 0.9) 0%, transparent 100%);
+    top: 1rem;
+    right: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
     display: flex;
-    align-items: flex-end;
-    padding: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    background: var(--structa-white);
+    color: var(--structa-black);
+    border-radius: 50%;
     opacity: 0;
+    transform: translateY(8px);
     transition: all var(--transition-base);
   }
 
-  .portfolio-card:hover .portfolio-overlay {
+  .portfolio-item:hover .portfolio-hover-icon {
     opacity: 1;
-    visibility: visible;
-  }
-
-  .portfolio-content {
-    transform: translateY(20px);
-    transition: all var(--transition-base);
-    width: 100%;
-  }
-
-  .portfolio-card:hover .portfolio-content {
     transform: translateY(0);
   }
 
+  .portfolio-caption {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.1rem;
+  }
+
   .portfolio-category {
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.14em;
     color: var(--structa-accent);
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.35rem;
   }
 
   .portfolio-title {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.1875rem;
     font-weight: 700;
-    color: var(--structa-white);
-    margin: 0 0 1.5rem;
-    line-height: 1.2;
-  }
-
-  .portfolio-view {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--structa-white);
-    font-size: 0.8125rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .portfolio-view span {
-    border-bottom: 2px solid var(--structa-accent);
-    padding-bottom: 2px;
+    letter-spacing: -0.015em;
+    color: var(--structa-black);
+    margin: 0;
+    line-height: 1.25;
   }
 </style>
 
@@ -268,9 +290,9 @@ const portfolioItems: PortfolioItem[] = [
       portfolioItems.forEach(item => {
         const category = item.getAttribute('data-category');
         if (filter === 'all' || category === filter) {
-          item.style.display = '';
+          (item as HTMLElement).style.display = '';
         } else {
-          item.style.display = 'none';
+          (item as HTMLElement).style.display = 'none';
         }
       });
     });

@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 
 const phone = "696 293 362";
+const phoneHref = `tel:+48${phone.replace(/\s/g, "")}`;
 const emails = [
   { label: "Biuro", address: "biuro@artdecor.net.pl" },
   { label: "Dział Graficzny", address: "grafika@artdecor.net.pl" },
@@ -16,244 +17,305 @@ const hours = [
   { days: "Niedziela", time: "nieczynne" },
 ];
 ---
-<section class="section contact-block pt-4" id="kontakt">
+<section class="section contact-block" id="kontakt">
   <div class="container">
-    <div class="contact-grid" data-stagger-grid>
-      <div class="contact-card glass-card">
-        <div class="contact-info">
-          <h3 class="contact-heading">Dane kontaktowe</h3>
-          <address class="contact-address">
-            <div class="contact-item">
-              <Icon name="lucide:map-pin" class="contact-icon" size={24} />
-              <div>
-                <strong>Siedziba firmy</strong>
-                <p>{companyName}<br />{street}<br />{city}</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <Icon name="lucide:phone" class="contact-icon" size={24} />
-              <div>
-                <strong>Obsługa klienta</strong>
-                <p><a href={`tel:+48${phone.replace(/\s/g, "")}`}>{phone}</a></p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <Icon name="lucide:mail" class="contact-icon" size={24} />
-              <div class="emails-list">
-                {emails.map(e => (
-                  <div class="email-row">
-                    <strong>{e.label}:</strong>
-                    <a href={`mailto:${e.address}`}>{e.address}</a>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </address>
-        </div>
-      </div>
-      <div class="contact-card glass-card">
-        <div class="contact-hours">
-          <h3 class="contact-heading">Godziny pracy</h3>
-          <ul class="hours-list">
-            {hours.map((h) => (
-              <li>
-                <span class="hours-days">{h.days}</span>
-                <span class="hours-time">{h.time}</span>
-              </li>
-            ))}
-          </ul>
-          <a href="https://www.facebook.com/artdecorreklama/" target="_blank" rel="noopener noreferrer" class="contact-social">
-            <Icon name="mdi:facebook" size={24} />
-            Odwiedź nasz Facebooku
+    <div class="contact-panel" data-reveal data-reveal-dir="up">
+      <div class="contact-panel-glow" aria-hidden="true"></div>
+
+      <div class="contact-panel-main">
+        <p class="eyebrow contact-eyebrow">Kontakt</p>
+        <h2 class="contact-title">Masz projekt w głowie?<br /><em>Porozmawiajmy.</em></h2>
+        <p class="contact-lead">
+          Doradzimy, wycenimy i zrealizujemy — od projektu graficznego po montaż.
+        </p>
+
+        <div class="contact-cta-row">
+          <a href={phoneHref} class="contact-phone">
+            <Icon name="lucide:phone" size={22} />
+            {phone}
+          </a>
+          <a href={`mailto:${emails[0].address}`} class="contact-mail-btn">
+            Napisz do nas
+            <Icon name="lucide:arrow-up-right" size={18} />
           </a>
         </div>
       </div>
+
+      <div class="contact-panel-details">
+        <div class="contact-detail">
+          <p class="contact-detail-label">Siedziba firmy</p>
+          <address class="contact-detail-value">
+            {companyName}<br />{street}<br />{city}
+          </address>
+        </div>
+
+        <div class="contact-detail">
+          <p class="contact-detail-label">E-mail</p>
+          <ul class="contact-emails">
+            {emails.map(e => (
+              <li>
+                <span>{e.label}</span>
+                <a href={`mailto:${e.address}`}>{e.address}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="contact-detail">
+          <p class="contact-detail-label">Godziny pracy</p>
+          <ul class="contact-hours">
+            {hours.map((h) => (
+              <li>
+                <span>{h.days}</span>
+                <strong>{h.time}</strong>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <a href="https://www.facebook.com/artdecorreklama/" target="_blank" rel="noopener noreferrer" class="contact-social">
+          <Icon name="mdi:facebook" size={20} />
+          Odwiedź nas na Facebooku
+        </a>
+      </div>
     </div>
   </div>
-  
-  <div class="map-container" data-reveal data-reveal-dir="up" data-reveal-delay="0.2">
-    <iframe 
-      src="https://maps.google.com/maps?q=Art%20Decor%20M%C4%99czennik%C3%B3w%20O%C5%9Bwi%C4%99cimskich%2016,%2043-200%20Pszczyna&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-      width="100%" 
-      height="450" 
-      style="border:0;" 
-      allowfullscreen="" 
-      loading="lazy" 
+
+  <div class="container map-container" data-reveal data-reveal-dir="up" data-reveal-delay="0.2">
+    <iframe
+      src="https://maps.google.com/maps?q=Art%20Decor%20M%C4%99czennik%C3%B3w%20O%C5%9Bwi%C4%99cimskich%2016,%2043-200%20Pszczyna&t=&z=15&ie=UTF8&iwloc=&output=embed"
+      width="100%"
+      height="420"
+      style="border:0;"
+      title="Mapa dojazdu do Art Decor Pszczyna"
+      allowfullscreen=""
+      loading="lazy"
       referrerpolicy="no-referrer-when-downgrade">
     </iframe>
   </div>
 </section>
 
 <style>
-  .section-header {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    margin: 0 0 1rem;
-    color: var(--color-text);
-  }
-
-  .section-lead {
-    color: var(--color-text-muted);
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 1.1rem;
-    line-height: 1.7;
-  }
-
-  .contact-grid {
+  .contact-panel {
+    position: relative;
     display: grid;
-    gap: 2rem;
+    gap: 3rem;
+    background: var(--structa-black);
+    color: var(--structa-white);
+    border-radius: var(--radius-2xl);
+    padding: clamp(2rem, 5vw, 4.5rem);
+    overflow: hidden;
   }
 
-  @media (min-width: 768px) {
-    .contact-grid {
-      grid-template-columns: 1fr 1fr;
+  @media (min-width: 1024px) {
+    .contact-panel {
+      grid-template-columns: 7fr 5fr;
+      gap: 5rem;
     }
   }
 
-  .contact-card {
-    padding: 2rem;
+  .contact-panel-glow {
+    position: absolute;
+    bottom: -40%;
+    left: -10%;
+    width: 60%;
+    height: 90%;
+    background: radial-gradient(circle, rgba(255, 92, 53, 0.15) 0%, transparent 65%);
+    filter: blur(24px);
+    pointer-events: none;
+  }
+
+  .contact-panel-main {
+    position: relative;
+  }
+
+  .contact-eyebrow {
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0 0 1.5rem;
+  }
+
+  .contact-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    margin: 0 0 1.25rem;
+  }
+
+  .contact-title em {
+    font-style: normal;
+    color: var(--structa-accent);
+  }
+
+  .contact-lead {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    max-width: 44ch;
+    margin: 0 0 2.5rem;
+  }
+
+  .contact-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--structa-white);
+    padding: 0.85rem 1.75rem;
+    border-radius: 100px;
+    background: var(--structa-accent);
     transition: all var(--transition-base);
   }
 
-  .contact-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(254, 107, 0, 0.1);
-    border-color: var(--color-accent);
+  .contact-phone:hover {
+    background: var(--structa-accent-hover);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 92, 53, 0.35);
   }
 
-  .contact-heading {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem;
-    color: var(--color-text);
-  }
-
-  .contact-address {
-    font-style: normal;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .contact-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .contact-icon {
-    flex-shrink: 0;
-    color: var(--color-accent);
-    margin-top: 0.25rem;
-  }
-
-  .contact-item strong {
-    display: block;
-    color: var(--color-text);
-    font-size: 0.95rem;
+  .contact-mail-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    font-size: 0.9375rem;
+    color: var(--structa-white);
+    padding: 1rem 1.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 100px;
+    transition: all var(--transition-base);
   }
 
-  .contact-item p {
-    margin: 0;
-    color: var(--color-text-muted);
-    line-height: 1.6;
+  .contact-mail-btn:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--structa-white);
+    transform: translateY(-2px);
   }
 
-  .contact-item a:hover {
-    color: var(--color-accent);
-    text-decoration: underline;
-  }
-
-  .emails-list {
+  .contact-panel-details {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  .email-row {
-    display: flex;
-    flex-direction: column;
+  @media (min-width: 1024px) {
+    .contact-panel-details {
+      padding-top: 0;
+      padding-left: 3rem;
+      border-top: none;
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
   }
 
-  .email-row strong {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
+  .contact-detail-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.1rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0 0 0.6rem;
   }
 
-  .map-container {
-    margin-top: 4rem;
-    width: 100%;
-    border-radius: var(--radius-2xl);
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  .contact-detail-value {
+    font-style: normal;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-size: 0.9375rem;
   }
 
-  .map-container iframe {
-    display: block;
-    width: 100%;
-  }
-
-  .hours-list {
+  .contact-emails {
     list-style: none;
-    margin: 0 0 2rem;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .contact-emails li {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9375rem;
+  }
+
+  .contact-emails span {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .contact-emails a {
+    color: rgba(255, 255, 255, 0.85);
+    transition: color var(--transition-fast);
+  }
+
+  .contact-emails a:hover {
+    color: var(--structa-accent);
+  }
+
+  .contact-hours {
+    list-style: none;
+    margin: 0;
     padding: 0;
   }
 
-  .hours-list li {
+  .contact-hours li {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--glass-border);
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
+    padding: 0.4rem 0;
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.6);
   }
 
-  .hours-list li:last-child {
-    border-bottom: none;
-  }
-
-  .hours-days {
-    flex-shrink: 0;
-    font-weight: 500;
-  }
-
-  .hours-time {
-    color: var(--color-text);
+  .contact-hours strong {
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
   }
 
   .contact-social {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.75rem;
-    background: rgba(254, 107, 0, 0.08);
-    border: 1px solid rgba(254, 107, 0, 0.15);
-    border-radius: var(--radius-xl);
-    color: var(--color-accent);
-    font-weight: 700;
-    transition: all var(--transition-base);
+    gap: 0.6rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-fast);
+    margin-top: auto;
   }
 
   .contact-social:hover {
-    background: rgba(254, 107, 0, 0.12);
-    border-color: var(--color-accent);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(254, 107, 0, 0.2);
+    color: var(--structa-white);
+  }
+
+  .map-container {
+    margin-top: 1.5rem;
+  }
+
+  .map-container iframe {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius-xl);
+    filter: grayscale(1) contrast(1.05);
+    transition: filter var(--transition-slow);
+  }
+
+  .map-container:hover iframe {
+    filter: grayscale(0);
   }
 </style>
