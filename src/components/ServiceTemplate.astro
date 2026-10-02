@@ -384,6 +384,18 @@ const carouselImages = imagePaths.map((path, idx) => {
     opacity: 1 !important;
   }
 
+  /* Biblioteka daje strzałkom height: 50vh — przy okrągłym tle wychodziły elipsy */
+  :global(.carousel__button--arrow) {
+    width: 56px !important;
+    height: 56px !important;
+    align-self: center;
+  }
+
+  :global(.carousel__button--arrow .carousel__svg) {
+    width: 28px;
+    height: 28px;
+  }
+
   :global(.carousel__close) {
     top: 2rem !important;
     right: 2rem !important;
