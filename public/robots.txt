@@ -5,7 +5,6 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api
-Disallow: /_astro/
 
 # --- AI search crawlers (GEO-optimized) ---
 # Jawne pozwolenie dla głównych AI crawlerów wykorzystywanych w
