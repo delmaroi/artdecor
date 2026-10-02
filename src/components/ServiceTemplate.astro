@@ -3,8 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
 import FAQ from "./FAQ.astro";
-import { Carousel } from "astro-carousel";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import { asset } from "../lib/images";
 import { Icon } from "astro-icon/components";
 import Hero from "./Hero.astro";
@@ -103,17 +102,23 @@ const breadcrumbJsonLd = {
 // Normalizacja: każdy element galerii → publiczna ścieżka "/images/..."
 const imagePaths = images.map((img) => (typeof img === "string" ? img : img.src));
 
-// Karuzela (astro-carousel) wymaga src:string — podajemy zoptymalizowany asset
-// (oraz intrinsiczne wymiary z ImageMetadata zamiast zgadywanych 1200×800).
-const carouselImages = imagePaths.map((path, idx) => {
-  const meta = asset(path);
-  return {
-    src: meta.src,
-    alt: `${heroTitle} — realizacja ${idx + 1}`,
-    width: meta.width,
-    height: meta.height,
-  };
-});
+// Podgląd PhotoSwipe potrzebuje pełnego zdjęcia i jego wymiarów — generujemy
+// WebP max. 2000 px (bez powiększania mniejszych oryginałów).
+const LIGHTBOX_MAX_WIDTH = 2000;
+const galleryImages = await Promise.all(
+  imagePaths.map(async (path, idx) => {
+    const meta = asset(path);
+    const width = Math.min(meta.width, LIGHTBOX_MAX_WIDTH);
+    const full = await getImage({ src: meta, width, format: "webp" });
+    return {
+      meta,
+      alt: `${heroTitle} — realizacja ${idx + 1}`,
+      href: full.src,
+      width,
+      height: Math.round((meta.height * width) / meta.width),
+    };
+  })
+);
 ---
 <Layout title={title} description={description}>
   {serviceJsonLd && (
@@ -179,15 +184,18 @@ const carouselImages = imagePaths.map((path, idx) => {
       <div class="container">
         <h2 class="section-title">Nasze <span class="gradient-text">realizacje</span></h2>
         {images && images.length > 0 ? (
-          <div id="carouselTargetList">
-            <div class="gallery-grid">
-              {imagePaths.map((path, index) => (
+          <div class="gallery-grid" data-pswp-gallery>
+              {galleryImages.map((img) => (
                 <a
-                  href={`?image=${index}`}
+                  href={img.href}
                   class="gallery-item glass-card"
-                  data-carousel-index={index}
+                  data-pswp-width={img.width}
+                  data-pswp-height={img.height}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Powiększ: ${img.alt}`}
                 >
-                  <Image src={asset(path)} alt={`${heroTitle} - Realizacja ${index + 1}`} width={800} loading="lazy" />
+                  <Image src={img.meta} alt={img.alt} width={800} loading="lazy" />
                   <div class="gallery-overlay">
                     <div class="view-icon">
                       <Icon name="lucide:expand" size={24} />
@@ -195,10 +203,6 @@ const carouselImages = imagePaths.map((path, idx) => {
                   </div>
                 </a>
               ))}
-            </div>
-            <div class="carousel-container">
-              <Carousel images={carouselImages} color="var(--color-accent)" />
-            </div>
           </div>
         ) : (
           <slot name="gallery" />
@@ -363,32 +367,6 @@ const carouselImages = imagePaths.map((path, idx) => {
     transform: scale(1);
   }
 
-  .carousel-container {
-    position: relative;
-    z-index: 1000;
-  }
-
-  /* Carousel Customization */
-  :global(.carousel) {
-    --astroCarouselColor: var(--color-accent) !important;
-  }
-
-  :global(.carousel__button) {
-    background: white !important;
-    border-radius: 50% !important;
-    box-shadow: var(--shadow-lg) !important;
-    color: var(--color-accent) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    opacity: 1 !important;
-  }
-
-  :global(.carousel__close) {
-    top: 2rem !important;
-    right: 2rem !important;
-  }
-
   /* CTA Section */
   .service-cta-section {
     padding-block: 5rem;
@@ -460,6 +438,70 @@ const carouselImages = imagePaths.map((path, idx) => {
   @media (min-width: 768px) {
     .content-card {
       padding: 4rem;
+    }
+  }
+</style>
+
+<script>
+  import { initLightbox } from "../scripts/lightbox";
+  initLightbox();
+</script>
+
+<style is:global>
+  /* PhotoSwipe w kolorach marki */
+  .pswp {
+    --pswp-bg: var(--structa-black, #161d2e);
+    --pswp-icon-color: #fff;
+    --pswp-icon-color-secondary: var(--structa-black, #161d2e);
+    --pswp-icon-stroke-color: var(--structa-black, #161d2e);
+  }
+
+  .pswp__button--arrow .pswp__icn {
+    width: 56px;
+    height: 56px;
+    padding: 14px;
+    margin-top: -28px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    fill: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .pswp__button--arrow:hover .pswp__icn {
+    background: var(--color-accent-hover);
+    transform: scale(1.06);
+  }
+
+  .pswp__counter {
+    font-family: var(--font-sans);
+    font-weight: 600;
+  }
+
+  .pswp__caption {
+    position: absolute;
+    left: 50%;
+    bottom: 1.25rem;
+    transform: translateX(-50%);
+    max-width: calc(100% - 2rem);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .pswp__caption:empty {
+    display: none;
+  }
+
+  /* Na telefonie przewija się gestem — strzałki tylko zasłaniają zdjęcie */
+  @media (max-width: 640px) {
+    .pswp__button--arrow {
+      display: none;
     }
   }
 </style>

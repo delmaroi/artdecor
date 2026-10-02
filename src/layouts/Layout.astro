@@ -150,6 +150,19 @@ const jsonLd = {
   //   sameAs: ["https://www.linkedin.com/in/..."],
   // },
 } as const;
+
+// WebSite łączy domenę z organizacją — AI i Google rozpoznają nazwę serwisu
+// oraz wydawcę. Bez SearchAction, bo strona nie ma wyszukiwarki.
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${site.origin}/#website`,
+  url: `${site.origin}/`,
+  name: "Art Decor Pszczyna",
+  alternateName: "Art Decor",
+  inLanguage: "pl-PL",
+  publisher: { "@id": organizationId },
+} as const;
 ---
 <!DOCTYPE html>
 <html lang="pl">
@@ -202,6 +215,7 @@ const jsonLd = {
     <link rel="preload" href="/fonts/font-9.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/fonts/fonts.css" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
     <slot name="head" />
   </head>
   <body>
