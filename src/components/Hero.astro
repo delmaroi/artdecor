@@ -2,6 +2,8 @@
 import { Icon } from "astro-icon/components";
 import { services } from "../lib/services-data";
 import { foundedYear } from "../lib/company-data";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
 export interface BreadcrumbItem {
   label: string;
@@ -51,12 +53,19 @@ const lastWord = words.pop();
 const titleStart = words.join(" ");
 
 const marqueeItems = services.map((s) => s.title);
+
+// Wideo w tle renderujemy tylko, gdy plik faktycznie leży w `public/videos` —
+// inaczej każda strona wysyłałaby żądanie kończące się 404.
+const heroVideoSrc = "/videos/hero-loop.mp4";
+const hasHeroVideo = existsSync(join(process.cwd(), "public", heroVideoSrc));
 ---
 <section class:list={["hero", isPage && "hero--page"]}>
   <div class="hero-bg" aria-hidden="true">
-    <video class="hero-video" autoplay muted loop playsinline preload="metadata">
-      <source src="/videos/hero-loop.mp4" type="video/mp4" />
-    </video>
+    {hasHeroVideo && (
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+        <source src={heroVideoSrc} type="video/mp4" />
+      </video>
+    )}
     <div class="hero-video-overlay"></div>
     <div class="hero-grid grid-pattern"></div>
     <div class="hero-glow"></div>

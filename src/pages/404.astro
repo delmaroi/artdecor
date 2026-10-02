@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Services from "../components/Services.astro";
+import "../styles/globals.css";
+---
+<Layout
+  title="Nie znaleziono strony (404) – Art Decor Pszczyna"
+  description="Strona, której szukasz, nie istnieje lub została przeniesiona. Sprawdź ofertę reklamy wizualnej Art Decor Pszczyna."
+  noindex
+>
+  <Header />
+  <main>
+    <Hero
+      title="Nie znaleziono strony"
+      subtitle="Strona, której szukasz, nie istnieje lub została przeniesiona. Wróć na stronę główną albo wybierz jedną z naszych usług poniżej."
+      eyebrow="Błąd 404"
+      ctaText="Strona główna"
+      ctaHref="/"
+      secondaryCtaText="Kontakt"
+      secondaryCtaHref="/kontakt/"
+      variant="page"
+    />
+    <Services />
+  </main>
+  <Footer />
+</Layout>
