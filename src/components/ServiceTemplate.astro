@@ -292,6 +292,51 @@ const galleryImages = await Promise.all(
     margin-bottom: 0.5rem;
   }
 
+  @media (max-width: 640px) {
+    .content-card {
+      padding: 1.75rem 1.25rem;
+    }
+  }
+
+  .content-card :global(strong) {
+    color: var(--color-text);
+  }
+
+  /* Tabele porównawcze — na wąskim ekranie przewijają się w poziomie */
+  .content-card :global(.table-wrap) {
+    overflow-x: auto;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .content-card :global(table) {
+    width: 100%;
+    min-width: 480px;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .content-card :global(caption) {
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .content-card :global(th),
+  .content-card :global(td) {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--structa-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .content-card :global(th) {
+    color: var(--color-text);
+    font-weight: 700;
+    background: rgba(35, 45, 72, 0.04);
+  }
+
   /* Specifications */
   .service-specs {
     background: #fdfdfd;
