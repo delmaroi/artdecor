@@ -10,7 +10,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   serviceType="Vinyl plotter cutting"
   serviceAlternateNames={["Cięcie ploterowe folii", "Wycinanie liter z folii", "Naklejki z folii", "Plotter cutting", "Folia ploterowa"]}
   priceFrom={50}
-  answerBlock="Cięcie ploterowe to precyzyjne wycinanie kształtów (liter, logo, grafiki) z folii samoprzylepnej za pomocą plotera tnącego z nożykiem diamentowym. Folie Oracal 641 (monomeric, 3 lata) lub 751 (cast polimer, 5 lat) w 60+ kolorach RAL. Naklejana na auta, witryny, ściany, sprzęt. Cena od 50 zł netto za m²."
+  answerBlock="Cięcie ploterowe to precyzyjne wycinanie kształtów (liter, logo, grafiki) z folii samoprzylepnej za pomocą plotera tnącego z nożykiem diamentowym. Folie Oracal 641 (monomerowa, 3–4 lata na zewnątrz) lub 751 (polimerowa, 5–7 lat) w 60+ kolorach RAL. Naklejana na auta, witryny, ściany, sprzęt. Cena od 50 zł netto za m²."
   content={true}
   specifications={true}
   images={[
@@ -33,37 +33,47 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   ]}
 >
   <div slot="content">
-    <h3>Cięcie ploterowe</h3>
+    <h3>Czym jest cięcie ploterowe?</h3>
     <p>
-      Wycinanie znaków to podstawowa technika w reklamie wizualnej. Pozwala na tworzenie napisów, logo i grafiki z folii samoprzylepnej, które można nakleić na różne powierzchnie.
+      Cięcie ploterowe to precyzyjne wycinanie liter, logo i grafiki z folii samoprzylepnej ploterem tnącym. Art Decor wycina znaki z folii Oracal 641 i 751, 3M Scotchcal oraz Avery Dennison MPI i nakleja je na samochody, witryny, ściany, drzwi i sprzęt. Cięcie ploterowe w Art Decor kosztuje od <strong>50 zł netto za m²</strong>.
     </p>
 
-    <h3>Zastosowania</h3>
-    <ul>
-      <li><strong>Napisy na samochody</strong> - logo, dane kontaktowe, grafika</li>
-      <li><strong>Oznakowanie witryn</strong> - godziny otwarcia, napisy promocyjne</li>
-      <li><strong>Naklejki</strong> - logo firmowe, naklejki promocyjne</li>
-      <li><strong>Oznakowanie wnętrz</strong> - napisy na ścianach, drzwiach</li>
-      <li><strong>Szablony do malowania</strong> - precyzyjne wzory</li>
-    </ul>
+    <h3>Folia monomerowa czy polimerowa?</h3>
+    <p>
+      Folia monomerowa (Oracal 641) jest tańsza i sztywniejsza, a folia polimerowa (Oracal 751) jest trwalsza i pozwala wycinać drobniejsze napisy. Folie czarne i białe zachowują kolor najdłużej; jaskrawa czerwień i żółć blakną szybciej.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <caption>Porównanie folii Oracal do cięcia ploterowego</caption>
+        <thead>
+          <tr><th>Parametr</th><th>Oracal 641 (monomerowa)</th><th>Oracal 751 (polimerowa)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Trwałość na zewnątrz</td><td>3–4 lata</td><td>5–7 lat</td></tr>
+          <tr><td>Trwałość wewnątrz</td><td>6–8 lat</td><td>ponad 10 lat</td></tr>
+          <tr><td>Minimalna wysokość napisu</td><td>5 mm</td><td>3 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Detale o wysokości 2 mm Art Decor wycina tylko do wnętrz — na zewnątrz po roku tracą czytelność przez promieniowanie UV i kurz.
+    </p>
 
-    <h3>Folie</h3>
-    <p>Używamy folii renomowanych producentów:</p>
-    <ul>
-      <li><strong>Oracal</strong> - seria 551 (5 lat), 751 (8 lat)</li>
-      <li><strong>3M</strong> - seria Scotchcal</li>
-      <li><strong>Avery Dennison</strong> - MPI series</li>
-    </ul>
+    <h3>Jak przygotować projekt do wycięcia?</h3>
+    <p>
+      Ploter tnący odczytuje wyłącznie grafikę wektorową, dlatego najlepszy jest plik w formacie .ai, .pdf, .eps lub .svg. Jeśli masz logo tylko w formacie PNG lub JPG, Art Decor przygotuje wektoryzację za 50–150 zł netto, w zależności od złożoności znaku. Projekt i cięcie zajmują po 1 dniu, a naklejenie znaków jest usługą opcjonalną.
+    </p>
 
-    <h3>Kolory i efekty</h3>
-    <p>Dostępne w szerokiej gamie kolorów i wykończeń:</p>
+    <h3>Zastosowania i wykończenia folii</h3>
     <ul>
-      <li>Kolory matowe i błyszczące</li>
-      <li>Metaliczne (złoty, srebrny, miedziany)</li>
-      <li>Fluorescencyjne</li>
-      <li>Refleksyjne (odblaskowe)</li>
-      <li>Transparentne</li>
+      <li><strong>Samochody</strong> — logo, dane kontaktowe i grafika.</li>
+      <li><strong>Witryny</strong> — godziny otwarcia i napisy promocyjne.</li>
+      <li><strong>Wnętrza</strong> — napisy na ścianach i drzwiach.</li>
+      <li><strong>Naklejki i szablony</strong> — logo firmowe i wzory do malowania.</li>
     </ul>
+    <p>
+      Art Decor tnie folie o szerokości do 125 cm i dowolnej długości. Dostępne wykończenia to folie matowe i błyszczące, metaliczne (złote, srebrne, miedziane), fluorescencyjne, odblaskowe i transparentne.
+    </p>
   </div>
 
   <div slot="specifications">
@@ -71,8 +81,8 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       <div class="spec-card glass-card">
         <h3>Folie</h3>
         <ul>
-          <li>Oracal 551 (5 lat)</li>
-          <li>Oracal 751 (8 lat)</li>
+          <li>Oracal 641 (3-4 lata)</li>
+          <li>Oracal 751 (5-7 lat)</li>
           <li>3M Scotchcal</li>
           <li>Avery Dennison MPI</li>
         </ul>
@@ -83,7 +93,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
         <ul>
           <li>Szerokość: do 125 cm</li>
           <li>Długość: bez ograniczeń</li>
-          <li>Min. wielkość: 1 cm</li>
+          <li>Min. wysokość napisu: 3-5 mm</li>
         </ul>
       </div>
 
