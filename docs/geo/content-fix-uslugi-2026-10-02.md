@@ -31,21 +31,23 @@
 
 Żadne dane nie zostały wymyślone — wszystkie liczby pochodzą z istniejącej treści, bloków `answerBlock`, FAQ lub specyfikacji tej samej strony.
 
-## ⚠️ Sprzeczne dane do potwierdzenia przez właściciela
+## Rozstrzygnięte sprzeczności w danych
 
-Na kilku stronach ta sama wartość występowała w różnych wersjach. W nowej treści użyto wartości z `answerBlock`/FAQ (zgodnych z `public/llms.txt`). Proszę potwierdzić i ujednolicić **specyfikację** (sekcja „Specyfikacja techniczna”), która nadal zawiera starsze wartości:
+Na kilku stronach ta sama wartość występowała w różnych wersjach. Przyjęto zasadę: **obowiązują wartości z FAQ i bloków odpowiedzi** (najbardziej szczegółowe, zgodne z `public/llms.txt`). Specyfikacje, bloki odpowiedzi i `llms.txt` zostały do nich ujednolicone.
 
-| Strona | Wartość w treści (po) | Sprzeczna wartość (specyfikacja / stara treść) |
+| Strona | Było (sprzeczne) | Jest |
 |---|---|---|
-| wycinanie-znakow | Oracal 641: 3–4 lata, Oracal 751: 5–7 lat (FAQ) | blok odpowiedzi: 641 — 3 lata, 751 — 5 lat; specyfikacja: Oracal 551 — 5 lat, 751 — 8 lat |
-| wycinanie-znakow | min. wysokość napisu 5 mm / 3 mm | specyfikacja: min. wielkość 1 cm |
-| oklejanie-witryn | Oracal 641/751 | specyfikacja: „Reklamowa (Oracal 551)” |
-| litery-blokowe | wysokość 15–120 cm (blok odpowiedzi; w treści nie podano zakresu) | specyfikacja: 10–150 cm |
-| litery-przestrzenne | PCV 3–19 mm (blok odpowiedzi; w treści nie podano) | specyfikacja: PCV 3–30 mm; stara treść: grubości 3–50 mm |
-| szyldy-szklane | szkło 8/10/12 mm, dystanse 15–30 mm (FAQ) | blok odpowiedzi: dystanse 15–25 mm; specyfikacja: szkło hartowane 6–10 mm |
-| piaskowanie-artystyczne | maks. 200 × 140 × 60 cm (FAQ) | specyfikacja: maks. 200 × 100 cm |
-| punkty-gastronomiczne | szyld + witryna 7–10 dni, pełna identyfikacja 2–4 tyg. (FAQ) | blok odpowiedzi: „spójna identyfikacja w 7–14 dni” |
-| oklejanie-samochodow | gwarancja „do 24 miesięcy” | FAQ: 24 mies.; specyfikacja: 12–24 mies. |
+| wycinanie-znakow | spec.: Oracal 551 — 5 lat, 751 — 8 lat; blok odp.: 641 — 3 lata, 751 — 5 lat | Oracal 641: 3–4 lata, Oracal 751: 5–7 lat (na zewnątrz) |
+| wycinanie-znakow | spec.: min. wielkość 1 cm; `llms.txt`: 5 mm zewn. / 3 mm wewn. | min. wysokość napisu 5 mm (641) / 3 mm (751) |
+| oklejanie-witryn | spec.: „Reklamowa (Oracal 551)” | Oracal 641/751 |
+| litery-blokowe | spec.: wysokość 10–150 cm | 15–120 cm |
+| litery-przestrzenne | spec.: PCV 3–30 mm | PCV 3–19 mm |
+| szyldy-szklane | spec.: szkło hartowane 6–10 mm; blok odp. i `llms.txt`: dystanse 15–25 mm | szkło 8–12 mm, dystanse 15–30 mm |
+| piaskowanie-artystyczne | spec.: maks. 200 × 100 cm | maks. 200 × 140 × 60 cm |
+| punkty-gastronomiczne | blok odp.: identyfikacja w 7–14 dni | szyld + witryna 7–10 dni, pełna identyfikacja 2–4 tygodnie |
+| oklejanie-samochodow | spec.: gwarancja 12–24 mies.; blok odp.: full wrap „8 000+ zł” | gwarancja 24 mies.; full wrap busa do 14 000 zł |
+
+Jeśli któraś z przyjętych wartości jest nieaktualna, wystarczy poprawić ją w tych samych miejscach (treść, specyfikacja, `answerBlock`, `llms.txt`).
 
 ## Walidacja (faza 5 skilla)
 
@@ -68,4 +70,3 @@ Na kilku stronach ta sama wartość występowała w różnych wersjach. W nowej 
 
 - **Świeżość cen** — dopisać przy cenach „stan na 2026 r.” po potwierdzeniu, że ceny są aktualne, i dodać `dateModified` do schematu usług.
 - **Dowody z realizacji** — liczba wykonanych realizacji danego typu, przykładowi klienci (za zgodą), rok rozpoczęcia działalności przy danej usłudze.
-- **Ujednolicenie specyfikacji** wg tabeli sprzeczności powyżej.
