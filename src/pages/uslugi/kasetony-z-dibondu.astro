@@ -1,5 +1,6 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Kasetony z dibondu — Art Decor Pszczyna | LED SMD 5050, frezowanie CNC"
@@ -14,11 +15,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
-  images={[
-    "/images/portfolio/kasetony-z-dibondu/kaseton-1.jpg",
-    "/images/portfolio/kasetony-z-dibondu/kaseton-2.jpg",
-    "/images/portfolio/kasetony-z-dibondu/kaseton-3.jpg"
-  ]}
+  images={galleries["kasetony-z-dibondu"].images}
   faqs={[
     {
       q: "Ile kosztuje kaseton z dibondu?",

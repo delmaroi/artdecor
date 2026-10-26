@@ -6,20 +6,26 @@ import SectionRule from "./SectionRule.astro";
 import { asset } from "../lib/images";
 import type { PortfolioItem } from "../types/index";
 
-const categories = [
+interface Props {
+  /** Pełna lista realizacji (strona /realizacje/). Domyślnie — skrót na stronę główną. */
+  items?: PortfolioItem[];
+  categories?: string[];
+  /** Na /realizacje/ link „Wszystkie realizacje" prowadziłby do samej siebie. */
+  showCta?: boolean;
+}
+
+const defaultCategories = [
   "Wszystko",
   "Kasetony z dibondu",
   "Litery blokowe",
   "Litery przestrzenne",
   "Oklejanie samochodów",
   "Oklejanie witryn",
-  "Piaskowanie artystyczne",
   "Punkty gastronomiczne",
-  "Systemy wystawiennicze",
   "Szyldy szklane",
 ];
 
-const portfolioItems: PortfolioItem[] = [
+const defaultItems: PortfolioItem[] = [
   // Pylony
   { id: 1, title: "Pylon reklamowy - Kancelarie", category: "Kasetony z dibondu", image: "/images/portfolio/pylony-totemy/pylon-1.jpg" },
   { id: 2, title: "Totem reklamowy LED", category: "Kasetony z dibondu", image: "/images/portfolio/pylony-totemy/pylon-2.jpg" },
@@ -45,6 +51,8 @@ const portfolioItems: PortfolioItem[] = [
   { id: 14, title: "Oklejanie busa firmowego", category: "Oklejanie samochodów", image: "/images/portfolio/oklejanie-samochodow/auto-2.jpg" },
   { id: 15, title: "Grafika reklamowa na pojazd", category: "Oklejanie samochodów", image: "/images/portfolio/oklejanie-samochodow/auto-3.jpg" },
 ];
+
+const { items: portfolioItems = defaultItems, categories = defaultCategories, showCta = true } = Astro.props;
 ---
 <section class="section portfolio" id="portfolio">
   <div class="container">
@@ -54,7 +62,7 @@ const portfolioItems: PortfolioItem[] = [
       title={"Nasze ostatnie\nrealizacje"}
       accent="realizacje"
       lead="Zobacz, jak pomagamy naszym klientom wyróżnić się na tle konkurencji."
-      cta={{ text: "Wszystkie realizacje", href: "/realizacje/" }}
+      cta={showCta ? { text: "Wszystkie realizacje", href: "/realizacje/" } : undefined}
       align="split"
     />
 

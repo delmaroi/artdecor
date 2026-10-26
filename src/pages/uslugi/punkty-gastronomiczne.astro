@@ -1,5 +1,6 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Reklama dla gastronomii — Art Decor Pszczyna | menuboard, szyld, food truck"
@@ -12,11 +13,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   answerBlock="Kompleksowa reklama gastronomii: zewnętrzne szyldy i kasetony z logo lokalu, menuboardy LED, naklejki na witryny, tablice menu, oznakowanie wewnątrz lokalu, oklejanie food trucków. Szyld z oklejeniem witryny realizujemy w 7–10 dni roboczych, pełną identyfikację wizualną lokalu w 2–4 tygodnie."
   content={true}
   specifications={true}
-  images={[
-    "/images/portfolio/punkty-gastronomiczne/gastro-1.jpg",
-    "/images/portfolio/punkty-gastronomiczne/gastro-2.jpg",
-    "/images/portfolio/punkty-gastronomiczne/gastro-3.jpg"
-  ]}
+  images={galleries["punkty-gastronomiczne"].images}
   faqs={[
     {
       q: "Co wchodzi w kompleksowy pakiet dla restauracji?",

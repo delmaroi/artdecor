@@ -6,6 +6,11 @@ export interface Service {
   desc?: string;
 }
 
+export interface GalleryImage {
+  src: string;
+  alt?: string;
+}
+
 export interface PortfolioItem {
   id: number;
   title: string;
@@ -21,7 +26,7 @@ export interface ServiceTemplateProps {
   content?: boolean;
   specifications?: boolean;
   process?: boolean;
-  images?: (string | { src: string })[];
+  images?: (string | GalleryImage)[];
   ctaText?: string;
   ctaHref?: string;
   /** Slug usługi — używany do canonical i BreadcrumbList. Np. "pylony-totemy". */

@@ -5,6 +5,8 @@ import Footer from "../../components/Footer.astro";
 import Hero from "../../components/Hero.astro";
 import Portfolio from "../../components/Portfolio.astro";
 import ContactBlock from "../../components/ContactBlock.astro";
+import { galleries } from "../../lib/gallery-data";
+import type { PortfolioItem } from "../../types/index";
 import "../../styles/globals.css";
 
 const site = Astro.site ?? new URL("https://www.artdecor.net.pl/");
@@ -17,11 +19,22 @@ const breadcrumbLd = {
     { "@type": "ListItem", position: 2, name: "Realizacje", item: new URL("/realizacje/", site).href },
   ],
 };
+
+// Wszystkie realizacje ze wszystkich kategorii — tytuł karty = nazwa klienta z alt.
+const categories = ["Wszystko", ...Object.values(galleries).map((g) => g.label)];
+const allItems: PortfolioItem[] = Object.values(galleries).flatMap((g) =>
+  g.images.map((img) => ({
+    id: 0,
+    title: img.alt?.split(" — ").slice(1).join(" — ") || g.label,
+    category: g.label,
+    image: img.src,
+  }))
+).map((item, idx) => ({ ...item, id: idx + 1 }));
 ---
 <Layout
   title="Realizacje – Art Decor Pszczyna | portfolio reklamy wizualnej"
   ogBasicTitle="Realizacje Art Decor Pszczyna"
-  description="Portfolio Art Decor Pszczyna: pylony i totemy, kasetony z dibondu, litery przestrzenne i blokowe LED, szyldy szklane, oklejanie witryn i samochodów, piaskowanie artystyczne. Zobacz nasze realizacje reklamy wizualnej."
+  description="Portfolio Art Decor Pszczyna: pylony i totemy, kasetony z dibondu, litery przestrzenne i blokowe LED, szyldy szklane, oklejanie witryn i samochodów. Zobacz nasze realizacje reklamy wizualnej."
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
@@ -43,7 +56,7 @@ const breadcrumbLd = {
       secondaryCtaHref="/#uslugi"
     />
 
-    <Portfolio />
+    <Portfolio items={allItems} categories={categories} showCta={false} />
     <ContactBlock />
   </main>
   <Footer />

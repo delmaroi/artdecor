@@ -99,20 +99,20 @@ const breadcrumbJsonLd = {
   ],
 };
 
-// Normalizacja: każdy element galerii → publiczna ścieżka "/images/..."
-const imagePaths = images.map((img) => (typeof img === "string" ? img : img.src));
+// Normalizacja: każdy element galerii → publiczna ścieżka "/images/..." + opcjonalny alt
+const galleryItems = images.map((img) => (typeof img === "string" ? { src: img } : img));
 
 // Podgląd PhotoSwipe potrzebuje pełnego zdjęcia i jego wymiarów — generujemy
 // WebP max. 2000 px (bez powiększania mniejszych oryginałów).
 const LIGHTBOX_MAX_WIDTH = 2000;
 const galleryImages = await Promise.all(
-  imagePaths.map(async (path, idx) => {
+  galleryItems.map(async ({ src: path, alt }, idx) => {
     const meta = asset(path);
     const width = Math.min(meta.width, LIGHTBOX_MAX_WIDTH);
     const full = await getImage({ src: meta, width, format: "webp" });
     return {
       meta,
-      alt: `${heroTitle} — realizacja ${idx + 1}`,
+      alt: alt ?? `${heroTitle} — realizacja ${idx + 1}`,
       href: full.src,
       width,
       height: Math.round((meta.height * width) / meta.width),

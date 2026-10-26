@@ -1,5 +1,6 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Litery blokowe LED — Art Decor Pszczyna | aluminium, plexi, RAL"
@@ -14,11 +15,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
-  images={[
-    "/images/portfolio/litery-blokowe/litera-1.jpg",
-    "/images/portfolio/litery-blokowe/litera-2.jpg",
-    "/images/portfolio/litery-blokowe/litera-3.jpg"
-  ]}
+  images={galleries["litery-blokowe"].images}
   faqs={[
     {
       q: "Ile kosztuje pojedyncza litera LED?",

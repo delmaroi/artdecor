@@ -1,5 +1,6 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Oklejanie witryn — Art Decor Pszczyna | One-Way Vision, folia matowa, reklama"
@@ -13,11 +14,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   answerBlock="Oklejanie witryn to montaż folii reklamowej, dekoracyjnej lub przyciemniającej na szybach sklepów i biur. Stosujemy folię One-Way Vision (widok jednostronny), folię mleczną z efektem matowego szkła, kolorowe wydruki UV i wycinaną grafikę z Oracal 641/751. Cena od 90 zł netto za m²."
   content={true}
   specifications={true}
-  images={[
-    "/images/portfolio/oklejanie-witryn/witryna-1.jpg",
-    "/images/portfolio/oklejanie-witryn/witryna-2.jpg",
-    "/images/portfolio/oklejanie-witryn/witryna-3.jpg"
-  ]}
+  images={galleries["oklejanie-witryn"].images}
   faqs={[
     {
       q: "Co to jest folia One-Way Vision?",
