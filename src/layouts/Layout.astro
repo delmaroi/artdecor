@@ -42,7 +42,7 @@ const jsonLd = {
   additionalType: "https://www.wikidata.org/wiki/Q1390083",
   name: "Art Decor",
   alternateName: ["Art Decor Pszczyna", "F.H.U. Art Decor"],
-  legalName: "F.H.U. Art Decor",
+  legalName: 'Szczygieł Tomasz FHU "ART DECOR"',
   description:
     "Agencja reklamowa Art Decor — kompleksowa reklama wizualna w Pszczynie i woj. śląskim. Pylony, kasetony LED, litery 3D, szyldy, oklejanie witryn i samochodów, wycinanie znaków.",
   url: site.origin,
@@ -50,10 +50,12 @@ const jsonLd = {
   logo: new URL("/images/logo_kolor2.svg", site).href,
   telephone: "+48696293362",
   email: "biuro@artdecor.net.pl",
-  // TODO: po weryfikacji NIP/REGON zaktualizować poniższe pola
-  // taxID: "PLXXXXXXXXXX",
-  // vatID: "PLXXXXXXXXXX",
-  // iso6523Code: "0184:XXXXXXXXXX",
+  taxID: "6381143945",
+  vatID: "PL6381143945",
+  identifier: [
+    { "@type": "PropertyValue", propertyID: "NIP", value: "6381143945" },
+    { "@type": "PropertyValue", propertyID: "REGON", value: "240423520" },
+  ],
   foundingDate: "2008",
   slogan: "Reklama wizualna z charakterem",
   priceRange: "$$",
@@ -134,14 +136,12 @@ const jsonLd = {
       itemOffered: { "@type": "Service", "@id": `${site.origin}/uslugi/${slug}/#service` },
     })),
   },
-  // TODO: po weryfikacji właściciela odkomentować i uzupełnić Person schema
-  // founder: {
-  //   "@type": "Person",
-  //   name: "[Imię Nazwisko]",
-  //   jobTitle: "Właściciel / Lead designer",
-  //   worksFor: { "@id": organizationId },
-  //   sameAs: ["https://www.linkedin.com/in/..."],
-  // },
+  founder: {
+    "@type": "Person",
+    name: "Tomasz Szczygieł",
+    jobTitle: "Właściciel",
+    worksFor: { "@id": organizationId },
+  },
 } as const;
 
 // WebSite łączy domenę z organizacją — AI i Google rozpoznają nazwę serwisu
