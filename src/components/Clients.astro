@@ -3,7 +3,45 @@ import { Image } from "astro:assets";
 import SectionHeader from "./SectionHeader.astro";
 import { asset } from "../lib/images";
 
-const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png`);
+/** Klienci z logotypem (pliki w `src/assets/klienci`, przezroczyste tło). */
+const logos = [
+  { name: "Oriflame", file: "oriflame.png" },
+  { name: "Nestlé", file: "nestle.png" },
+  { name: "Mokate", file: "mokate.png" },
+  { name: "Trendy Hair Fashion", file: "trendy.png" },
+  { name: "Ideon", file: "ideon.png" },
+  { name: "Energoaparatura", file: "energoaparatura.png" },
+  { name: "Sordrew", file: "sordrew.svg" },
+  { name: "Szczęśniak", file: "szczesniak.png" },
+  { name: "Abalico", file: "abalico.png" },
+  { name: "GKS Katowice", file: "gks-katowice.png" },
+].map((logo) => {
+  const meta = asset(`/images/klienci/${logo.file}`);
+  // Bez powiększania ponad oryginał — rastrowe logo rozciągnięte w górę jest rozmyte.
+  return { ...logo, meta, width: Math.min(meta.width, 160) };
+});
+
+/**
+ * Firmy prywatne z realizacji (nazwy odczytane ze zdjęć w `foto/`).
+ * Celowo bez instytucji, sieci i punktów partnerskich — „zaufali nam" nie może
+ * sugerować współpracy z centralą marki.
+ */
+const names = [
+  "Amore Mio", "Asgard Barbershop", "Ashwood", "Atologia", "Babcia Gotuje", "Beauty Lady Fashion",
+  "Bella Ciao", "Blanka Hess", "BlueBed", "Butik Lilly", "Centrozap", "Chłodzimy24",
+  "Circuit Training", "Clevermet", "CMS", "Cosmetic Group", "CP Consulting", "Cukiernia Szarlotka",
+  "Czaniecki", "Decoria", "Deltawent", "Demac Lenko", "Dolce Vita", "Domos Nieruchomości",
+  "Eco-Serwis", "Firma Kurowski", "Fit Lady Club", "FloraDekora", "Foto-Express", "Gamainstal",
+  "Gravity Fitness", "Hair Team", "Instalbud", "Inter-Team", "JM Kontrakt", "JTC",
+  "Julia Lingerie", "Kami Sushi", "Kleopatra Fashion", "Kondzielnik Stomatologia", "Kontrakt Plus",
+  "Laby Garden Design", "Lifting Solutions", "LIS Logistics", "Lusopol", "Magnolia", "Massoni",
+  "Mc Hair", "Micza Stomatologia", "Mimas", "Miracle Cosmetic Institute", "Munimentum", "Munistyle",
+  "NakarmPupila.pl", "Nasze Lody", "Niedźbała 1933", "Nova Yoga", "Odostal", "Optyk Karolina",
+  "Pless", "Prodrex", "Prymstol", "Rakara Barber", "Rozmus", "RR Technologies", "Salus",
+  "Smart Solution", "Stek Wino Magnum", "Target Pizza", "Taurus Pizza", "Techmex", "Tropical",
+  "U Przewoźnika", "Victoria", "Witpol Auto", "Xaum Transport", "Yuro Sushi", "Zamel",
+  "Zeta Pro Office", "Zielona Manufaktura", "ZPUE",
+];
 ---
 <section class="section clients" id="klienci">
   <div class="container">
@@ -11,6 +49,7 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
       eyebrow="Nasi zaufani partnerzy"
       title="Zaufali nam"
       accent="nam"
+      lead={`Ponad ${Math.floor((logos.length + names.length) / 10) * 10} firm z Pszczyny, Śląska i całej Polski — od lokalnych salonów i restauracji po producentów i zakłady przemysłowe.`}
       align="stack"
     />
   </div>
@@ -19,19 +58,31 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
     <div class="clients-track">
       {[0, 1].map((copy) => (
         <div class="clients-group" aria-hidden={copy === 1 ? "true" : undefined}>
-          {logos.map((logo, i) => (
+          {logos.map((logo) => (
             <div class="client-cell" role={copy === 0 ? "listitem" : undefined}>
               <Image
-                src={asset(logo)}
-                alt={copy === 0 ? `Logo klienta Art Decor Pszczyna #${i + 1} — współpraca w zakresie reklamy wizualnej` : ""}
+                src={logo.meta}
+                alt={copy === 0 ? `${logo.name} — klient Art Decor Pszczyna` : ""}
                 class="client-logo"
                 loading="lazy"
                 decoding="async"
-                width={240}
+                width={logo.width}
               />
             </div>
           ))}
         </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="clients-marquee clients-marquee--names" role="list" aria-label="Pozostali klienci Art Decor">
+    <div class="clients-track clients-track--reverse">
+      {[0, 1].map((copy) => (
+        <ul class="clients-group" aria-hidden={copy === 1 ? "true" : undefined} role="presentation">
+          {names.map((name) => (
+            <li class="client-name" role={copy === 0 ? "listitem" : undefined}>{name}</li>
+          ))}
+        </ul>
       ))}
     </div>
   </div>
@@ -48,16 +99,26 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
     position: relative;
     overflow: hidden;
     border-block: 1px solid var(--paper-line);
-    padding-block: 2.25rem;
+    padding-block: 2rem;
     /* Wygaszenie krawędzi */
     mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
     -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
   }
 
+  .clients-marquee--names {
+    border-top: 0;
+    padding-block: 1.25rem;
+  }
+
   .clients-track {
     display: flex;
     width: max-content;
-    animation: marquee 35s linear infinite;
+    animation: marquee 40s linear infinite;
+  }
+
+  .clients-track--reverse {
+    animation-duration: 160s;
+    animation-direction: reverse;
   }
 
   .clients-marquee:hover .clients-track {
@@ -68,15 +129,18 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .client-cell {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 180px;
-    height: 72px;
-    margin-inline: 2.5rem;
+    width: 160px;
+    height: 56px;
+    margin-inline: 2.25rem;
     flex-shrink: 0;
   }
 
@@ -87,13 +151,41 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
     height: auto;
     object-fit: contain;
     filter: grayscale(1);
-    opacity: 0.55;
+    opacity: 0.6;
     transition: filter var(--transition-base), opacity var(--transition-base);
   }
 
   .client-cell:hover .client-logo {
     filter: grayscale(0);
     opacity: 1;
+  }
+
+  .client-name {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    color: var(--structa-gray-text);
+    transition: color var(--transition-fast);
+  }
+
+  /* Separator między nazwami */
+  .client-name::after {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-inline: 1.5rem;
+    vertical-align: middle;
+    background: var(--color-accent);
+    transform: rotate(45deg);
+    opacity: 0.6;
+  }
+
+  .client-name:hover {
+    color: var(--structa-black);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -103,6 +195,11 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
       width: 100%;
       justify-content: center;
     }
+    .clients-group {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 0.75rem;
+    }
     .clients-group[aria-hidden="true"] {
       display: none;
     }
@@ -110,9 +207,15 @@ const logos = Array.from({ length: 10 }, (_, i) => `/images/klienci/${i + 1}.png
 
   @media (max-width: 640px) {
     .client-cell {
-      width: 130px;
-      height: 56px;
+      width: 120px;
+      height: 44px;
       margin-inline: 1.5rem;
+    }
+    .client-name {
+      font-size: 0.9375rem;
+    }
+    .client-name::after {
+      margin-inline: 1rem;
     }
   }
 </style>
