@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import SectionHeader from "./SectionHeader.astro";
 import SectionRule from "./SectionRule.astro";
 import { asset } from "../lib/images";
@@ -52,7 +52,25 @@ const defaultItems: PortfolioItem[] = [
   { id: 15, title: "Grafika reklamowa na pojazd", category: "Oklejanie samochodów", image: "/images/portfolio/oklejanie-samochodow/auto-3.jpg" },
 ];
 
-const { items: portfolioItems = defaultItems, categories = defaultCategories, showCta = true } = Astro.props;
+const { items, categories = defaultCategories, showCta = true } = Astro.props;
+
+// Podgląd PhotoSwipe: pełne zdjęcie WebP max. 2000 px (te same parametry co
+// w galeriach usług, więc Astro nie generuje drugiej kopii) + jego wymiary.
+const LIGHTBOX_MAX_WIDTH = 2000;
+const portfolioItems = await Promise.all(
+  (items ?? defaultItems).map(async (item) => {
+    const meta = asset(item.image);
+    const width = Math.min(meta.width, LIGHTBOX_MAX_WIDTH);
+    const full = await getImage({ src: meta, width, format: "webp" });
+    return {
+      ...item,
+      meta,
+      href: full.src,
+      width,
+      height: Math.round((meta.height * width) / meta.width),
+    };
+  })
+);
 ---
 <section class="section portfolio" id="portfolio">
   <div class="container">
@@ -79,22 +97,31 @@ const { items: portfolioItems = defaultItems, categories = defaultCategories, sh
       ))}
     </div>
 
-    <ul class="portfolio-grid" data-stagger-grid>
+    <ul class="portfolio-grid" data-stagger-grid data-pswp-gallery>
       {portfolioItems.map((item) => (
         <li class="portfolio-item" data-category={item.category.toLowerCase().replace(/\s+/g, "-")}>
           <figure class="portfolio-card">
-            <div class="portfolio-image-wrapper">
+            <a
+              class="portfolio-image-wrapper"
+              href={item.href}
+              data-pswp-width={item.width}
+              data-pswp-height={item.height}
+              data-caption={`${item.category} — ${item.title}`}
+              target="_blank"
+              rel="noopener"
+              aria-label={`Powiększ: ${item.title}`}
+            >
               <Image
-                src={asset(item.image)}
+                src={item.meta}
                 alt={`${item.title} — realizacja Art Decor Pszczyna, kategoria: ${item.category}`}
                 loading="lazy"
                 decoding="async"
                 width={800}
               />
               <span class="portfolio-hover-icon" aria-hidden="true">
-                <Icon name="lucide:arrow-up-right" size={20} />
+                <Icon name="lucide:expand" size={20} />
               </span>
-            </div>
+            </a>
             <figcaption class="portfolio-caption">
               <div>
                 <p class="portfolio-category">{item.category}</p>
@@ -174,6 +201,7 @@ const { items: portfolioItems = defaultItems, categories = defaultCategories, sh
   }
 
   .portfolio-image-wrapper {
+    display: block;
     position: relative;
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -244,6 +272,9 @@ const { items: portfolioItems = defaultItems, categories = defaultCategories, sh
 
 
 <script>
+  import { initLightbox } from "../scripts/lightbox";
+  initLightbox();
+
   const filterBtns = document.querySelectorAll('.filter-btn');
   const portfolioItems = document.querySelectorAll('.portfolio-item');
 
@@ -255,14 +286,12 @@ const { items: portfolioItems = defaultItems, categories = defaultCategories, sh
       filterBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
       btn.setAttribute('aria-pressed', 'true');
 
-      // Filter items
+      // Filter items — ukryte pozycje wypadają też z przewijania w podglądzie
       portfolioItems.forEach(item => {
         const category = item.getAttribute('data-category');
-        if (filter === 'all' || category === filter) {
-          (item as HTMLElement).style.display = '';
-        } else {
-          (item as HTMLElement).style.display = 'none';
-        }
+        const visible = filter === 'all' || category === filter;
+        (item as HTMLElement).style.display = visible ? '' : 'none';
+        item.querySelector('a[data-pswp-width]')?.toggleAttribute('data-pswp-hidden', !visible);
       });
     });
   });
