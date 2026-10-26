@@ -1,5 +1,6 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Pylony i totemy reklamowe — Art Decor Pszczyna | LED, dibond, montaż"
@@ -14,6 +15,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
+  images={galleries["pylony-totemy"].images}
   faqs={[
     {
       q: "Ile kosztuje pylon reklamowy?",

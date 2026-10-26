@@ -1,5 +1,6 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Wycinanie znaków z folii — Art Decor Pszczyna | cięcie ploterowe Oracal"
@@ -13,10 +14,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   answerBlock="Cięcie ploterowe to precyzyjne wycinanie kształtów (liter, logo, grafiki) z folii samoprzylepnej za pomocą plotera tnącego z nożykiem diamentowym. Folie Oracal 641 (monomerowa, 3–4 lata na zewnątrz) lub 751 (polimerowa, 5–7 lat) w 60+ kolorach RAL. Naklejana na auta, witryny, ściany, sprzęt. Cena od 50 zł netto za m²."
   content={true}
   specifications={true}
-  images={[
-    "/images/portfolio/wycinanie-znakow/znaki-1.jpg",
-    "/images/portfolio/wycinanie-znakow/znaki-2.jpg"
-  ]}
+  images={galleries["wycinanie-znakow"].images}
   faqs={[
     {
       q: "Jaka jest minimalna wysokość wycinanego napisu?",

@@ -1,17 +1,22 @@
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
+import "../styles/lightbox.css";
 
 /**
  * Podgląd zdjęć (PhotoSwipe 5) dla każdej galerii oznaczonej `data-pswp-gallery`.
- * Linki muszą mieć `data-pswp-width` / `data-pswp-height`. Właściwy moduł
+ * Linki muszą mieć `data-pswp-width` / `data-pswp-height`; linki z `data-pswp-hidden`
+ * (np. ukryte filtrem portfolio) są pomijane przy przewijaniu. Właściwy moduł
  * PhotoSwipe ładuje się dopiero przy pierwszym otwarciu podglądu.
  */
+let initialized = false;
+
 export function initLightbox() {
-  if (!document.querySelector("[data-pswp-gallery]")) return;
+  if (initialized || !document.querySelector("[data-pswp-gallery]")) return;
+  initialized = true;
 
   const lightbox = new PhotoSwipeLightbox({
     gallery: "[data-pswp-gallery]",
-    children: "a[data-pswp-width]",
+    children: "a[data-pswp-width]:not([data-pswp-hidden])",
     pswpModule: () => import("photoswipe"),
     bgOpacity: 0.94,
     showHideAnimationType: "zoom",
@@ -24,7 +29,7 @@ export function initLightbox() {
     indexIndicatorSep: " / ",
   });
 
-  // Podpis pod zdjęciem z tekstu alternatywnego miniatury
+  // Podpis pod zdjęciem: `data-caption` linku, a gdy go brak — tekst alternatywny miniatury
   lightbox.on("uiRegister", () => {
     lightbox.pswp?.ui?.registerElement({
       name: "caption",
@@ -33,8 +38,8 @@ export function initLightbox() {
       appendTo: "root",
       onInit: (el, pswp) => {
         pswp.on("change", () => {
-          const thumb = pswp.currSlide?.data.element?.querySelector("img");
-          el.textContent = thumb?.getAttribute("alt") ?? "";
+          const link = pswp.currSlide?.data.element;
+          el.textContent = link?.dataset.caption ?? link?.querySelector("img")?.getAttribute("alt") ?? "";
         });
       },
     });

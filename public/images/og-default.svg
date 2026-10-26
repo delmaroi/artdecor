@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Art Decor Pszczyna — reklama wizualna i oznakowanie">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#2C3A5C"/>
+      <stop offset="55%" stop-color="#232D48"/>
+      <stop offset="100%" stop-color="#161D2E"/>
+    </radialGradient>
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF8A5C"/>
+      <stop offset="40%" stop-color="#FF5C35"/>
+      <stop offset="80%" stop-color="#D6A05C"/>
+      <stop offset="100%" stop-color="#8B6F3D"/>
+    </linearGradient>
+    <linearGradient id="brassFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFB37A" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#8B6F3D" stop-opacity="0.4"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="100%" r="80%">
+      <stop offset="0%" stop-color="#FF5C35" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#FF5C35" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#FF5C35" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#sun)"/>
+
+  <!-- Top chevron border -->
+  <g stroke="url(#brass)" stroke-width="1.4" stroke-opacity="0.55" fill="none">
+    <path d="M 0 24 L 30 0 L 60 24 L 90 0 L 120 24 L 150 0 L 180 24 L 210 0 L 240 24 L 270 0 L 300 24 L 330 0 L 360 24 L 390 0 L 420 24 L 450 0 L 480 24 L 510 0 L 540 24 L 570 0 L 600 24 L 630 0 L 660 24 L 690 0 L 720 24 L 750 0 L 780 24 L 810 0 L 840 24 L 870 0 L 900 24 L 930 0 L 960 24 L 990 0 L 1020 24 L 1050 0 L 1080 24 L 1110 0 L 1140 24 L 1170 0 L 1200 24"/>
+  </g>
+
+  <!-- Bottom chevron border (mirrored) -->
+  <g stroke="url(#brass)" stroke-width="1.4" stroke-opacity="0.55" fill="none">
+    <path d="M 0 606 L 30 630 L 60 606 L 90 630 L 120 606 L 150 630 L 180 606 L 210 630 L 240 606 L 270 630 L 300 606 L 330 630 L 360 606 L 390 630 L 420 606 L 450 630 L 480 606 L 510 630 L 540 606 L 570 630 L 600 606 L 630 630 L 660 606 L 690 630 L 720 606 L 750 630 L 780 606 L 810 630 L 840 606 L 870 630 L 900 606 L 930 630 L 960 606 L 990 630 L 1020 606 L 1050 630 L 1080 606 L 1110 630 L 1140 606 L 1170 630 L 1200 606"/>
+  </g>
+
+  <!-- Sunburst rays from bottom-center -->
+  <g transform="translate(600 700)" opacity="0.55">
+    <g stroke="url(#brass)" stroke-linecap="round" fill="none">
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(10)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(-10)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(20)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(-20)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(30)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(-30)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(42)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(-42)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(55)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(-55)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(70)"/>
+      <line x1="0" y1="0" x2="0" y2="-560" stroke-width="1.4" transform="rotate(-70)"/>
+    </g>
+    <!-- Concentric arches -->
+    <g fill="none" stroke="url(#brass)" stroke-opacity="0.5">
+      <path d="M -300 0 A 300 300 0 0 1 300 0" stroke-width="1.4"/>
+      <path d="M -240 0 A 240 240 0 0 1 240 0" stroke-width="1"/>
+      <path d="M -180 0 A 180 180 0 0 1 180 0" stroke-width="0.7" stroke-opacity="0.4"/>
+    </g>
+  </g>
+
+  <!-- Corner ornaments -->
+  <g transform="translate(60 60)" stroke="url(#brass)" stroke-opacity="0.6" fill="none">
+    <path d="M 0 0 L 160 0" stroke-width="1.2"/>
+    <path d="M 0 0 L 0 160" stroke-width="1.2"/>
+    <path d="M 24 24 L 140 24 L 140 140" stroke-width="0.9"/>
+    <path d="M 48 48 L 120 48 L 120 120" stroke-width="0.7"/>
+    <g transform="translate(95 95)">
+      <path d="M 0 -16 L 16 0 L 0 16 L -16 0 Z" stroke-width="1"/>
+      <circle cx="0" cy="0" r="3" fill="url(#brass)"/>
+    </g>
+  </g>
+  <g transform="translate(1140 60) scale(-1 1)" stroke="url(#brass)" stroke-opacity="0.6" fill="none">
+    <path d="M 0 0 L 160 0" stroke-width="1.2"/>
+    <path d="M 0 0 L 0 160" stroke-width="1.2"/>
+    <path d="M 24 24 L 140 24 L 140 140" stroke-width="0.9"/>
+    <path d="M 48 48 L 120 48 L 120 120" stroke-width="0.7"/>
+    <g transform="translate(95 95)">
+      <path d="M 0 -16 L 16 0 L 0 16 L -16 0 Z" stroke-width="1"/>
+      <circle cx="0" cy="0" r="3" fill="url(#brass)"/>
+    </g>
+  </g>
+
+  <!-- Brand mark (text-based, no external fonts) -->
+  <g transform="translate(600 270)" text-anchor="middle">
+    <text x="0" y="0"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="72"
+          font-weight="700"
+          letter-spacing="6"
+          fill="#FFFFFF"
+          filter="url(#glow)">ART DECOR</text>
+    <text x="0" y="2"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="72"
+          font-weight="700"
+          letter-spacing="6"
+          fill="#FFFFFF">ART DECOR</text>
+    <!-- Decorative bars -->
+    <line x1="-300" y1="36" x2="-140" y2="36" stroke="url(#brass)" stroke-width="1.5"/>
+    <line x1="140" y1="36" x2="300" y2="36" stroke="url(#brass)" stroke-width="1.5"/>
+    <circle cx="-330" cy="36" r="3" fill="url(#brass)"/>
+    <circle cx="330" cy="36" r="3" fill="url(#brass)"/>
+    <!-- Subtitle -->
+    <text x="0" y="90"
+          font-family="'Helvetica Neue', Arial, sans-serif"
+          font-size="22"
+          font-weight="500"
+          letter-spacing="8"
+          fill="#D6A05C">PSZCZYNA · REKLAMA WIZUALNA</text>
+    <!-- Tagline -->
+    <text x="0" y="160"
+          font-family="'Helvetica Neue', Arial, sans-serif"
+          font-size="26"
+          font-weight="400"
+          letter-spacing="1"
+          fill="rgba(255,255,255,0.88)">Pylony · Kasetony LED · Litery 3D · Szyldy · Oklejanie</text>
+    <text x="0" y="200"
+          font-family="'Helvetica Neue', Arial, sans-serif"
+          font-size="20"
+          font-weight="400"
+          letter-spacing="1"
+          fill="rgba(255,255,255,0.7)">www.artdecor.net.pl  ·  +48 696 293 362</text>
+  </g>
+</svg>

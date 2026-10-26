@@ -1,5 +1,6 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Litery przestrzenne 3D — Art Decor Pszczyna | PCV, dibond, stal"
@@ -14,11 +15,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
-  images={[
-    "/images/portfolio/litery-przestrzenne/przestrzenne-1.jpg",
-    "/images/portfolio/litery-przestrzenne/przestrzenne-2.jpg",
-    "/images/portfolio/litery-przestrzenne/przestrzenne-3.jpg"
-  ]}
+  images={galleries["litery-przestrzenne"].images}
   faqs={[
     {
       q: "Z czego najlepiej zrobić litery na recepcję?",

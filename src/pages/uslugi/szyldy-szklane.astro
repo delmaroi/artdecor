@@ -1,23 +1,20 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Szyldy szklane — Art Decor Pszczyna | szkło hartowane, dystanse, premium"
-  description="Eleganckie szyldy szklane ze szkła hartowanego z piaskowaną grafiką lub drukiem UV. Montaż na dystansach. Pszczyna i Śląsk. Tel. 696 293 362."
+  description="Eleganckie szyldy szklane ze szkła hartowanego z grafiką drukowaną UV lub z folii. Montaż na dystansach. Pszczyna i Śląsk. Tel. 696 293 362."
   heroTitle="Szyldy szklane"
-  heroSubtitle="Eleganckie szyldy ze szkła z piaskowaną lub wydrukowaną grafiką. Prestiżowe oznakowanie dla Twojej firmy."
+  heroSubtitle="Eleganckie szyldy ze szkła z drukowaną lub foliową grafiką. Prestiżowe oznakowanie dla Twojej firmy."
   slug="szyldy-szklane"
   serviceType="Glass signage manufacturing"
   serviceAlternateNames={["Szyld ze szkła", "Tabliczka szklana", "Szyld recepcyjny", "Szyld biurowy premium", "Szyld na dystansach"]}
   priceFrom={350}
-  answerBlock="Szyld szklany to elegancka tablica informacyjna lub reklamowa wykonana ze szkła hartowanego (8–12 mm), montowana na dystansach (15–30 mm od ściany). Grafika piaskowana, drukowana UV lub naklejana folią. Standardowo dla biur, kancelarii, gabinetów, recepcji. Cena od 350 zł netto."
+  answerBlock="Szyld szklany to elegancka tablica informacyjna lub reklamowa wykonana ze szkła hartowanego (8–12 mm), montowana na dystansach (15–30 mm od ściany). Grafika drukowana UV lub naklejana folią. Standardowo dla biur, kancelarii, gabinetów, recepcji. Cena od 350 zł netto."
   content={true}
   specifications={true}
-  images={[
-    "/images/portfolio/szyldy-szklane/szyld-1.jpg",
-    "/images/portfolio/szyldy-szklane/szyld-2.jpg",
-    "/images/portfolio/szyldy-szklane/szyld-3.jpg"
-  ]}
+  images={galleries["szyldy-szklane"].images}
   faqs={[
     {
       q: "Z jakiego szkła robicie szyldy?",
@@ -29,14 +26,14 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
     },
     {
       q: "Czy szyld szklany sprawdzi się na zewnątrz?",
-      a: "Tak — szyldy ze szkła hartowanego są w pełni odporne na warunki atmosferyczne. Grafika powinna być piaskowana lub drukowana UV (laminowana). Dla zewnętrznego użytku stosujemy też podświetlenie krawędziowe LED (efekt świecącej krawędzi szyby) — opcja premium."
+      a: "Tak — szyldy ze szkła hartowanego są w pełni odporne na warunki atmosferyczne. Grafika powinna być drukowana UV (laminowana) lub wykonana z folii zewnętrznej. Dla zewnętrznego użytku stosujemy też podświetlenie krawędziowe LED (efekt świecącej krawędzi szyby) — opcja premium."
     }
   ]}
 >
   <div slot="content">
     <h3>Czym jest szyld szklany?</h3>
     <p>
-      Szyld szklany to tablica informacyjna lub reklamowa ze szkła hartowanego, montowana na dystansach ze stali nierdzewnej, dzięki czemu „unosi się” nad ścianą. Art Decor zdobi szyldy piaskowaniem, drukiem UV lub folią i wykonuje je dla biur, kancelarii, gabinetów i recepcji. Szyld szklany w Art Decor kosztuje od <strong>350 zł netto</strong>.
+      Szyld szklany to tablica informacyjna lub reklamowa ze szkła hartowanego, montowana na dystansach ze stali nierdzewnej, dzięki czemu „unosi się” nad ścianą. Art Decor zdobi szyldy drukiem UV lub folią i wykonuje je dla biur, kancelarii, gabinetów i recepcji. Szyld szklany w Art Decor kosztuje od <strong>350 zł netto</strong>.
     </p>
 
     <h3>Z jakiego szkła powstaje szyld?</h3>
@@ -58,7 +55,6 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
           <tr><th>Technika</th><th>Efekt</th><th>Na zewnątrz</th></tr>
         </thead>
         <tbody>
-          <tr><td>Piaskowanie artystyczne 3D</td><td>matowa grafika wpiaskowana w szkło</td><td>tak</td></tr>
           <tr><td>Druk UV</td><td>pełnokolorowa grafika na szkle</td><td>tak, z laminatem</td></tr>
           <tr><td>Folia ploterowa</td><td>naklejana grafika, możliwe złote i srebrne akcenty</td><td>—</td></tr>
           <tr><td>Podświetlenie krawędziowe LED</td><td>świecąca krawędź szyby (opcja premium)</td><td>tak</td></tr>
@@ -66,7 +62,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       </table>
     </div>
     <p>
-      Szyld ze szkła hartowanego jest w pełni odporny na warunki atmosferyczne, dlatego na zewnątrz Art Decor stosuje grafikę piaskowaną lub drukowaną UV z laminatem.
+      Szyld ze szkła hartowanego jest w pełni odporny na warunki atmosferyczne, dlatego na zewnątrz Art Decor stosuje grafikę drukowaną UV z laminatem.
     </p>
 
     <h3>Montaż szyldu szklanego</h3>
@@ -98,7 +94,6 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
       <div class="spec-card glass-card">
         <h3>Techniki</h3>
         <ul>
-          <li>Piaskowanie 3D</li>
           <li>Wydruk UV</li>
           <li>Folia ploterowa</li>
         </ul>
@@ -121,7 +116,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
         <div class="process-number">01</div>
         <div class="process-content">
           <h3>Projekt</h3>
-          <p>Wybór materiału (szkło hartowane, plexi), techniki zdobienia (druk UV, piaskowanie)</p>
+          <p>Wybór materiału (szkło hartowane, plexi), techniki zdobienia (druk UV, folia)</p>
           <span class="process-time">1-2 dni</span>
         </div>
       </div>
@@ -130,7 +125,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
         <div class="process-number">02</div>
         <div class="process-content">
           <h3>Produkcja</h3>
-          <p>Hartowanie szkła, piaskowanie 3D lub druk UV, wiercenie otworów pod dystanse</p>
+          <p>Hartowanie szkła, druk UV lub aplikacja folii, wiercenie otworów pod dystanse</p>
           <span class="process-time">5-7 dni</span>
         </div>
       </div>

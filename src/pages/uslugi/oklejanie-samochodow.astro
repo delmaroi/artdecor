@@ -1,5 +1,6 @@
 ---
 import ServiceTemplate from "../../components/ServiceTemplate.astro";
+import { galleries } from "../../lib/gallery-data";
 ---
 <ServiceTemplate
   title="Oklejanie samochodów — Art Decor Pszczyna | reklama na flotę, car wrap"
@@ -14,11 +15,7 @@ import ServiceTemplate from "../../components/ServiceTemplate.astro";
   content={true}
   specifications={true}
   process={true}
-  images={[
-    "/images/portfolio/oklejanie-samochodow/auto-1.jpg",
-    "/images/portfolio/oklejanie-samochodow/auto-2.jpg",
-    "/images/portfolio/oklejanie-samochodow/auto-3.jpg"
-  ]}
+  images={galleries["oklejanie-samochodow"].images}
   faqs={[
     {
       q: "Ile kosztuje oklejenie całego samochodu?",

@@ -126,31 +126,6 @@ export const machinery = {
   ] as Machine[],
 };
 
-/* ── Piaskowanie 3D — wyróżnik ─────────────────────────────────────────────
-   NIEUŻYWANE: sekcja została zdjęta ze strony „O nas" na życzenie.
-   Treść zostaje tutaj, żeby dało się ją przywrócić bez pisania od nowa —
-   wystarczy odtworzyć blok `<section class="section sandblasting">`
-   w `src/pages/o-nas.astro` i jego style. Usuń ten eksport, jeżeli decyzja
-   o zdjęciu sekcji jest ostateczna.                                          */
-
-export const sandblasting = {
-  eyebrow: "Nasza specjalność",
-  title: "Artystyczne\npiaskowanie 3D",
-  accent: "piaskowanie 3D",
-  paragraphs: [
-    "Jako jedna z nielicznych firm reklamowych wdrożyliśmy technologię " +
-      "artystycznego piaskowania 3D. W odróżnieniu od zwykłego matowania " +
-      "powierzchni daje ona głębię i światłocień — wzór ma realną grubość, " +
-      "a nie tylko zmienioną fakturę.",
-    "Wykorzystujemy ją do produkcji oryginalnych akcesoriów reklamowych " +
-      "i elementów dekoracyjnych. To rozwiązanie dla firm, które szukają upominku " +
-      "biznesowego, statuetki albo detalu we wnętrzu, jakiego nie znajdą " +
-      "w katalogu z gotowymi gadżetami.",
-  ],
-  materials: ["Szkło", "Lustro", "Ceramika", "Marmur", "Granit"],
-  cta: { text: "Zobacz piaskowanie artystyczne", href: "/uslugi/piaskowanie-artystyczne/" },
-};
-
 /* ── Liczby ──────────────────────────────────────────────────────────────── */
 
 export interface AboutStat {
