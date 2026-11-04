@@ -2,10 +2,12 @@ import { defineConfig } from "astro/config";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import { PRICING_STATUS } from "./src/lib/calculator/pricing.ts";
+import pruneOriginals from "./src/integrations/prune-originals.mjs";
 
 export default defineConfig({
   site: "https://www.artdecor.net.pl/",
   integrations: [
+    pruneOriginals(),
     sitemap({
       filter: (page) =>
         !page.includes("/cookies") &&

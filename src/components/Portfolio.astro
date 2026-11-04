@@ -1,6 +1,6 @@
 ---
-import { Icon } from "astro-icon/components";
-import { Image, getImage } from "astro:assets";
+import { getImage } from "astro:assets";
+import PortfolioCard from "./PortfolioCard.astro";
 import SectionHeader from "./SectionHeader.astro";
 import SectionRule from "./SectionRule.astro";
 import { asset } from "../lib/images";
@@ -12,6 +12,8 @@ interface Props {
   categories?: string[];
   /** Na /realizacje/ link „Wszystkie realizacje" prowadziłby do samej siebie. */
   showCta?: boolean;
+  /** Ile realizacji pokazać od razu; resztę dokłada przycisk „Pokaż więcej". */
+  batchSize?: number;
 }
 
 const defaultCategories = [
@@ -52,7 +54,7 @@ const defaultItems: PortfolioItem[] = [
   { id: 15, title: "Grafika reklamowa na pojazd", category: "Oklejanie samochodów", image: "/images/portfolio/oklejanie-samochodow/auto-3.jpg" },
 ];
 
-const { items, categories = defaultCategories, showCta = true } = Astro.props;
+const { items, categories = defaultCategories, showCta = true, batchSize } = Astro.props;
 
 // Podgląd PhotoSwipe: pełne zdjęcie WebP max. 2000 px (te same parametry co
 // w galeriach usług, więc Astro nie generuje drugiej kopii) + jego wymiary.
@@ -71,6 +73,11 @@ const portfolioItems = await Promise.all(
     };
   })
 );
+
+// Dalsze realizacje trafiają do <template>: nie obciążają strony, dopóki klient
+// o nie nie poprosi. Filtry i przycisk obsługuje skrypt na dole pliku.
+const initialItems = batchSize ? portfolioItems.slice(0, batchSize) : portfolioItems;
+const laterItems = batchSize ? portfolioItems.slice(batchSize) : [];
 ---
 <section class="section portfolio" id="portfolio">
   <div class="container">
@@ -97,41 +104,19 @@ const portfolioItems = await Promise.all(
       ))}
     </div>
 
-    <ul class="portfolio-grid" data-stagger-grid data-pswp-gallery>
-      {portfolioItems.map((item) => (
-        <li class="portfolio-item" data-category={item.category.toLowerCase().replace(/\s+/g, "-")}>
-          <figure class="portfolio-card">
-            <a
-              class="portfolio-image-wrapper"
-              href={item.href}
-              data-pswp-width={item.width}
-              data-pswp-height={item.height}
-              data-caption={`${item.category} — ${item.title}`}
-              target="_blank"
-              rel="noopener"
-              aria-label={`Powiększ: ${item.title}`}
-            >
-              <Image
-                src={item.meta}
-                alt={`${item.title} — realizacja Art Decor Pszczyna, kategoria: ${item.category}`}
-                loading="lazy"
-                decoding="async"
-                width={800}
-              />
-              <span class="portfolio-hover-icon" aria-hidden="true">
-                <Icon name="lucide:expand" size={20} />
-              </span>
-            </a>
-            <figcaption class="portfolio-caption">
-              <div>
-                <p class="portfolio-category">{item.category}</p>
-                <h3 class="portfolio-title">{item.title}</h3>
-              </div>
-            </figcaption>
-          </figure>
-        </li>
-      ))}
+    <ul class="portfolio-grid" data-stagger-grid data-pswp-gallery data-portfolio-list data-batch={batchSize}>
+      {initialItems.map((item) => <PortfolioCard {...item} />)}
     </ul>
+
+    {laterItems.length > 0 && (
+      <template data-portfolio-rest>
+        {laterItems.map((item) => <PortfolioCard {...item} />)}
+      </template>
+    )}
+
+    <div class="portfolio-more-wrap">
+      <button type="button" class="portfolio-more" data-portfolio-more hidden></button>
+    </div>
   </div>
 </section>
 
@@ -196,77 +181,36 @@ const portfolioItems = await Promise.all(
     }
   }
 
-  .portfolio-card {
-    margin: 0;
-  }
-
-  .portfolio-image-wrapper {
-    display: block;
-    position: relative;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    aspect-ratio: 4 / 3;
-    background: var(--structa-offwhite);
-  }
-
-  .portfolio-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .portfolio-item:hover .portfolio-card img {
-    transform: scale(1.06);
-  }
-
-  .portfolio-hover-icon {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 2.75rem;
-    height: 2.75rem;
+  .portfolio-more-wrap {
     display: flex;
-    align-items: center;
     justify-content: center;
-    background: var(--structa-white);
-    color: var(--structa-black);
-    border-radius: 50%;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: all var(--transition-base);
+    margin-top: 3rem;
   }
 
-  .portfolio-item:hover .portfolio-hover-icon {
-    opacity: 1;
-    transform: translateY(0);
+  .portfolio-more {
+    padding: 0.85rem 1.75rem;
+    background: var(--structa-charcoal);
+    border: 1px solid var(--structa-charcoal);
+    border-radius: 100px;
+    color: var(--structa-white);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition-fast);
   }
 
-  .portfolio-caption {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-top: 1.1rem;
+  .portfolio-more:hover {
+    background: var(--structa-black);
   }
 
-  .portfolio-category {
-    font-size: 0.6875rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--structa-accent);
-    margin: 0 0 0.35rem;
+  .portfolio-more:focus-visible {
+    outline: 2px solid var(--structa-accent);
+    outline-offset: 2px;
   }
 
-  .portfolio-title {
-    font-family: var(--font-display);
-    font-size: 1.1875rem;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-    color: var(--structa-black);
-    margin: 0;
-    line-height: 1.25;
+  .portfolio-more[hidden] {
+    display: none;
   }
 </style>
 
@@ -275,24 +219,43 @@ const portfolioItems = await Promise.all(
   import { initLightbox } from "../scripts/lightbox";
   initLightbox();
 
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const portfolioItems = document.querySelectorAll('.portfolio-item');
+  const list = document.querySelector<HTMLElement>("[data-portfolio-list]");
+  const rest = document.querySelector<HTMLTemplateElement>("[data-portfolio-rest]");
+  const moreBtn = document.querySelector<HTMLButtonElement>("[data-portfolio-more]");
+  const filterBtns = document.querySelectorAll(".filter-btn");
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.getAttribute('data-filter');
+  if (list && moreBtn) {
+    const items = [
+      ...list.children,
+      ...(rest?.content.children ?? []),
+    ] as HTMLElement[];
+    const batch = Number(list.dataset.batch) || items.length;
+    let filter = "all";
+    let shown = batch;
 
-      // Update active state
-      filterBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
-      btn.setAttribute('aria-pressed', 'true');
+    // W DOM są tylko widoczne realizacje, więc podgląd PhotoSwipe przewija dokładnie je.
+    const render = () => {
+      const matching = items.filter((item) => filter === "all" || item.dataset.category === filter);
+      list.replaceChildren(...matching.slice(0, shown));
+      const remaining = matching.length - shown;
+      moreBtn.hidden = remaining <= 0;
+      moreBtn.textContent = `Pokaż więcej (zostało ${remaining})`;
+    };
 
-      // Filter items — ukryte pozycje wypadają też z przewijania w podglądzie
-      portfolioItems.forEach(item => {
-        const category = item.getAttribute('data-category');
-        const visible = filter === 'all' || category === filter;
-        (item as HTMLElement).style.display = visible ? '' : 'none';
-        item.querySelector('a[data-pswp-width]')?.toggleAttribute('data-pswp-hidden', !visible);
+    moreBtn.addEventListener("click", () => {
+      shown += batch;
+      render();
+    });
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filter = btn.getAttribute("data-filter") ?? "all";
+        shown = batch;
+        filterBtns.forEach((other) => other.setAttribute("aria-pressed", String(other === btn)));
+        render();
       });
     });
-  });
+
+    render();
+  }
 </script>

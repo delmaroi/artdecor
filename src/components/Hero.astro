@@ -30,6 +30,8 @@ export interface Props {
    * czytają się jak ta sama strona, a nie jak osobny szablon.
    */
   variant?: "home" | "page";
+  /** Ruchome tło. Tylko strona główna; pozostałe strony dostają lekki obraz. */
+  video?: boolean;
 }
 
 const {
@@ -42,6 +44,7 @@ const {
   secondaryCtaText = "Zobacz realizacje",
   secondaryCtaHref = "/realizacje/",
   variant = "home",
+  video = false,
 } = Astro.props;
 
 const isPage = variant === "page";
@@ -55,16 +58,26 @@ const titleStart = words.join(" ");
 const marqueeItems = services.map((s) => s.title);
 
 // Wideo w tle renderujemy tylko, gdy plik faktycznie leży w `public/videos` —
-// inaczej każda strona wysyłałaby żądanie kończące się 404.
+// inaczej strona wysyłałaby żądanie kończące się 404.
 const heroVideoSrc = "/videos/hero-loop.mp4";
-const hasHeroVideo = existsSync(join(process.cwd(), "public", heroVideoSrc));
+const heroPosterSrc = "/images/hero-poster.webp";
+const hasHeroVideo = video && existsSync(join(process.cwd(), "public", heroVideoSrc));
 ---
 <section class:list={["hero", isPage && "hero--page"]}>
   <div class="hero-bg" aria-hidden="true">
-    {hasHeroVideo && (
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata">
-        <source src={heroVideoSrc} type="video/mp4" />
-      </video>
+    {hasHeroVideo ? (
+      <video
+        class="hero-video"
+        data-hero-video
+        data-src={heroVideoSrc}
+        poster={heroPosterSrc}
+        muted
+        loop
+        playsinline
+        preload="none"
+      ></video>
+    ) : (
+      <img class="hero-video" src={heroPosterSrc} alt="" width="1280" height="720" decoding="async" />
     )}
     <div class="hero-video-overlay"></div>
     <div class="hero-grid grid-pattern"></div>
@@ -204,12 +217,6 @@ const hasHeroVideo = existsSync(join(process.cwd(), "public", heroVideoSrc));
     background:
       radial-gradient(ellipse at 50% 30%, rgba(35, 45, 72, 0.2) 0%, rgba(35, 45, 72, 0.6) 60%, rgba(35, 45, 72, 0.88) 100%),
       linear-gradient(180deg, rgba(35, 45, 72, 0.35) 0%, rgba(35, 45, 72, 0.75) 100%);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-video {
-      display: none;
-    }
   }
 
   .hero-glow {
@@ -523,3 +530,15 @@ const hasHeroVideo = existsSync(join(process.cwd(), "public", heroVideoSrc));
     }
   }
 </style>
+
+<script>
+  // Plik wideo pobieramy tylko tam, gdzie ma sens: nie na telefonie, nie przy
+  // oszczędzaniu danych i nie przy ograniczonym ruchu. Wszędzie indziej zostaje plakat.
+  const video = document.querySelector<HTMLVideoElement>("[data-hero-video]");
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  const shouldPlay = matchMedia("(min-width: 768px) and (prefers-reduced-motion: no-preference)").matches;
+  if (video?.dataset.src && shouldPlay && !connection?.saveData) {
+    video.src = video.dataset.src;
+    video.play().catch(() => {});
+  }
+</script>
