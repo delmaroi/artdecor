@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Calculator from "../components/Calculator.astro";
+import { PRICING_STATUS } from "../lib/calculator/pricing";
+import "../styles/globals.css";
+---
+<Layout
+  title="Kalkulator wyceny reklamy – Art Decor Pszczyna"
+  description="Sprawdź szacunkowy koszt liter, kasetonu, pylonu, szyldu lub oklejenia witryny. Podaj wymiary i od razu zobacz orientacyjną cenę, bez zostawiania danych."
+  noindex={PRICING_STATUS === "draft"}
+>
+  <Header />
+  <main>
+    <Hero
+      variant="page"
+      title="Ile może kosztować Twoja reklama?"
+      subtitle="Wybierz produkt, podaj wymiary i od razu zobacz orientacyjny koszt. Nie zostawiasz żadnych danych."
+      breadcrumb={[{ label: "Strona główna", href: "/" }, { label: "Kalkulator" }]}
+      ctaText="Oblicz koszt"
+      ctaHref="#kalkulator"
+      secondaryCtaText={null}
+    />
+    <Calculator />
+  </main>
+  <Footer />
+</Layout>

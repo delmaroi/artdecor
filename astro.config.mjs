@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+import { PRICING_STATUS } from "./src/lib/calculator/pricing.ts";
 
 export default defineConfig({
   site: "https://www.artdecor.net.pl/",
@@ -8,7 +9,8 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !page.includes("/cookies") &&
-        !page.includes("/polityka-prywatnosci"),
+        !page.includes("/polityka-prywatnosci") &&
+        (PRICING_STATUS === "published" || !page.includes("/kalkulator")),
       i18n: {
         defaultLocale: "pl",
         locales: { pl: "pl-PL" },

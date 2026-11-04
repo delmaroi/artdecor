@@ -1,0 +1,325 @@
+---
+import { Icon } from "astro-icon/components";
+import { pricing, PRICING_STATUS } from "../lib/calculator/pricing";
+import { services } from "../lib/services-data";
+
+const iconFor = (slug: string) => services.find((s) => s.slug === slug)?.icon ?? "lucide:square";
+const isDraft = PRICING_STATUS === "draft";
+const [first] = pricing.products;
+---
+<section class="section calculator" id="kalkulator" data-calculator>
+  <div class="container">
+    {isDraft && (
+      <p class="calc-draft" role="note">
+        <strong>Wersja robocza.</strong> Kwoty są przykładowe i nie stanowią oferty Art Decor.
+      </p>
+    )}
+
+    <div class="calc-layout">
+      <form class="calc-form" autocomplete="off" novalidate aria-label="Kalkulator szacunkowej wyceny">
+        <fieldset class="calc-step">
+          <legend><span class="calc-step-no">1</span> Co chcesz wycenić?</legend>
+          <div class="calc-products">
+            {pricing.products.map((product, index) => (
+              <label class="calc-product">
+                <input type="radio" name="product" value={product.id} checked={index === 0} />
+                <span class="calc-product-icon"><Icon name={iconFor(product.slug)} size={20} /></span>
+                <span>{product.title}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="calc-step">
+          <legend><span class="calc-step-no">2</span> Wykonanie</legend>
+          <div class="calc-chips" data-variants>
+            {first.variants.map((variant, index) => (
+              <label class="calc-chip">
+                <input type="radio" name="variant" value={variant.id} checked={index === 0} />
+                <span>{variant.label}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="calc-step">
+          <legend><span class="calc-step-no">3</span> Wymiary całej reklamy</legend>
+          <div class="calc-fields">
+            <div class="calc-field">
+              <label for="calc-width">Szerokość, cm</label>
+              <input id="calc-width" type="text" inputmode="decimal" aria-describedby="calc-width-error" />
+              <p id="calc-width-error" class="calc-error" hidden></p>
+            </div>
+            <div class="calc-field">
+              <label for="calc-height">Wysokość, cm</label>
+              <input id="calc-height" type="text" inputmode="decimal" aria-describedby="calc-height-error" />
+              <p id="calc-height-error" class="calc-error" hidden></p>
+            </div>
+          </div>
+          <div class="calc-field calc-field--text" data-text-field>
+            <label for="calc-text">Treść napisu</label>
+            <input id="calc-text" type="text" maxlength="40" value="TWOJA FIRMA" aria-describedby="calc-text-hint" />
+            <p id="calc-text-hint" class="calc-hint">Masz logo? Wpisz tekst o podobnej liczbie elementów.</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="calc-step" data-install-field>
+          <legend><span class="calc-step-no">4</span> Montaż</legend>
+          <label class="calc-check">
+            <input id="calc-install" type="checkbox" />
+            <span>Dolicz montaż</span>
+          </label>
+        </fieldset>
+
+        <p class="calc-other">
+          Oklejanie samochodów i punkty gastronomiczne wyceniamy indywidualnie:
+          <a href="/uslugi/oklejanie-samochodow/">oklejanie samochodów</a>,
+          <a href="/uslugi/punkty-gastronomiczne/">punkty gastronomiczne</a>.
+        </p>
+
+        <div class="calc-bar" aria-hidden="true">
+          <span>Szacunkowo</span>
+          <strong data-bar-price>Podaj wymiary</strong>
+        </div>
+      </form>
+
+      <aside class="calc-panel" aria-label="Rysunek i szacunkowa cena">
+        <svg class="calc-drawing" data-drawing viewBox="0 0 640 380" role="img" aria-label="Rysunek w skali"></svg>
+        <p class="calc-drawing-note">Rysunek w skali. Sylwetka człowieka pokazuje proporcje.</p>
+
+        <div class="calc-result" aria-live="polite" aria-atomic="true">
+          <p class="calc-result-label">Szacunkowy koszt</p>
+          <output class="calc-price" data-price-net>Podaj wymiary</output>
+          <p class="calc-gross" data-price-gross></p>
+          <p class="calc-min" data-price-note></p>
+          <dl class="calc-meta"><dt>Powierzchnia</dt><dd data-area>—</dd></dl>
+        </div>
+
+        <p class="calc-disclaimer">
+          To orientacyjny koszt, a nie oferta. Ostateczna cena zależy od projektu, materiałów i miejsca montażu.
+        </p>
+
+        <div class="calc-actions">
+          <a class="calc-cta" href="tel:+48696293362"><Icon name="lucide:phone" size={18} /> Omów wycenę: 696 293 362</a>
+          <a class="calc-link" href="/kontakt/">Inne formy kontaktu</a>
+        </div>
+      </aside>
+    </div>
+
+    <noscript><p class="calc-draft">Włącz JavaScript, aby obliczyć szacunkowy koszt, albo zadzwoń: 696 293 362.</p></noscript>
+  </div>
+</section>
+
+<script>
+  import "../scripts/calculator";
+</script>
+
+<style>
+  .calc-draft {
+    margin: 0 0 var(--space-lg);
+    padding: var(--space-xs) var(--space-sm);
+    border-left: 3px solid var(--color-accent);
+    background: rgba(255, 92, 53, 0.08);
+    color: var(--color-text);
+  }
+
+  .calc-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .calc-form { display: grid; gap: var(--space-xl); min-width: 0; }
+
+  .calc-step { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .calc-step legend {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 0;
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--structa-charcoal);
+  }
+  .calc-step-no {
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--structa-charcoal);
+    color: var(--structa-white);
+    font-size: 0.9rem;
+  }
+
+  .calc-products { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2xs); }
+  .calc-product {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    min-height: 3.5rem;
+    padding: var(--space-2xs) var(--space-xs);
+    border: 1px solid var(--paper-line);
+    border-radius: var(--radius-sm);
+    background: var(--structa-white);
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+  .calc-product:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .calc-product:hover { border-color: var(--structa-charcoal); }
+  .calc-product-icon { display: inline-flex; color: var(--color-accent); }
+  .calc-product:has(input:checked) { background: var(--structa-charcoal); border-color: var(--structa-charcoal); color: var(--structa-white); }
+  .calc-product:has(input:focus-visible),
+  .calc-form :global(.calc-chip:has(input:focus-visible)),
+  .calc-check:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+  .calc-product input,
+  .calc-form :global(.calc-chip input) { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+
+  .calc-chips { display: flex; flex-wrap: wrap; gap: var(--space-2xs); }
+  .calc-form :global(.calc-chip) {
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--paper-line);
+    border-radius: 100px;
+    background: var(--structa-white);
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+  .calc-form :global(.calc-chip:hover) { border-color: var(--structa-charcoal); }
+  .calc-form :global(.calc-chip:has(input:checked)) { background: var(--structa-charcoal); border-color: var(--structa-charcoal); color: var(--structa-white); }
+
+  .calc-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); }
+  .calc-field { display: grid; gap: 0.35rem; align-content: start; }
+  .calc-field--text { margin-top: var(--space-sm); }
+  .calc-field[hidden], .calc-step[hidden] { display: none; }
+  .calc-field label { font-size: 0.95rem; font-weight: 500; }
+  .calc-field input {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--paper-line);
+    border-radius: var(--radius-sm);
+    background: var(--structa-white);
+    color: var(--color-text);
+    font: inherit;
+    font-size: 1rem;
+  }
+  .calc-field input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; border-color: transparent; }
+  .calc-field input[aria-invalid="true"] { border-color: #b3261e; }
+  .calc-error { margin: 0; color: #b3261e; font-size: 0.875rem; line-height: 1.35; }
+  .calc-hint { margin: 0; color: var(--color-text-muted); font-size: 0.875rem; }
+
+  .calc-check { display: inline-flex; align-items: center; gap: var(--space-xs); font-weight: 500; cursor: pointer; }
+  .calc-check input { width: 1.2rem; height: 1.2rem; accent-color: var(--color-accent); }
+
+  .calc-other { margin: 0; color: var(--color-text-muted); font-size: 0.95rem; }
+  .calc-other a { color: var(--structa-charcoal); text-decoration: underline; text-underline-offset: 2px; }
+
+  .calc-bar { display: none; }
+
+  .calc-panel {
+    position: sticky;
+    top: 7.5rem;
+    min-width: 0;
+    padding: var(--space-md);
+    border-radius: var(--radius);
+    background: var(--structa-charcoal);
+    color: var(--structa-white);
+  }
+
+  .calc-drawing {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    background-color: var(--structa-black);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .calc-drawing-note { margin: var(--space-2xs) 0 var(--space-md); color: rgba(255, 255, 255, 0.72); font-size: 0.85rem; }
+
+  .calc-drawing :global(.ground) { stroke: rgba(255, 255, 255, 0.45); stroke-width: 1; }
+  .calc-drawing :global(.person) { fill: #7f8799; }
+  .calc-drawing :global(.dims line) { stroke: rgba(255, 255, 255, 0.72); stroke-width: 1; }
+  .calc-drawing :global(.dim-label) { fill: var(--structa-white); font-family: var(--font-sans); font-size: 14px; font-weight: 500; }
+
+  .calc-drawing :global(.sign rect),
+  .calc-drawing :global(.sign text) { fill: #c6ccd9; }
+  .calc-drawing :global(.sign text) { font-family: var(--font-display); font-weight: 700; }
+  .calc-drawing :global(.sign-detail line) { stroke: rgba(35, 45, 72, 0.5); stroke-width: 1.5; }
+
+  .calc-drawing :global(.sign[data-effect="front"] rect),
+  .calc-drawing :global(.sign[data-effect="front"] text),
+  .calc-drawing :global(.sign[data-effect="both"] rect),
+  .calc-drawing :global(.sign[data-effect="both"] text) { fill: #fff6dc; }
+  .calc-drawing :global(.sign[data-effect="front"]) { filter: drop-shadow(0 0 5px rgba(255, 224, 150, 0.85)); }
+  .calc-drawing :global(.sign[data-effect="both"]) { filter: drop-shadow(0 0 4px rgba(255, 232, 170, 0.95)) drop-shadow(0 0 16px rgba(255, 190, 90, 0.8)); }
+  .calc-drawing :global(.sign[data-effect="halo"] text) { fill: #2a3655; }
+  .calc-drawing :global(.sign[data-effect="halo"]) { filter: drop-shadow(0 0 3px rgba(255, 224, 150, 1)) drop-shadow(0 0 14px rgba(255, 190, 90, 0.9)); }
+
+  .calc-drawing :global(.sign--glass rect) { fill: rgba(190, 220, 240, 0.32); stroke: rgba(255, 255, 255, 0.75); stroke-width: 1; }
+  .calc-drawing :global(.sign--film rect) { fill: rgba(255, 255, 255, 0.2); stroke: rgba(255, 255, 255, 0.55); stroke-width: 1; stroke-dasharray: 6 4; }
+
+  .calc-result-label { margin: 0 0 0.25rem; color: rgba(255, 255, 255, 0.72); font-size: 0.95rem; }
+  .calc-price {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+  }
+  .calc-gross { margin: 0.35rem 0 0; color: rgba(255, 255, 255, 0.82); }
+  .calc-min { margin: 0.35rem 0 0; color: #ffd7cb; font-size: 0.9rem; }
+  .calc-min:empty, .calc-gross:empty { display: none; }
+  .calc-meta { display: flex; gap: 0.5rem; margin: var(--space-xs) 0 0; color: rgba(255, 255, 255, 0.82); font-size: 0.95rem; }
+  .calc-meta dt { font-weight: 400; }
+  .calc-meta dd { margin: 0; font-weight: 600; }
+
+  .calc-disclaimer { margin: var(--space-sm) 0; color: rgba(255, 255, 255, 0.72); font-size: 0.875rem; line-height: 1.45; }
+
+  .calc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs) var(--space-md); }
+  .calc-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 100px;
+    background: var(--color-accent);
+    color: var(--structa-white);
+    font-weight: 600;
+    transition: background var(--transition-fast);
+  }
+  .calc-cta:hover { background: var(--color-accent-hover); }
+  .calc-link { color: var(--structa-white); text-decoration: underline; text-underline-offset: 3px; }
+  .calc-cta:focus-visible, .calc-link:focus-visible { outline: 2px solid var(--structa-white); outline-offset: 2px; }
+
+  @media (max-width: 960px) {
+    .calc-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+    .calc-panel { position: static; }
+    .calc-bar {
+      position: sticky;
+      bottom: 0.75rem;
+      z-index: 5;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.25rem var(--space-sm);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      background: var(--structa-charcoal);
+      color: var(--structa-white);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .calc-products { grid-template-columns: minmax(0, 1fr); }
+    .calc-product { min-height: 3rem; }
+  }
+</style>

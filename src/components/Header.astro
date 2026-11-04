@@ -55,6 +55,11 @@ const servicesActive = currentPath.startsWith("/uslugi/");
             </a>
           </li>
           <li>
+            <a href="/kalkulator/" class:list={["nav-link", { "nav-link--active": isActive("/kalkulator/") }]}>
+              Kalkulator
+            </a>
+          </li>
+          <li>
             <a href="/o-nas/" class:list={["nav-link", { "nav-link--active": isActive("/o-nas/") }]}>
               O nas
             </a>
@@ -215,6 +220,34 @@ const servicesActive = currentPath.startsWith("/uslugi/");
   .nav-link--active {
     color: #ffffff;
     background: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Poniżej tej szerokości napisy muszą się łamać, inaczej menu wyjdzie poza pasek. */
+  @media (min-width: 1024px) {
+    .nav-link,
+    .header-cta {
+      white-space: nowrap;
+    }
+  }
+
+  /* Węższe odstępy, żeby wszystkie pozycje menu mieściły się w jednej linii. */
+  @media (min-width: 768px) and (max-width: 1360px) {
+    .nav-link {
+      padding-inline: 0.7rem;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 900px) {
+    .nav-link {
+      padding-inline: 0.35rem;
+    }
+  }
+
+  /* Na wąskim tablecie brakuje miejsca; Facebook jest też w stopce. */
+  @media (min-width: 768px) and (max-width: 850px) {
+    .header-actions .header-facebook {
+      display: none;
+    }
   }
 
   .nav-caret {
