@@ -2,47 +2,235 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.php/kasetony-z-dibondu",
+      "destination": "/uslugi/kasetony-z-dibondu",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/kasetony-reklamowe",
+      "destination": "/uslugi/kasetony-z-dibondu",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/litery-przestrzenne",
+      "destination": "/uslugi/litery-przestrzenne",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/litery-blokowe-przestrzenne-swietlne-led",
+      "destination": "/uslugi/litery-blokowe",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/oklejanie-samochodow",
+      "destination": "/uslugi/oklejanie-samochodow",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/oklejanie-witryn",
+      "destination": "/uslugi/oklejanie-witryn",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/piaskowanie-artystyczne",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/szyldy-szklane",
+      "destination": "/uslugi/szyldy-szklane",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/tablice-led",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/systemy-wystawiennicze",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/uslugi/piaskowanie-artystyczne",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/uslugi/tablice-led",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/uslugi/systemy-wystawiennicze",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/o-nas",
+      "destination": "/o-nas",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/kontakt",
+      "destination": "/kontakt",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/polityka-cookies",
+      "destination": "/cookies",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/banery-i-siatki",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/druk-wielkoformatowy",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/pylony-totemy",
+      "destination": "/uslugi/pylony-totemy",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/litery-blokowe",
+      "destination": "/uslugi/litery-blokowe",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/litery-blokowe-przestrzenne-led",
+      "destination": "/uslugi/litery-blokowe",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/wycinanie-znakow",
+      "destination": "/uslugi/wycinanie-znakow",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/punkty-gastronomiczne",
+      "destination": "/uslugi/punkty-gastronomiczne",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/component/content/article",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/component/users",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.php/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/joomla/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/component/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/administrator/:path*",
+      "destination": "/",
+      "statusCode": 301
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
-        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
-        { "key": "X-DNS-Prefetch-Control", "value": "on" }
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "X-DNS-Prefetch-Control",
+          "value": "on"
+        }
       ]
     },
     {
       "source": "/_astro/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/images/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=2592000" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        }
       ]
     },
     {
       "source": "/videos/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=2592000" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        }
       ]
     },
     {
       "source": "/fonts/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/(robots.txt|llms.txt|sitemap-index.xml|sitemap-0.xml)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
       ]
     }
   ]

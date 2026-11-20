@@ -67,35 +67,5 @@ export default defineConfig({
         mdi: ["facebook", "instagram"],
       },
     }),
-  ],
-  redirects: {
-    "/index.php/kasetony-z-dibondu": { status: 301, destination: "/uslugi/kasetony-z-dibondu" },
-    "/index.php/kasetony-reklamowe": { status: 301, destination: "/uslugi/kasetony-z-dibondu" },
-    "/index.php/litery-przestrzenne": { status: 301, destination: "/uslugi/litery-przestrzenne" },
-    "/index.php/litery-blokowe-przestrzenne-swietlne-led": { status: 301, destination: "/uslugi/litery-blokowe" },
-    "/index.php/oklejanie-samochodow": { status: 301, destination: "/uslugi/oklejanie-samochodow" },
-    "/index.php/oklejanie-witryn": { status: 301, destination: "/uslugi/oklejanie-witryn" },
-    "/index.php/piaskowanie-artystyczne": { status: 301, destination: "/" },
-    "/index.php/szyldy-szklane": { status: 301, destination: "/uslugi/szyldy-szklane" },
-    "/index.php/tablice-led": { status: 301, destination: "/" },
-    "/index.php/systemy-wystawiennicze": { status: 301, destination: "/" },
-    // Usługi wycofane z oferty (2026-10) — stare adresy kierują na stronę główną.
-    "/uslugi/piaskowanie-artystyczne": { status: 301, destination: "/" },
-    "/uslugi/tablice-led": { status: 301, destination: "/" },
-    "/uslugi/systemy-wystawiennicze": { status: 301, destination: "/" },
-    "/index.php/o-nas": { status: 301, destination: "/o-nas" },
-    "/index.php/kontakt": { status: 301, destination: "/kontakt" },
-    "/index.php/polityka-cookies": { status: 301, destination: "/" },
-    "/index.php/banery-i-siatki": { status: 301, destination: "/" },
-    "/index.php/druk-wielkoformatowy": { status: 301, destination: "/" },
-    "/index.php/pylony-totemy": { status: 301, destination: "/uslugi/pylony-totemy" },
-    "/index.php/litery-blokowe": { status: 301, destination: "/uslugi/litery-blokowe" },
-    "/index.php/litery-blokowe-przestrzenne-led": { status: 301, destination: "/uslugi/litery-blokowe" },
-    "/index.php/wycinanie-znakow": { status: 301, destination: "/uslugi/wycinanie-znakow" },
-    "/index.php/punkty-gastronomiczne": { status: 301, destination: "/uslugi/punkty-gastronomiczne" },
-    "/index.php": { status: 301, destination: "/" },
-    "/index.php/component/content/article": { status: 301, destination: "/" },
-    "/index.php/component/users": { status: 301, destination: "/" },
-    "/joomla": { status: 301, destination: "/" }
-  }
+  ]
 });
