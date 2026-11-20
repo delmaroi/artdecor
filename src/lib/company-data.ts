@@ -8,4 +8,7 @@
  */
 
 /** Rok założenia firmy. Zmiana tutaj propaguje się na hero, stopkę i „O nas". */
-export const foundedYear = 1993;
+export const foundedYear = 2006;
+
+/** Liczba pełnych lat na rynku — w 2026 r. firma obchodzi 20-lecie. */
+export const yearsOnMarket = new Date().getFullYear() - foundedYear;

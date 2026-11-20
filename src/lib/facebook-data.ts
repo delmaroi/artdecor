@@ -12,10 +12,8 @@
  *    z `src/lib/images.ts`, więc obraz przechodzi przez optymalizację
  *    (WebP/AVIF + srcset) tak samo jak portfolio.
  *
- * ⚠ Miniatury poniżej są ZASTĘPCZE — pochodzą z portfolio i są kadrami
- *   poziomymi, więc w pionowej ramce Reela zostaną przycięte. Podmień je na
- *   kadry pionowe z rzeczywistych filmów, inaczej sekcja obiecuje inną treść,
- *   niż pokazuje po kliknięciu.
+ * Miniatura to pionowy kadr (9:16) z tego samego filmu — sekcja ma
+ *   pokazywać dokładnie to, co odtworzy się po kliknięciu.
  *
  * ⚠ Puste `href` = kafelek nie ładuje odtwarzacza, tylko prowadzi na profil.
  *   Sekcja działa i wygląda poprawnie, po prostu bez odtwarzania w miejscu.
@@ -77,35 +75,47 @@ export const facebookSection = {
  */
 export const videos: FacebookVideo[] = [
   {
-    href: "https://www.facebook.com/reel/1740346367289537",
-    title: "Realizacja na warsztacie",
+    href: "https://www.facebook.com/reel/1668177411759148",
+    title: "Optyk Karolina — Galeria WAWA w Bieruniu",
     excerpt:
-      "Kulisy produkcji — jak z płyty i folii powstaje gotowy nośnik reklamowy.",
-    date: "2026-06-18",
-    poster: "/images/portfolio/pylony-totemy/pylon-1.jpg",
-    posterAlt: "Kadr z filmu na profilu Art Decor — realizacja na warsztacie",
+      "Litery świetlne LED na blendzie z dibondu giętego krawędziowo i kasetony " +
+      "świetlne na pylonie, montowane na zakładkę pod kątem 45°.",
+    date: "2026-10-28",
+    poster: "/images/facebook/optyk-karolina.jpg",
+    posterAlt: "Czerwony kaseton z literami 3D Optyk Karolina nad wejściem do salonu",
     orientation: "vertical",
   },
   {
-    href: "https://www.facebook.com/reel/1923237555299773/",
-    title: "Montaż u klienta",
-    excerpt: "Od transportu po ostatnią śrubę na elewacji.",
-    date: "2026-05-30",
-    poster: "/images/portfolio/kasetony-z-dibondu/kaseton-2.jpg",
-    posterAlt: "Kadr z filmu na profilu Art Decor — montaż u klienta",
+    href: "https://www.facebook.com/reel/26232324883132041",
+    title: "Mivardi — litery świetlne w Czechach",
+    excerpt: "Litery świetlne z logo na hali — projekt, produkcja i montaż u nas.",
+    date: "2026-08-26",
+    poster: "/images/facebook/mivardi.jpg",
+    posterAlt: "Podświetlone litery i logo Mivardi na elewacji hali nocą",
+    orientation: "vertical",
+  },
+  {
+    href: "https://www.facebook.com/reel/1429849859001092",
+    title: "Oklejenie auta dla WelderStal",
+    excerpt: "Kolejny samochód firmowy w pełnym oklejeniu reklamowym.",
+    date: "2026-08-24",
+    poster: "/images/facebook/welderstal.jpg",
+    posterAlt: "Oklejony bus firmy WelderStal z danymi kontaktowymi na boku",
+    orientation: "vertical",
+  },
+  {
+    href: "https://www.facebook.com/reel/2602022366924693",
+    title: "Kasetony z frezowanego dibondu",
+    excerpt: "Kasetony świetlne LED wykonane we współpracy z GAFDESIGN.",
+    date: "2026-08-12",
+    poster: "/images/facebook/gafdesign-kasetony.jpg",
+    posterAlt: "Dwa pionowe kasetony z dibondu: Monica Fashion Store i Orchid Massage",
     orientation: "vertical",
   },
 ];
 
-export const posts: FacebookPost[] = [
-  {
-    href: "",
-    title: "Litery przestrzenne na elewacji",
-    excerpt:
-      "Nowa identyfikacja na budynku klienta. Projekt, produkcja i montaż " +
-      "w całości u nas.",
-    date: "2026-05-12",
-    image: "/images/portfolio/litery-przestrzenne/przestrzenne-1.jpg",
-    imageAlt: "Litery przestrzenne zamontowane na elewacji — realizacja Art Decor",
-  },
-];
+/**
+ * Posty ze zdjęciami. Puste — sekcję wypełniają filmy. Dodając post, wklej
+ * prawdziwy adres i zdjęcie z tej realizacji (nie kadr zastępczy).
+ */
+export const posts: FacebookPost[] = [];

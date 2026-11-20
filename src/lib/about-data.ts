@@ -7,7 +7,7 @@
  * oraz stopką — nie wpisuj go w tekstach na sztywno.
  */
 
-import { foundedYear } from "./company-data";
+import { foundedYear, yearsOnMarket } from "./company-data";
 
 export { foundedYear };
 
@@ -134,7 +134,7 @@ export interface AboutStat {
 }
 
 export const aboutStats: AboutStat[] = [
-  { value: "30+", label: "Lat na rynku" },
+  { value: String(yearsOnMarket), label: "Lat na rynku" },
   { value: "100%", label: "Produkcji w naszym warsztacie" },
   { value: "5", label: "Maszyn w parku maszynowym" },
 ];

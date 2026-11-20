@@ -3,6 +3,7 @@ import { SEO } from "astro-seo";
 import CookieConsent from "../components/CookieConsent.astro";
 import LayoutRails from "../components/LayoutRails.astro";
 import { DEFAULT_OG_IMAGE_PATH } from "../lib/seo-constants";
+import { foundedYear } from "../lib/company-data";
 
 export interface Props {
   title: string;
@@ -56,7 +57,7 @@ const jsonLd = {
     { "@type": "PropertyValue", propertyID: "NIP", value: "6381143945" },
     { "@type": "PropertyValue", propertyID: "REGON", value: "240423520" },
   ],
-  foundingDate: "2008",
+  foundingDate: String(foundedYear),
   slogan: "Reklama wizualna z charakterem",
   priceRange: "$$",
   paymentAccepted: ["Cash", "Credit Card", "Bank Transfer", "Invoice"],
