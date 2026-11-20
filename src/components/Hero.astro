@@ -49,6 +49,7 @@ const {
 
 const isPage = variant === "page";
 const hasExtra = Astro.slots.has("default");
+const hasVisual = Astro.slots.has("visual");
 
 // Ostatnie słowo tytułu dostaje akcent typograficzny
 const words = title.trim().split(" ");
@@ -83,6 +84,12 @@ const hasHeroVideo = video && existsSync(join(process.cwd(), "public", heroVideo
     <div class="hero-grid grid-pattern"></div>
     <div class="hero-glow"></div>
   </div>
+
+  {hasVisual && (
+    <div class="hero-visual" aria-hidden="true">
+      <slot name="visual" />
+    </div>
+  )}
 
   <div class="container hero-inner">
     {breadcrumb ? (
@@ -227,6 +234,36 @@ const hasHeroVideo = video && existsSync(join(process.cwd(), "public", heroVideo
     height: 90%;
     background: radial-gradient(circle, rgba(255, 92, 53, 0.14) 0%, transparent 65%);
     filter: blur(20px);
+  }
+
+  /* Grafika hero (slot „visual").
+     Wąski ekran: zwykły blok w przepływie, nad nagłówkiem — tytuł zostaje
+     przy dole hero, jak bez grafiki.
+     Od 1100px: po prawej stronie, obok tytułu, nad tłem i pod tekstem. */
+  .hero-visual {
+    position: relative;
+    z-index: 5;
+    width: min(100% - 3rem, 560px);
+    aspect-ratio: 16 / 10;
+    margin: 0 auto 2.5rem;
+    pointer-events: none;
+  }
+
+  .hero-visual > :global(*) {
+    pointer-events: auto;
+  }
+
+  @media (min-width: 1100px) {
+    .hero-visual {
+      position: absolute;
+      top: 7rem;
+      right: max(1.5rem, calc((100vw - 1320px) / 2));
+      width: min(44vw, 640px);
+      /* kończy się nad przyciskami CTA (hero-actions leżą ~20rem od dołu) */
+      bottom: 21rem;
+      aspect-ratio: auto;
+      margin: 0;
+    }
   }
 
   .hero-inner {
