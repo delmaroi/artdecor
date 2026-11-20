@@ -43,7 +43,7 @@ const [first] = pricing.products;
         </fieldset>
 
         <fieldset class="calc-step">
-          <legend><span class="calc-step-no">3</span> Wymiary całej reklamy</legend>
+          <legend><span class="calc-step-no">3</span> <span data-dimensions-title>Wymiary całej reklamy</span></legend>
           <div class="calc-fields">
             <div class="calc-field">
               <label for="calc-width">Szerokość, cm</label>
@@ -51,7 +51,7 @@ const [first] = pricing.products;
               <p id="calc-width-error" class="calc-error" hidden></p>
             </div>
             <div class="calc-field">
-              <label for="calc-height">Wysokość, cm</label>
+              <label for="calc-height" data-height-label>Wysokość, cm</label>
               <input id="calc-height" type="text" inputmode="decimal" aria-describedby="calc-height-error" />
               <p id="calc-height-error" class="calc-error" hidden></p>
             </div>
@@ -59,7 +59,7 @@ const [first] = pricing.products;
           <div class="calc-field calc-field--text" data-text-field>
             <label for="calc-text">Treść napisu</label>
             <input id="calc-text" type="text" maxlength="40" value="TWOJA FIRMA" aria-describedby="calc-text-hint" />
-            <p id="calc-text-hint" class="calc-hint">Masz logo? Wpisz tekst o podobnej liczbie elementów.</p>
+            <p id="calc-text-hint" class="calc-hint">Cena dotyczy standardowego kroju. Logotypy wyceniamy indywidualnie.</p>
           </div>
         </fieldset>
 
@@ -92,7 +92,8 @@ const [first] = pricing.products;
           <output class="calc-price" data-price-net>Podaj wymiary</output>
           <p class="calc-gross" data-price-gross></p>
           <p class="calc-min" data-price-note></p>
-          <dl class="calc-meta"><dt>Powierzchnia</dt><dd data-area>—</dd></dl>
+          <dl class="calc-meta"><dt data-meta-label>Powierzchnia</dt><dd data-area>—</dd></dl>
+          <p class="calc-includes" data-variant-note></p>
         </div>
 
         <p class="calc-disclaimer">
@@ -277,7 +278,8 @@ const [first] = pricing.products;
   }
   .calc-gross { margin: 0.35rem 0 0; color: rgba(255, 255, 255, 0.82); }
   .calc-min { margin: 0.35rem 0 0; color: #ffd7cb; font-size: 0.9rem; }
-  .calc-min:empty, .calc-gross:empty { display: none; }
+  .calc-includes { margin: var(--space-2xs) 0 0; color: rgba(255, 255, 255, 0.82); font-size: 0.9rem; }
+  .calc-min:empty, .calc-gross:empty, .calc-includes:empty { display: none; }
   .calc-meta { display: flex; gap: 0.5rem; margin: var(--space-xs) 0 0; color: rgba(255, 255, 255, 0.82); font-size: 0.95rem; }
   .calc-meta dt { font-weight: 400; }
   .calc-meta dd { margin: 0; font-weight: 600; }
