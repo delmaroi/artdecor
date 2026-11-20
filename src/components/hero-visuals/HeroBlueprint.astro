@@ -1,0 +1,738 @@
+---
+/**
+ * Propozycja A (v2) — rysunek warsztatowy „ART DECOR".
+ *
+ * Arkusz techniczny: widok elewacji z literami 3D LED na blendzie z dibondu,
+ * przekrój litery w kółku detalu, wymiarowanie, odnośniki materiałów
+ * i tabliczka rysunkowa. Sekwencja:
+ *   1. siatka i ramka arkusza,
+ *   2. blenda i obrys liter — dorysowywane linia po linii,
+ *   3. głowica CNC przejeżdża po literach (z odczytem X/Y w mm),
+ *   4. wymiary, odnośniki, przekrój, tabliczka,
+ *   5. litery zapalają się LED-em, na elewacji pojawia się poświata.
+ * Kursor nad rysunkiem: celownik z odczytem współrzędnych w mm.
+ * Czyste SVG + CSS, ~40 linii JS (licznik współrzędnych i celownik).
+ */
+---
+<div class="bp" data-bp>
+  <svg viewBox="0 0 720 540" class="bp-svg" role="presentation" data-bp-svg>
+    <defs>
+      <pattern id="bp-grid-s" width="12" height="12" patternUnits="userSpaceOnUse">
+        <path d="M12 0H0V12" fill="none" stroke="rgba(150,180,255,0.07)" stroke-width="0.6" />
+      </pattern>
+      <pattern id="bp-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <rect width="60" height="60" fill="url(#bp-grid-s)" />
+        <path d="M60 0H0V60" fill="none" stroke="rgba(150,180,255,0.14)" stroke-width="0.8" />
+      </pattern>
+      <pattern id="bp-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <path d="M0 0V6" stroke="rgba(170,196,255,0.55)" stroke-width="1" />
+      </pattern>
+      <pattern id="bp-hatch-wall" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+        <path d="M0 0V9" stroke="rgba(170,196,255,0.25)" stroke-width="1" />
+      </pattern>
+      <filter id="bp-glow" x="-30%" y="-60%" width="160%" height="220%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b1" />
+        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="b2" />
+        <feMerge>
+          <feMergeNode in="b2" />
+          <feMergeNode in="b1" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <radialGradient id="bp-spill" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#ff5c35" stop-opacity="0.5" />
+        <stop offset="0.6" stop-color="#ff5c35" stop-opacity="0.12" />
+        <stop offset="1" stop-color="#ff5c35" stop-opacity="0" />
+      </radialGradient>
+      <linearGradient id="bp-face-art" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffffff" />
+        <stop offset="1" stop-color="#ffe3d8" />
+      </linearGradient>
+      <linearGradient id="bp-face-decor" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ff8a66" />
+        <stop offset="1" stop-color="#ff5c35" />
+      </linearGradient>
+      <!-- odsłanianie liter za głowicą CNC -->
+      <clipPath id="bp-reveal">
+        <rect class="bp-reveal-rect" x="96" y="80" width="0" height="230" />
+      </clipPath>
+      <clipPath id="bp-detail-clip">
+        <circle cx="590" cy="392" r="78" />
+      </clipPath>
+    </defs>
+
+    <!-- ── 1. arkusz ─────────────────────────────────────────────── -->
+    <rect class="bp-sheet" x="8" y="8" width="704" height="524" fill="url(#bp-grid)" />
+    <g class="bp-frame">
+      <path class="bp-draw" pathLength="1" d="M8 8H712V532H8Z" />
+      <path class="bp-draw" pathLength="1" d="M20 20H700V520H20Z" />
+      <!-- znaczniki pasowania w narożnikach -->
+      <path class="bp-reg" d="M20 34V20H34 M686 20H700V34 M700 506V520H686 M34 520H20V506" />
+      <!-- podziałka na krawędzi -->
+      <g class="bp-ruler">
+        {Array.from({ length: 23 }, (_, i) => (
+          <path d={`M${50 + i * 28} 20v${i % 5 === 0 ? 8 : 4}`} />
+        ))}
+      </g>
+    </g>
+
+    <!-- ── 2. elewacja ───────────────────────────────────────────── -->
+    <!-- poświata LED na ścianie (krok 5) -->
+    <ellipse class="bp-spill" cx="300" cy="196" rx="250" ry="130" fill="url(#bp-spill)" />
+
+    <!-- ściana: przekrój stropu i linia elewacji -->
+    <g class="bp-wall">
+      <rect x="40" y="56" width="520" height="14" fill="url(#bp-hatch-wall)" />
+      <path class="bp-draw bp-d1" pathLength="1" d="M40 56H560 M40 70H560" />
+      <path class="bp-draw bp-d1 bp-thin" pathLength="1" d="M40 330H560" stroke-dasharray="0.012 0.008" />
+    </g>
+
+    <!-- blenda z dibondu (zaginana krawędziowo) -->
+    <g class="bp-panel">
+      <path class="bp-draw bp-d2" pathLength="1" d="M70 92H530V300H70Z" />
+      <path class="bp-draw bp-d2 bp-thin" pathLength="1" d="M78 100H522V292H78Z" />
+      <!-- kotwy montażowe -->
+      <g class="bp-anchors">
+        {[[86, 108], [514, 108], [86, 284], [514, 284], [300, 108], [300, 284]].map(([x, y]) => (
+          <g transform={`translate(${x} ${y})`}>
+            <circle r="4.5" />
+            <path d="M-7 0H7M0 -7V7" />
+          </g>
+        ))}
+      </g>
+    </g>
+
+    <!-- litery: (a) obrys „ploterem”, (b) wypełnienie za głowicą CNC, (c) światło -->
+    <g class="bp-letters">
+      <g class="bp-outline">
+        <text x="300" y="186" text-anchor="middle" class="bp-t bp-t--art">ART</text>
+        <text x="300" y="268" text-anchor="middle" class="bp-t bp-t--decor">DECOR</text>
+      </g>
+
+      <g clip-path="url(#bp-reveal)">
+        <!-- grubość liter (bok 60 mm) — przesunięty „cień” konstrukcyjny -->
+        <g class="bp-depth">
+          <text x="306" y="192" text-anchor="middle" class="bp-t bp-t--art">ART</text>
+          <text x="306" y="274" text-anchor="middle" class="bp-t bp-t--decor">DECOR</text>
+        </g>
+        <g class="bp-fill">
+          <text x="300" y="186" text-anchor="middle" class="bp-t bp-t--art">ART</text>
+          <text x="300" y="268" text-anchor="middle" class="bp-t bp-t--decor">DECOR</text>
+        </g>
+      </g>
+
+      <g class="bp-lit" filter="url(#bp-glow)">
+        <text x="300" y="186" text-anchor="middle" class="bp-t bp-t--art" fill="url(#bp-face-art)">ART</text>
+        <text x="300" y="268" text-anchor="middle" class="bp-t bp-t--decor" fill="url(#bp-face-decor)">DECOR</text>
+      </g>
+    </g>
+
+    <!-- ── 3. głowica CNC ────────────────────────────────────────── -->
+    <g class="bp-cnc" data-bp-cnc>
+      <g class="bp-cnc-head">
+        <circle r="7" />
+        <circle r="2" class="bp-cnc-dot" />
+        <path d="M-14 0H-9M9 0H14M0 -14V-9M0 9V14" />
+      </g>
+      <g class="bp-cnc-readout" transform="translate(12 -26)">
+        <rect width="104" height="18" rx="3" />
+        <text x="7" y="12.5" data-bp-xy>X 0000.0  Y 0000.0</text>
+      </g>
+    </g>
+
+    <!-- ── 4. wymiary ────────────────────────────────────────────── -->
+    <g class="bp-dims">
+      <!-- szerokość blendy -->
+      <g class="bp-dim" style="--d:3.6s">
+        <path d="M70 300V318 M530 300V318 M70 312H530" />
+        <path class="bp-tick" d="M66 316L74 308 M526 316L534 308" />
+        <rect x="262" y="304" width="76" height="16" rx="2" class="bp-dim-bg" />
+        <text x="300" y="316" text-anchor="middle" data-bp-count="4600" data-unit=" mm">0 mm</text>
+      </g>
+      <!-- wysokość blendy -->
+      <g class="bp-dim" style="--d:3.8s">
+        <path d="M530 92H556 M530 300H556 M550 92V300" />
+        <path class="bp-tick" d="M546 96L554 88 M546 304L554 296" />
+        <text x="566" y="200" text-anchor="middle" transform="rotate(-90 566 200)" data-bp-count="2100" data-unit=" mm">0 mm</text>
+      </g>
+      <!-- wysokość litery ART -->
+      <g class="bp-dim" style="--d:4s">
+        <path d="M58 128H66 M58 186H66 M62 128V186" />
+        <path class="bp-tick" d="M58 132L66 124 M58 190L66 182" />
+        <text x="50" y="157" text-anchor="middle" transform="rotate(-90 50 157)" data-bp-count="800" data-unit="">0</text>
+      </g>
+    </g>
+
+    <!-- odnośniki materiałów -->
+    <g class="bp-leaders">
+      <g class="bp-leader" style="--d:4.3s">
+        <path d="M168 150L150 120H96" />
+        <circle cx="168" cy="150" r="2.5" />
+        <g transform="translate(78 120)"><circle r="9" /><text y="3.5" text-anchor="middle">1</text></g>
+      </g>
+      <g class="bp-leader" style="--d:4.45s">
+        <path d="M430 240L470 214H500" />
+        <circle cx="430" cy="240" r="2.5" />
+        <g transform="translate(509 214)"><circle r="9" /><text y="3.5" text-anchor="middle">2</text></g>
+      </g>
+      <g class="bp-leader" style="--d:4.6s">
+        <path d="M120 290L104 344H150" />
+        <circle cx="120" cy="290" r="2.5" />
+        <g transform="translate(95 344)"><circle r="9" /><text y="3.5" text-anchor="middle">3</text></g>
+      </g>
+    </g>
+
+    <!-- legenda -->
+    <g class="bp-legend" transform="translate(40 384)">
+      <text y="0" class="bp-legend-h">MATERIAŁY</text>
+      <text y="20"><tspan class="bp-n">1</tspan>  LICO · PLEXI OPAL 3 mm</text>
+      <text y="38"><tspan class="bp-n">2</tspan>  BOK · DIBOND 60 mm, LAKIER RAL 7016</text>
+      <text y="56"><tspan class="bp-n">3</tspan>  BLENDA · DIBOND 4 mm, ZAGINANY</text>
+      <text y="74"><tspan class="bp-n">4</tspan>  LED 6500K · IP67 · 12 V</text>
+    </g>
+
+    <!-- ── przekrój A–A (detal w kółku) ─────────────────────────── -->
+    <g class="bp-detail">
+      <circle class="bp-draw bp-d4" pathLength="1" cx="590" cy="392" r="78" />
+      <g clip-path="url(#bp-detail-clip)" class="bp-detail-in">
+        <!-- ściana -->
+        <rect x="512" y="314" width="40" height="160" fill="url(#bp-hatch-wall)" />
+        <path d="M552 314V470" class="bp-detail-line" />
+        <!-- blenda -->
+        <rect x="552" y="314" width="5" height="160" fill="url(#bp-hatch)" />
+        <!-- dystans / kotwa -->
+        <path d="M557 384H572 M557 400H572" class="bp-detail-line" />
+        <!-- korpus litery: bok dibond + lico -->
+        <path d="M572 344H632V440H572Z" class="bp-detail-line" />
+        <rect x="572" y="344" width="60" height="4" fill="url(#bp-hatch)" />
+        <rect x="572" y="436" width="60" height="4" fill="url(#bp-hatch)" />
+        <rect class="bp-detail-face" x="632" y="344" width="5" height="96" />
+        <!-- moduły LED -->
+        <g class="bp-detail-led">
+          <rect x="576" y="362" width="8" height="6" rx="1" />
+          <rect x="576" y="389" width="8" height="6" rx="1" />
+          <rect x="576" y="416" width="8" height="6" rx="1" />
+        </g>
+        <!-- strumień światła w stronę lica -->
+        <path class="bp-detail-rays" d="M584 365L630 352 M584 365L630 378 M584 392L630 380 M584 392L630 404 M584 419L630 407 M584 419L630 432" />
+      </g>
+      <g transform="translate(626 312)" class="bp-detail-tag">
+        <circle r="11" />
+        <text y="4" text-anchor="middle">A</text>
+      </g>
+      <text x="590" y="486" text-anchor="middle" class="bp-detail-cap">PRZEKRÓJ A–A · 1:5</text>
+    </g>
+    <!-- linia cięcia na elewacji -->
+    <g class="bp-cut">
+      <path d="M232 128V96 M232 300V276" />
+      <text x="232" y="90" text-anchor="middle">A</text>
+    </g>
+
+    <!-- ── tabliczka rysunkowa ───────────────────────────────────── -->
+    <g class="bp-stamp" transform="translate(452 492)">
+      <rect width="248" height="28" />
+      <path d="M86 0V28 M168 0V28 M0 13H248" />
+      <text x="6" y="10">PROJEKT</text>
+      <text x="6" y="24" class="bp-strong">ART DECOR</text>
+      <text x="92" y="10">NR RYS.</text>
+      <text x="92" y="24" class="bp-strong">AD-26/014</text>
+      <text x="174" y="10">SKALA</text>
+      <text x="174" y="24" class="bp-strong">1 : 25</text>
+    </g>
+
+    <!-- ── celownik pod kursorem ─────────────────────────────────── -->
+    <g class="bp-cross" data-bp-cross>
+      <path class="bp-cross-h" d="M8 0H712" />
+      <path class="bp-cross-v" d="M0 8V532" />
+      <g class="bp-cross-tag">
+        <rect width="92" height="16" rx="2" />
+        <text x="6" y="11.5" data-bp-cross-xy>X 0 · Y 0</text>
+      </g>
+    </g>
+  </svg>
+
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-bp]").forEach((root) => {
+    const svg = root.querySelector<SVGSVGElement>("[data-bp-svg]");
+    if (!svg) return;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // skala rysunku: 1 jednostka SVG ≈ 10 mm (blenda 460 j. = 4600 mm)
+    const MM = 10;
+
+    // liczniki wymiarów — odliczają do wartości, gdy pojawia się linia
+    root.querySelectorAll<SVGTextElement>("[data-bp-count]").forEach((el) => {
+      const target = Number(el.dataset.bpCount);
+      const unit = el.dataset.unit ?? "";
+      const delay = parseFloat(getComputedStyle(el.closest(".bp-dim") as Element).getPropertyValue("--d")) * 1000 || 0;
+      if (reduced) { el.textContent = `${target}${unit}`; return; }
+      setTimeout(() => {
+        const t0 = performance.now();
+        const step = (t: number) => {
+          const k = Math.min(1, (t - t0) / 700);
+          const e = 1 - Math.pow(1 - k, 3);
+          el.textContent = `${Math.round(target * e)}${unit}`;
+          if (k < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }, delay);
+    });
+
+    // odczyt współrzędnych głowicy CNC — czytamy jej bieżącą pozycję z CSS
+    const cnc = root.querySelector<SVGGElement>("[data-bp-cnc]");
+    const xy = root.querySelector<SVGTextElement>("[data-bp-xy]");
+    if (cnc && xy && !reduced) {
+      const t0 = performance.now();
+      const read = (t: number) => {
+        const m = new DOMMatrix(getComputedStyle(cnc).transform);
+        const x = (m.m41 - 70) * MM;
+        const y = (300 - m.m42) * MM;
+        xy.textContent = `X ${x.toFixed(1).padStart(6, "0")}  Y ${y.toFixed(1).padStart(6, "0")}`;
+        if (t - t0 < 5200) requestAnimationFrame(read);
+      };
+      requestAnimationFrame(read);
+    }
+
+    // celownik pod kursorem — tekst hero leży nad grafiką, więc liczymy
+    // pozycję z okna, a nie z :hover
+    const cross = root.querySelector<SVGGElement>("[data-bp-cross]");
+    const crossXY = root.querySelector<SVGTextElement>("[data-bp-cross-xy]");
+    if (!cross || !crossXY || reduced) return;
+    const h = cross.querySelector<SVGPathElement>(".bp-cross-h")!;
+    const v = cross.querySelector<SVGPathElement>(".bp-cross-v")!;
+    const tag = cross.querySelector<SVGGElement>(".bp-cross-tag")!;
+    let raf = 0;
+    let last: PointerEvent | null = null;
+
+    const update = () => {
+      raf = 0;
+      if (!last) return;
+      const r = svg.getBoundingClientRect();
+      const inside = last.clientX > r.left && last.clientX < r.right && last.clientY > r.top && last.clientY < r.bottom;
+      root.classList.toggle("is-hover", inside);
+      if (!inside) return;
+      const pt = new DOMPoint(last.clientX, last.clientY).matrixTransform(svg.getScreenCTM()!.inverse());
+      const x = Math.max(8, Math.min(712, pt.x));
+      const y = Math.max(8, Math.min(532, pt.y));
+      h.setAttribute("transform", `translate(0 ${y})`);
+      v.setAttribute("transform", `translate(${x} 0)`);
+      tag.setAttribute("transform", `translate(${Math.min(x + 10, 612)} ${Math.max(y - 24, 12)})`);
+      crossXY.textContent = `X ${Math.round((x - 70) * MM)} · Y ${Math.round((300 - y) * MM)}`;
+    };
+
+    window.addEventListener("pointermove", (e) => {
+      last = e;
+      if (!raf) raf = requestAnimationFrame(update);
+    }, { passive: true });
+  });
+</script>
+
+<style>
+  .bp {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+
+  .bp-svg {
+    width: 100%;
+    max-height: 100%;
+    overflow: visible;
+    font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, monospace;
+  }
+
+  /* ── wspólne: rysowanie linii ──────────────────────────────────── */
+  .bp-draw {
+    fill: none;
+    stroke: rgba(190, 210, 255, 0.75);
+    stroke-width: 1.1;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: bp-draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  .bp-thin {
+    stroke: rgba(170, 196, 255, 0.35);
+    stroke-width: 0.8;
+  }
+
+  .bp-d1 { animation-delay: 0.45s; }
+  .bp-d2 { animation-delay: 0.8s; stroke: rgba(235, 242, 255, 0.9); }
+  .bp-d2.bp-thin { stroke: rgba(170, 196, 255, 0.35); }
+  .bp-d4 { animation-delay: 4.2s; stroke: rgba(255, 140, 110, 0.85); }
+
+  @keyframes bp-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes bp-fade {
+    to { opacity: 1; }
+  }
+
+  /* ── arkusz ───────────────────────────────────────────────────── */
+  .bp-sheet {
+    opacity: 0;
+    animation: bp-fade 1s ease 0.1s forwards;
+  }
+
+  .bp-frame .bp-draw {
+    stroke: rgba(170, 196, 255, 0.28);
+    stroke-width: 0.8;
+    animation-duration: 1.6s;
+  }
+
+  .bp-reg,
+  .bp-ruler path {
+    fill: none;
+    stroke: rgba(255, 92, 53, 0.65);
+    stroke-width: 1;
+    opacity: 0;
+    animation: bp-fade 0.6s ease 0.9s forwards;
+  }
+
+  .bp-ruler path {
+    stroke: rgba(170, 196, 255, 0.35);
+  }
+
+  .bp-wall rect {
+    opacity: 0;
+    animation: bp-fade 0.6s ease 1s forwards;
+  }
+
+  .bp-anchors {
+    opacity: 0;
+    animation: bp-fade 0.5s ease 1.7s forwards;
+  }
+
+  .bp-anchors circle,
+  .bp-anchors path {
+    fill: none;
+    stroke: var(--structa-accent);
+    stroke-width: 1;
+  }
+
+  /* ── litery ───────────────────────────────────────────────────── */
+  .bp-t {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .bp-t--art { font-size: 84px; }
+  .bp-t--decor { font-size: 64px; letter-spacing: 0.01em; }
+
+  /* (a) kontur rysowany jak ploterem */
+  .bp-outline text {
+    fill: none;
+    stroke: rgba(235, 242, 255, 0.95);
+    stroke-width: 1.1;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+    animation: bp-text-draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) 1.1s forwards;
+  }
+
+  .bp-outline text + text { animation-delay: 1.35s; }
+
+  @keyframes bp-text-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* (b) materiał wycinany przez głowicę CNC */
+  .bp-depth text {
+    fill: #121828;
+    stroke: rgba(170, 196, 255, 0.35);
+    stroke-width: 0.8;
+  }
+
+  .bp-fill text {
+    fill: url(#bp-hatch);
+    stroke: rgba(235, 242, 255, 0.9);
+    stroke-width: 1;
+  }
+
+  .bp-reveal-rect {
+    animation: bp-reveal 2.4s cubic-bezier(0.45, 0, 0.25, 1) 2.2s forwards;
+  }
+
+  @keyframes bp-reveal {
+    to { width: 440px; }
+  }
+
+  /* (c) światło — zapala się z mrugnięciem, potem „oddycha” */
+  .bp-lit {
+    opacity: 0;
+    animation:
+      bp-ignite 1.3s linear 5s forwards,
+      bp-breathe 5s ease-in-out 6.5s infinite;
+  }
+
+  @keyframes bp-ignite {
+    0% { opacity: 0; }
+    6% { opacity: 0.9; }
+    12% { opacity: 0.1; }
+    22% { opacity: 1; }
+    30% { opacity: 0.3; }
+    42% { opacity: 1; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes bp-breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.88; }
+  }
+
+  .bp-spill {
+    opacity: 0;
+    animation: bp-fade 1.4s ease 5.4s forwards;
+  }
+
+  /* ── głowica CNC ──────────────────────────────────────────────── */
+  .bp-cnc {
+    opacity: 0;
+    transform: translate(96px, 210px);
+    animation:
+      bp-cnc-in 0.3s ease 2.1s forwards,
+      bp-cnc-path 2.4s cubic-bezier(0.45, 0, 0.25, 1) 2.2s forwards,
+      bp-cnc-out 0.5s ease 4.7s forwards;
+  }
+
+  @keyframes bp-cnc-in { to { opacity: 1; } }
+
+  @keyframes bp-cnc-path {
+    0% { transform: translate(96px, 210px); }
+    20% { transform: translate(184px, 150px); }
+    40% { transform: translate(262px, 236px); }
+    60% { transform: translate(340px, 160px); }
+    80% { transform: translate(430px, 240px); }
+    100% { transform: translate(536px, 196px); }
+  }
+
+  @keyframes bp-cnc-out { to { opacity: 0; } }
+
+  .bp-cnc-head circle {
+    fill: rgba(255, 92, 53, 0.15);
+    stroke: var(--structa-accent);
+    stroke-width: 1.4;
+  }
+
+  .bp-cnc-head path {
+    stroke: var(--structa-accent);
+    stroke-width: 1.2;
+  }
+
+  .bp-cnc-dot {
+    fill: #fff !important;
+    stroke: none !important;
+    filter: drop-shadow(0 0 4px #ff5c35) drop-shadow(0 0 10px #ff5c35);
+  }
+
+  .bp-cnc-readout rect {
+    fill: rgba(22, 29, 46, 0.92);
+    stroke: rgba(255, 92, 53, 0.6);
+  }
+
+  .bp-cnc-readout text {
+    font-size: 8.5px;
+    fill: #ffd0c2;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── wymiary i odnośniki ──────────────────────────────────────── */
+  .bp-dim,
+  .bp-leader {
+    opacity: 0;
+    animation: bp-fade 0.45s ease var(--d) forwards;
+  }
+
+  .bp-dim path {
+    fill: none;
+    stroke: rgba(170, 196, 255, 0.7);
+    stroke-width: 0.9;
+  }
+
+  .bp-dim .bp-tick {
+    stroke: rgba(235, 242, 255, 0.95);
+    stroke-width: 1.4;
+  }
+
+  .bp-dim .bp-dim-bg {
+    fill: var(--structa-charcoal);
+  }
+
+  .bp-dim text,
+  .bp-legend text,
+  .bp-stamp text,
+  .bp-cut text,
+  .bp-detail-cap,
+  .bp-cross text {
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    fill: rgba(205, 220, 255, 0.85);
+  }
+
+  .bp-leader path {
+    fill: none;
+    stroke: rgba(255, 140, 110, 0.8);
+    stroke-width: 0.9;
+  }
+
+  .bp-leader circle {
+    fill: var(--structa-charcoal);
+    stroke: var(--structa-accent);
+    stroke-width: 1;
+  }
+
+  .bp-leader text {
+    font-size: 10px;
+    font-weight: 700;
+    fill: #fff;
+  }
+
+  .bp-legend {
+    opacity: 0;
+    animation: bp-fade 0.6s ease 4.7s forwards;
+  }
+
+  .bp-legend .bp-legend-h {
+    fill: var(--structa-accent);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+  }
+
+  .bp-legend .bp-n {
+    fill: #fff;
+    font-weight: 700;
+  }
+
+  /* ── przekrój ─────────────────────────────────────────────────── */
+  .bp-detail-in,
+  .bp-detail-tag,
+  .bp-detail-cap,
+  .bp-cut {
+    opacity: 0;
+    animation: bp-fade 0.6s ease 4.6s forwards;
+  }
+
+  .bp-detail-line {
+    fill: none;
+    stroke: rgba(235, 242, 255, 0.85);
+    stroke-width: 1;
+  }
+
+  .bp-detail-face {
+    fill: rgba(255, 255, 255, 0.25);
+    stroke: rgba(235, 242, 255, 0.9);
+    stroke-width: 0.8;
+    animation: bp-face-on 0.6s ease 5.3s forwards;
+  }
+
+  @keyframes bp-face-on {
+    to { fill: #ffe9e1; filter: drop-shadow(0 0 6px #ff5c35); }
+  }
+
+  .bp-detail-led rect {
+    fill: var(--structa-accent);
+    filter: drop-shadow(0 0 3px #ff5c35);
+  }
+
+  .bp-detail-rays {
+    fill: none;
+    stroke: rgba(255, 140, 110, 0.55);
+    stroke-width: 0.8;
+    stroke-dasharray: 2 3;
+    opacity: 0;
+    animation: bp-fade 0.6s ease 5.3s forwards, bp-rays 1.2s linear 5.3s infinite;
+  }
+
+  @keyframes bp-rays {
+    to { stroke-dashoffset: -10; }
+  }
+
+  .bp-detail-tag circle {
+    fill: var(--structa-accent);
+  }
+
+  .bp-detail-tag text {
+    font-size: 11px;
+    font-weight: 700;
+    fill: #fff;
+  }
+
+  .bp-cut path {
+    fill: none;
+    stroke: var(--structa-accent);
+    stroke-width: 1.6;
+    stroke-dasharray: 8 3 2 3;
+  }
+
+  .bp-cut text {
+    fill: var(--structa-accent);
+    font-weight: 700;
+  }
+
+  /* ── tabliczka ────────────────────────────────────────────────── */
+  .bp-stamp {
+    opacity: 0;
+    animation: bp-fade 0.6s ease 4.9s forwards;
+  }
+
+  .bp-stamp rect,
+  .bp-stamp path {
+    fill: rgba(22, 29, 46, 0.75);
+    stroke: rgba(170, 196, 255, 0.45);
+    stroke-width: 0.8;
+  }
+
+  .bp-stamp path { fill: none; }
+
+  .bp-stamp text { font-size: 7px; }
+
+  .bp-stamp .bp-strong {
+    font-size: 9px;
+    font-weight: 700;
+    fill: #fff;
+  }
+
+  /* ── celownik ─────────────────────────────────────────────────── */
+  .bp-cross {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  .bp.is-hover .bp-cross {
+    opacity: 1;
+  }
+
+  .bp-cross path {
+    stroke: rgba(255, 92, 53, 0.45);
+    stroke-width: 0.8;
+    stroke-dasharray: 4 4;
+  }
+
+  .bp-cross-tag rect {
+    fill: var(--structa-accent);
+  }
+
+  .bp-cross-tag text {
+    fill: #fff !important;
+    font-size: 8.5px !important;
+    font-weight: 700;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bp *,
+    .bp *::before {
+      animation-duration: 0.001s !important;
+      animation-delay: 0s !important;
+      animation-iteration-count: 1 !important;
+    }
+
+    .bp-cnc { display: none; }
+  }
+</style>
