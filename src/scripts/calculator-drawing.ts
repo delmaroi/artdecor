@@ -72,6 +72,7 @@ export function drawScene(
   widthCm: number,
   heightCm: number,
   text: string,
+  widthIsEstimated = false,
 ) {
   const availableW = VIEW.width - VIEW.left - VIEW.right;
   const availableH = VIEW.ground - VIEW.top;
@@ -101,6 +102,6 @@ export function drawScene(
   el("line", { x1: dimX, x2: dimX, y1: box.y, y2: box.y + box.h }, dims);
   el("line", { x1: dimX - 5, x2: dimX + 5, y1: box.y, y2: box.y }, dims);
   el("line", { x1: dimX - 5, x2: dimX + 5, y1: box.y + box.h, y2: box.y + box.h }, dims);
-  label(svg, box.x + box.w / 2, dimY - 8, format(widthCm));
+  label(svg, box.x + box.w / 2, dimY - 8, `${widthIsEstimated ? "ok. " : ""}${format(widthCm)}`);
   label(svg, dimX + 9, box.y + box.h / 2 + 4, format(heightCm), "start");
 }

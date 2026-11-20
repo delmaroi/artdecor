@@ -1,4 +1,4 @@
-import { estimate, countCharacters } from "../lib/calculator/estimate";
+import { estimate, countCharacters, isPerLetter } from "../lib/calculator/estimate";
 import { pricing, type Product } from "../lib/calculator/pricing";
 import { drawScene } from "./calculator-drawing";
 
@@ -9,6 +9,11 @@ const range = (low: number, high: number) =>
 function parseDimension(raw: string): number | null {
   const value = raw.trim().replace(",", ".");
   return value === "" ? null : Number(value);
+}
+
+/** Szerokość napisu do rysunku, gdy klient jej nie podał. Litera ma około 0,7 swojej wysokości. */
+function approximateTextWidthCm(text: string, heightCm: number): number {
+  return Math.round((text.trim().length || "NAPIS".length) * heightCm * 0.7);
 }
 
 function init() {
@@ -29,10 +34,15 @@ function init() {
   const priceGross = q<HTMLElement>("[data-price-gross]");
   const priceNote = q<HTMLElement>("[data-price-note]");
   const areaOutput = q<HTMLElement>("[data-area]");
+  const metaLabel = q<HTMLElement>("[data-meta-label]");
+  const variantNote = q<HTMLElement>("[data-variant-note]");
+  const dimensionsTitle = q<HTMLElement>("[data-dimensions-title]");
+  const heightLabel = q<HTMLElement>("[data-height-label]");
   const barPrice = q<HTMLElement>("[data-bar-price]");
 
   // Podpowiadane wymiary podmieniamy tylko, dopóki klient ich nie zmienił.
-  let dimensionsEdited = false;
+  let widthEdited = false;
+  let heightEdited = false;
   let textEdited = false;
   const defaultText = textInput.value;
 
@@ -72,9 +82,17 @@ function init() {
     const variantId =
       form!.querySelector<HTMLInputElement>('input[name="variant"]:checked')?.value ?? "";
     const variant = product.variants.find((v) => v.id === variantId) ?? product.variants[0];
+    const perLetter = isPerLetter(variant);
+
+    // Przy cenie za literę szerokość jest opcjonalna, więc nie podpowiadamy przykładu.
+    if (!widthEdited) widthInput.value = perLetter ? "" : String(product.example.widthCm);
+    widthInput.placeholder = perLetter ? "opcjonalnie" : `np. ${product.example.widthCm}`;
+    dimensionsTitle.textContent = perLetter ? "Wymiary napisu" : "Wymiary całej reklamy";
+    heightLabel.textContent = perLetter ? "Wysokość litery, cm" : "Wysokość, cm";
+
     const widthCm = parseDimension(widthInput.value);
     const heightCm = parseDimension(heightInput.value);
-    const usesText = product.perCharacterNet !== undefined;
+    const usesText = perLetter || product.perCharacterNet !== undefined;
     const text = usesText ? textInput.value : "";
 
     textField.hidden = !usesText;
@@ -96,32 +114,55 @@ function init() {
     showError(widthInput, errors.find((e) => e.field === "width")?.message);
     showError(heightInput, errors.find((e) => e.field === "height")?.message);
 
-    if (widthCm !== null && heightCm !== null && errors.length === 0) {
-      drawScene(drawing, product, variant.effect, widthCm, heightCm, text);
+    const widthIsEstimated = perLetter && widthCm === null && heightCm !== null;
+    const drawnWidthCm = widthIsEstimated ? approximateTextWidthCm(text, heightCm) : widthCm;
+    if (drawnWidthCm !== null && heightCm !== null && errors.length === 0) {
+      drawScene(
+        drawing,
+        variant.shape ? { ...product, shape: variant.shape } : product,
+        variant.effect,
+        drawnWidthCm,
+        heightCm,
+        text,
+        widthIsEstimated,
+      );
       drawing.setAttribute(
         "aria-label",
-        `Rysunek w skali: ${product.title}, ${widthCm} na ${heightCm} cm, obok sylwetka człowieka o wzroście 175 cm.`,
+        `Rysunek w skali: ${product.title}, ${widthIsEstimated ? "około " : ""}${drawnWidthCm} na ${heightCm} cm, obok sylwetka człowieka o wzroście 175 cm.`,
       );
     }
 
+    metaLabel.textContent = perLetter ? "Napis" : "Powierzchnia";
+    variantNote.textContent = result.status === "ok" ? (variant.note ?? "") : "";
     if (result.status === "ok") {
-      const area = new Intl.NumberFormat("pl-PL", { maximumFractionDigits: 2 }).format(result.areaM2);
-      const characters = usesText ? `, ${countCharacters(text)} zn.` : "";
-      areaOutput.textContent = `${area} m²${characters}`;
+      const area = new Intl.NumberFormat("pl-PL", { maximumFractionDigits: 2 });
+      areaOutput.textContent =
+        result.perLetterNet !== null
+          ? `${result.characters} zn., ok. ${money.format(result.perLetterNet)} zł netto za znak`
+          : `${area.format(result.areaM2 ?? 0)} m²${usesText ? `, ${result.characters} zn.` : ""}`;
       priceNet.textContent = `${range(result.netLow, result.netHigh)} netto`;
       priceGross.textContent = `${range(result.grossLow, result.grossHigh)} brutto (VAT ${pricing.vatRate * 100}%)`;
       priceNote.textContent = result.minimumApplied
-        ? "Przy tak małym wymiarze obowiązuje cena minimalna tego produktu."
+        ? "Przy tak małym zamówieniu obowiązuje cena minimalna."
         : "";
       barPrice.textContent = `${range(result.netLow, result.netHigh)} netto`;
+    } else if (result.status === "custom") {
+      areaOutput.textContent = "—";
+      priceNet.textContent = "Wycena indywidualna";
+      priceGross.textContent = "Ten rozmiar wyceniamy indywidualnie. Zadzwoń, a podamy cenę.";
+      priceNote.textContent = "";
+      barPrice.textContent = "Wycena indywidualna";
     } else {
       areaOutput.textContent = "—";
+      const dimensionsGiven = heightCm !== null && (perLetter || widthCm !== null);
       const prompt =
         result.status === "invalid"
           ? "Popraw wymiary"
-          : usesText && countCharacters(text) === 0 && widthCm !== null && heightCm !== null
+          : usesText && countCharacters(text) === 0 && dimensionsGiven
             ? "Wpisz treść napisu"
-            : "Podaj wymiary";
+            : perLetter
+              ? "Podaj wysokość liter"
+              : "Podaj wymiary";
       priceNet.textContent = prompt;
       priceGross.textContent = "";
       priceNote.textContent = "";
@@ -132,11 +173,7 @@ function init() {
   function applyProduct() {
     const product = currentProduct();
     renderVariants(product);
-    if (!dimensionsEdited) {
-      widthInput.value = String(product.example.widthCm);
-      heightInput.value = String(product.example.heightCm);
-    }
-    widthInput.placeholder = `np. ${product.example.widthCm}`;
+    if (!heightEdited) heightInput.value = String(product.example.heightCm);
     heightInput.placeholder = `np. ${product.example.heightCm}`;
     if (!textEdited) textInput.value = defaultText;
     update();
@@ -145,7 +182,8 @@ function init() {
   form.addEventListener("submit", (event) => event.preventDefault());
   form.addEventListener("input", (event) => {
     const target = event.target as HTMLInputElement;
-    if (target === widthInput || target === heightInput) dimensionsEdited = true;
+    if (target === widthInput) widthEdited = true;
+    if (target === heightInput) heightEdited = true;
     if (target === textInput) textEdited = true;
     if (target.name === "product") return;
     update();
