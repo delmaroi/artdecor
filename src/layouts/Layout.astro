@@ -194,7 +194,11 @@ const websiteJsonLd = {
         imageAlt: "Art Decor Pszczyna – reklama wizualna i produkcja szyldów",
       }}
       extend={{
-        link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+        link: [
+          { rel: "icon", href: "/favicon.ico?v=2", sizes: "48x48" },
+          { rel: "icon", type: "image/svg+xml", href: "/favicon.svg?v=2" },
+          { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=2" },
+        ],
         meta: [
           { name: "generator", content: Astro.generator },
           { name: "theme-color", content: "#232D48" },
